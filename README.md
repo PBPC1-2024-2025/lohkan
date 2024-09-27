@@ -1,4 +1,4 @@
-# <summary><strong>Hi there :wave: , We are LohKan! :sparkles: </strong></summary>
+# <strong>Hi there :wave: , We are LohKan! :sparkles: </strong>
 
 ## <summary><strong>Anggota Kelompok C01 </strong></summary>
 <p>
