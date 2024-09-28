@@ -11,29 +11,9 @@
 <h5>Harga</h5>
 <p>{{ harga }}</p>
 
-{% if not food_entries %}
-<p>Belum ada data food pada mental health tracker.</p>
-{% else %}
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Deskripsi</th>
-    <th>Harga</th>
-  </tr>
-
-  {% for food_entry in food_entries %}
-  <tr>
-    <td>{{food_entry.nama}}</td>
-    <td>{{food_entry.deskripsi}}</td>
-    <td>{{food_entry.harga}}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %}
-
 <br />
 
-<a href="{% url 'main:create_food_entry' %}">
-  <button>Add New Food Entry</button>
+<a href="{% url 'authentication:logout' %}"></a>
+  <button>Logout</button>
 </a>
 {% endblock content %}
