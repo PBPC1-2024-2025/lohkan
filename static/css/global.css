@@ -1,0 +1,22 @@
+input[type="text"], input[type="password"] {
+    border: 2px solid black; /* Border hitam selalu ada */
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+/* Menambahkan gaya saat input di klik (focus) */
+input[type="text"]:focus, input[type="password"]:focus {
+border-color: black; /* Tetap berwarna hitam ketika di klik */
+outline: none; /* Menghilangkan outline default browser */
+}
+  
+.card-shadow {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+.card-shadow:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}

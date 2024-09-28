@@ -1,32 +1,78 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block meta %}
 <title>Register</title>
 {% endblock meta %}
 
 {% block content %}
+<div class="min-h-screen flex items-center justify-center bg-[#FFF9E9] py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl w-full grid grid-cols-2 bg-white rounded-lg border border-[#CCC7BA] card-shadow">
+    <!-- Left Side: Graphic and Text -->
+    <div class="flex flex-col justify-center items-center bg-[#550000] text-white p-10 rounded-l-lg">
+      <h2 class="text-center text-3xl font-extrabold">Make Your Memories With Us 🍽️</h2>
+      <p class="mt-4">By LohKan Team</p>
+      <img src="{% static 'images/signup.gif' %}" alt="Sign-up Graphic" class="mt-6">
+    </div>
 
-<div class="login">
-  <h1>Register</h1>
+    <!-- Right Side: Form -->
+    <div class="p-10 bg-white">
+      <h2 class="text-center text-3xl font-extrabold text-[#000000]">
+        Create your account
+      </h2>
+      <form class="mt-8 space-y-6" method="POST">
+        {% csrf_token %}
+        <div class="rounded-md shadow-sm -space-y-px">
+          {% for field in form %}
+          <div class="{% if not forloop.first %}mt-4{% endif %}">
+            <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-[#000000]">
+              {{ field.label }}
+            </label>
+            <div class="relative">
+              {{ field }}
+              <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                {% if field.errors %}
+                <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                {% endif %}
+              </div>
+            </div>
+            {% if field.errors %}
+            <p class="mt-1 text-sm text-red-600">{{ field.errors.0 }}</p>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
 
-  <form method="POST">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-      <tr>
-        <td></td>
-        <td><input type="submit" name="submit" value="Daftar" /></td>
-      </tr>
-    </table>
-  </form>
+        <div>
+          <button type="submit"
+            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#550000] hover:bg-[#440000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#550000]">
+            Sign Up
+          </button>
+        </div>
+      </form>
 
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
+      {% if messages %}
+      <div class="mt-4">
+        {% for message in messages %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <span class="block sm:inline">{{ message }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="text-center mt-4">
+        <p class="text-sm text-[#B3AE94]">
+          Already have an account?
+          <a href="{% url 'authentication:login' %}" class="font-medium text-[#550000] hover:text-[#440000]">
+            Login here
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
-
 {% endblock content %}

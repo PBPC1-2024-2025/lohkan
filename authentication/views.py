@@ -6,16 +6,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 import datetime
 
+
 def register(request):
     form = UserCreationForm()
 
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            form.save()  # Simpan user baru ke database
             messages.success(request, 'Your account has been successfully created!')
-            return redirect('authentication:login')
-    context = {'form':form}
+            return redirect('authentication:login')  # Redirect ke halaman login setelah sukses
+    context = {'form': form}
     return render(request, 'register.html', context)
 
 def login_user(request):
