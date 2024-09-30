@@ -35,7 +35,7 @@ Dikerjakan oleh Fakhri Habibi </br>
 Fitur Explore memungkinkan kamu menjelajahi berbagai hidangan khas Bangka Belitung dengan mudah. Setiap makanan dilengkapi dengan informasi deskripsi dari makanan tersebut. Dengan fitur ini, kamu bisa menemukan kuliner-kuliner tersembunyi yang mungkin belum banyak diketahui wisatawan. Penjelajahan kuliner di Bangka Belitung kini lebih seru dengan LohKan!
 </br></br>
 
-<strong>Review Makanan :star: </strong></br>
+<strong>Food Review :star: </strong></br>
 Dikerjakan oleh Jasmine Rakhaila Wibisono </br>
 Fitur ini membantu kamu melihat review berbagai makanan yang menarik perhatianmu dari berbagai review yang diberikan oleh pengguna lainnya yang menggugah selera mu untuk mencobanya secara langsung. </br></br>
 
@@ -43,11 +43,11 @@ Fitur ini membantu kamu melihat review berbagai makanan yang menarik perhatianmu
 Dikerjakan oleh Abhiseka Susanto </br>
 Fitur Bucket List adalah tempat dimana kamu dapat menyimpan berbagai makanan yang ingin kamu coba di masa mendatang. Kamu bisa menambahkan makanan favorit yang sudah ditemukan sebelumnya ke dalam daftar ini, sehingga tidak akan lupa untuk mencicipinya nanti. Fitur ini membantu kamu mengatur perjalanan kuliner sesuai keinginan, menjadikan pengalaman makan lebih terencana. Setiap kali kamu menambahkan makanan ke daftar ini, kamu bisa melihat detail informasinya kapan saja. Jadi, jika kamu sedang mencari inspirasi makan berikutnya, tinggal buka Bucket List dan temukan rekomendasimu. </br></br>
 
-<strong>Tanya Resep :question: </strong></br> 
+<strong>Ask Recipe :question: </strong></br> 
 Dikerjakan oleh Muhammad Almerazka Yocendra </br>
 Fitur Tanya Resep adalah tempat bagi para penggemar masakan lokal yang ingin belajar lebih banyak tentang cara membuat makanan favorit mereka. Kamu bisa bertanya langsung dengan admin tentang resep-resep makanan khas Bangka Belitung yang ingin kamu coba buat di rumah. </br></br>
 
-<strong>Artikel 📰</strong> </br> 
+<strong>Article 📰</strong> </br> 
 Dikerjakan oleh Marla Marlena </br>
 Pengen tahu lebih dalam tentang produk lokal Bangka Belitung? Lohkan juga menyediakan wadah buat kamu nambah wawasan tentang produk lokal Bangka Belitung loh.. Dengan beragam artikel menarik seputar makanan dan tempat makan unik nan kece yang lagi trending dan ramai dikunjungi.  </br></br>
 
@@ -62,5 +62,5 @@ Admin akan bertugas menambah produk maupun menjawab pertanyaan yang diajukan ole
 Para Foodies memiliki role sebagai user yang dapat melihat berbagai produk yang ada pada menu explore, melihat dan menambahkan review makanan, serta menanyakan resep dari makanan lokal tersebut dan mengupload berbagai makanan yang telah dicoba di gallery makanan.</br></br>
 
 ## <summary><strong>Link PWS</strong></summary>
-TBA
+[LohKan Website](http://marla-marlena-lohkan.pbp.cs.ui.ac.id/)
 

@@ -1,13 +1,22 @@
+{% load static %}
 <nav class="bg-[#550000] shadow-lg fixed top-0 left-0 z-40 w-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
-                <h1 class="text-2xl font-bold text-center text-white">Lohkan</h1>
+                <div class="text-center">
+                    <img src="{% static 'images/logo.png' %}" alt="Lohkan Logo" class="w-64 h-auto mx-auto" />
+                </div>
             </div>
             <!-- Desktop Menu (hidden on mobile) -->
             <div class="hidden md:flex items-center">
                 {% if user.is_authenticated %}
-                    <span class="text-gray-300 mr-4">Welcome, {{ user.username }}</span>
+                    <!-- Additional Menu Item -->
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Explore</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Food Review</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Bucket List</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Ask Recipe</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 ">Article</a>
+
                     <a href="{% url 'authentication:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
                         Logout
                     </a>
