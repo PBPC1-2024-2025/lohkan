@@ -6,7 +6,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 import datetime
 
-
 def register(request):
     form = UserCreationForm()
 

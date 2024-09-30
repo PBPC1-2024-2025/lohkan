@@ -21,7 +21,7 @@ Manfaat dari website ini adalah </br>
 1. Menemukan Kuliner Lokal Autentik
 LohKan membantu pengguna menemukan makanan khas Bangka Belitung yang mungkin belum banyak dikenal. Dengan berbagai informasi yang disajikan, pengguna dapat mengeksplorasi kekayaan kuliner lokal yang unik dan autentik.
 </br></br>
-2. Belajar Membuat Masakan Lokal
+2. Belajar Mengenal Masakan Lokal
 Fitur Tanya Resep memungkinkan pengguna untuk bertanya dan belajar membuat hidangan khas Bangka Belitung di rumah. Dengan akses mudah ke resep-resep tradisional, pengguna dapat memperluas kemampuan memasak mereka dan membawa cita rasa lokal ke dapur sendiri.
 </br></br>
 3. Mendukung Promosi Kuliner Lokal
@@ -32,7 +32,7 @@ Dengan adanya LohKan, kuliner khas Bangka Belitung lebih dikenal oleh masyarakat
 # <summary><strong>Daftar Modul :closed_book: </strong></summary>
 <strong>Explore :bulb: </strong> </br>
 Dikerjakan oleh Fakhri Habibi </br>
-Fitur Explore memungkinkan kamu menjelajahi berbagai hidangan khas Bangka Belitung dengan mudah. Setiap makanan dilengkapi dengan informasi mendetail mulai dari asal-usul, bahan-bahan, hingga cara penyajiannya. Dengan fitur ini, kamu bisa menemukan kuliner-kuliner tersembunyi yang mungkin belum banyak diketahui wisatawan. Penjelajahan kuliner di Bangka Belitung kini lebih seru dengan LohKan!
+Fitur Explore memungkinkan kamu menjelajahi berbagai hidangan khas Bangka Belitung dengan mudah. Setiap makanan dilengkapi dengan informasi deskripsi dari makanan tersebut. Dengan fitur ini, kamu bisa menemukan kuliner-kuliner tersembunyi yang mungkin belum banyak diketahui wisatawan. Penjelajahan kuliner di Bangka Belitung kini lebih seru dengan LohKan!
 </br></br>
 
 <strong>Review Makanan :star: </strong></br>
@@ -47,12 +47,12 @@ Fitur Bucket List adalah tempat dimana kamu dapat menyimpan berbagai makanan yan
 Dikerjakan oleh Muhammad Almerazka Yocendra </br>
 Fitur Tanya Resep adalah tempat bagi para penggemar masakan lokal yang ingin belajar lebih banyak tentang cara membuat makanan favorit mereka. Kamu bisa bertanya langsung dengan admin tentang resep-resep makanan khas Bangka Belitung yang ingin kamu coba buat di rumah. </br></br>
 
-<strong>Gallery Makanan :foggy:</strong> </br> 
+<strong>Artikel 📰</strong> </br> 
 Dikerjakan oleh Marla Marlena </br>
-Galeri Foto Makanan di LohKan menampilkan berbagai hidangan yang telah dicicipi oleh pengguna lain. Setiap foto memberikan gambaran visual tentang makanan-makanan khas, lengkap dengan ulasan dari mereka yang telah mencoba. Galeri ini tidak hanya memperlihatkan estetika makanan tetapi juga memberikan inspirasi untuk mencoba hidangan baru. Kamu juga bisa berkontribusi dengan mengunggah foto makanan yang telah kamu cicipi dan memberikan ulasan tentang pengalamanmu. Dengan begitu, galeri ini menjadi tempat berbagi inspirasi kuliner sekaligus memperkaya pengetahuan kuliner lokal. </br></br>
+Pengen tahu lebih dalam tentang produk lokal Bangka Belitung? Lohkan juga menyediakan wadah buat kamu nambah wawasan tentang produk lokal Bangka Belitung loh.. Dengan beragam artikel menarik seputar makanan dan tempat makan unik nan kece yang lagi trending dan ramai dikunjungi.  </br></br>
 
 # <summary><strong>Dataset :clipboard: </strong></summary>
-LohKan menggunakan dataset yang kami buat sendiri di link berikut ini dengan mengutip berbagai sumber diantaranya Hotelier, Makanan Oleh-Oleh , Tempat Wisata Seru, dan Selasar. Dataset ini dibuat dengan field yang terdiri dari nama makanan, deskripsi makanan hingga range harga beserta fotonya agar para foodies dapat melihat secara langsung makanan yang dimaksud.</br></br>
+LohKan menggunakan dataset yang kami buat sendiri di link berikut ini dengan mengutip berbagai sumber diantaranya Hotelier, Makanan Oleh-Oleh , Tempat Wisata Seru, Selasar, Keluyuran, Tempat Wisata Seru, Wisata Belitung, dan Gotravelly. Dataset ini dibuat dengan field yang terdiri dari nama makanan, deskripsi makanan hingga range harga beserta fotonya agar para foodies dapat melihat secara langsung makanan yang dimaksud.</br></br>
 
 # <summary><strong>Jenis Pengguna (Role) :family:</strong></summary>
 Pada website kami, terdapat dua jenis pengguna diantaranya</br>
