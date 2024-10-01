@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-2^9w1+(st*)vot+ag^ecm0*i8%ui^65+hv7421mv1+aj&n8e=$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id" , "http://marla-marlena-koalove1.pbp.cs.ui.ac.id", "https://marla-marlena-koalove1.pbp.cs.ui.ac.id"]
 
 
 # Application definition
@@ -44,14 +44,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-
 
 ROOT_URLCONF = "lohkan.urls"
 
@@ -120,9 +119,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static' 
+    ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static' 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
