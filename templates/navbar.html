@@ -1,0 +1,78 @@
+{% load static %}
+<nav class="bg-[#550000] shadow-lg fixed top-0 left-0 z-40 w-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <div class="text-center">
+                    <img src="{% static 'images/logo.png' %}" alt="Lohkan Logo" class="w-64 h-auto mx-auto" />
+                </div>
+            </div>
+            <!-- Desktop Menu (hidden on mobile) -->
+            <div class="hidden md:flex items-center">
+                {% if user.is_authenticated %}
+                    <!-- Additional Menu Item -->
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Explore</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Food Review</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Bucket List</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Ask Recipe</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 ">Article</a>
+
+                    <a href="{% url 'authentication:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+                        Logout
+                    </a>
+                {% else %}
+                    <a href="{% url 'authentication:login' %}" class="text-center bg-[#550000] hover:bg-[#440000] text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">
+                        Login
+                    </a>
+                    <a href="{% url 'authentication:register' %}" class="text-center bg-[#550000] hover:bg-[#440000] text-white font-bold py-2 px-4 rounded transition duration-300">
+                        Register
+                    </a>
+                {% endif %}
+            </div>
+            <!-- Mobile Menu Button (visible on mobile) -->
+            <div class="md:hidden flex items-center">
+                <button class="mobile-menu-button">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div class="mobile-menu hidden md:hidden px-4 w-full">
+        <div class="pt-2 pb-3 space-y-1">
+            {% if user.is_authenticated %}
+                <span class="block text-gray-300 px-3 py-2">Welcome, {{ user.username }}</span>
+                <a href="{% url 'authentication:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Logout
+                </a>
+            {% else %}
+                <a href="{% url 'authentication:login' %}" class="block text-center bg-[#550000] hover:bg-[#440000] text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
+                    Login
+                </a>
+                <a href="{% url 'authentication:register' %}" class="block text-center bg-[#550000] hover:bg-[#440000] text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Register
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Toggle mobile menu visibility -->
+    <script>
+        const btn = document.querySelector("button.mobile-menu-button");
+        const menu = document.querySelector(".mobile-menu");
+      
+        btn.addEventListener("click", () => {
+          // Toggle hidden class
+          if (menu.classList.contains("hidden")) {
+            menu.classList.remove("hidden");
+            menu.classList.add("block"); // Make sure it stays visible
+          } else {
+            menu.classList.add("hidden");
+            menu.classList.remove("block");
+          }
+        });
+      </script>
+</nav>

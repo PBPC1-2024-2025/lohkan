@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Login</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center w-screen bg-[#F3F4F6]">
+  <div class="bg-[#FFF9E9] max-w-md w-full space-y-8 p-8 shadow-2xl border border-[#CCC7BA] rounded-3xl">
+    <div>
+      <h2 class="text-center text-2xl font-bold text-[#000000]">
+        Welcome back!
+      </h2>
+    </div>
+    <form class="space-y-6" method="POST" action="">
+      {% csrf_token %}
+      <div class="rounded-md shadow-sm space-y-4">
+        <div>
+          <label for="username" class="sr-only">Username</label>
+          <input id="username" name="username" type="text" required
+            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-[#CCC7BA] placeholder-[#B3AE94] text-[#000000] focus:outline-none focus:ring-[#550000] focus:border-[#550000] sm:text-sm"
+            placeholder="Username">
+        </div>
+        <div>
+          <label for="password" class="sr-only">Password</label>
+          <input id="password" name="password" type="password" required
+            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-[#CCC7BA] placeholder-[#B3AE94] text-[#000000] focus:outline-none focus:ring-[#550000] focus:border-[#550000] sm:text-sm"
+            placeholder="Password">
+        </div>
+      </div>
+
+      <div>
+        <button type="submit"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-[#FFFFFF] bg-[#550000] hover:bg-[#440000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#550000]">
+          Sign In
+        </button>
+      </div>
+    </form>
+
+    <div class="text-center mt-4">
+      <p class="text-sm text-[#B3AE94]">
+        Don't have an account? <a href="{% url 'authentication:register' %}" class="font-medium text-[#550000] hover:text-[#440000]">
+          Sign Up
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

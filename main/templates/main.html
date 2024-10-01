@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>LohKan - Home</title>
+{% endblock meta %}
+
+{% block content %}
+<!-- Navbar -->
+{% include 'navbar.html' %}
+
+  <!-- Full-Screen Hero Section with Image, Text, and Single Button -->
+  <div class="relative h-screen">
+    <img src="{% static 'images/hero.jpg' %}" alt="Flash App" class="absolute inset-0 w-full h-full object-cover">
+
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- Dark overlay for better text visibility -->
+
+    <div class="relative z-10 flex flex-col justify-center items-center h-full text-center">
+      <h1 class="text-4xl font-extrabold text-white sm:text-5xl typing-demo" id="typewriter">
+        {% if user.is_authenticated %}
+          Welcome back, {{ user.username }}
+          <span class="blinking-exclamation">!</span>
+        {% else %}
+          Welcome to LohKan <span class="blinking-exclamation">!</span>
+        {% endif %}</span>
+      </h1>
+      <p class="mt-4 text-lg text-gray-300">Experience the vibrant culture in Bangka Belitung with LohKan</p>
+      <div class="mt-6">
+        <a href="#section1" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">Check More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Choose Us Section -->
+  <div id = "section1" class="py-16 bg-white text-center">
+    <h2 class="text-3xl font-bold mb-6">Why Choose Us?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-4 md:px-16">
+      <!-- Fast Delivery -->
+      <div class="p-6 rounded-lg bg-marron-50 shadow-lg">
+        <img src="{% static 'images/experience.png' %}" alt="Authentic Experience" class="w-16 h-16 mx-auto mb-4">
+        <h3 class="text-xl font-semibold mb-2">Authentic Experience:</h3>
+        <p>Our app helps you discover dining spots that serve the true essence of Bangka Belitung's culinary heritage.</p>
+      </div>
+      <!-- Easy Online Order -->
+      <div class="p-6 rounded-lg bg-marron-50 shadow-lg">
+        <img src="{% static 'images/order.png' %}" alt="Easy Navigation" class="w-16 h-16 mx-auto mb-4">
+        <h3 class="text-xl font-semibold mb-2">Easy Navigation</h3>
+        <p>With a simple and intuitive interface, exploring local food options has never been easier.</p>
+      </div>
+      <!-- Fresh Ingredients -->
+      <div class="p-6 rounded-lg bg-marron-50 shadow-lg">
+        <img src="{% static 'images/support.png' %}" alt="Support Local" class="w-16 h-16 mx-auto mb-4">
+        <h3 class="text-xl font-semibold mb-2">Support Local</h3>
+        <p>By choosing us, you’re not only indulging in delicious food but also supporting local culinary businesses and preserving culture.</p>
+      </div>
+      <!-- Unforgettable Taste -->
+      <div class="p-6 rounded-lg bg-marron-50 shadow-lg">
+        <img src="{% static 'images/update.png' %}" alt="Regular Updates" class="w-16 h-16 mx-auto mb-4">
+        <h3 class="text-xl font-semibold mb-2">Regular Updates</h3>
+        <p>Stay up-to-date with the latest recommendations, so you always know where to find the best meals.</p>
+      </div>
+    </div>
+  </div>
+   
+  <!-- Trusted By Section with Border and Shadow -->
+  <div class="py-16 bg-gray-100 text-center">
+    <h2 class="text-3xl font-bold mb-6">Supported By</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-8 px-4 md:px-16">
+      <img src="{% static 'images/brand1.png' %}" alt="Google" class="mx-auto border shadow-lg p-4 rounded-lg w-32 h-32 object-contain">
+      <img src="{% static 'images/brand2.png' %}" alt="Microsoft" class="mx-auto border shadow-lg p-4 rounded-lg w-32 h-32 object-contain">
+      <img src="{% static 'images/brand3.png' %}" alt="AWS" class="mx-auto border shadow-lg p-4 rounded-lg w-32 h-32 object-contain">
+      <img src="{% static 'images/brand4.png' %}" alt="IBM" class="mx-auto border shadow-lg p-4 rounded-lg w-32 h-32 object-contain">
+      <img src="{% static 'images/brand5.png' %}" alt="Indosat" class="mx-auto border shadow-lg p-4 rounded-lg w-32 h-32 object-contain">
+    </div>
+    
+  </div>
+
+
+
+  <!-- Donut Selection -->
+  <div class="py-16 bg-gray-50 text-center">
+    <h2 class="text-3xl font-bold mb-6">Choose Your Favorite Restaurant</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-4 md:px-16">
+      <div class="p-6 rounded-lg bg-white shadow-lg">
+        <img src="{% static 'images/food1.jpg' %}" alt="Otak-Otak Ase" class="w-full h-32 mb-4">
+        <h3 class="text-xl font-semibold mb-2">Otak-Otak Ase</h3>
+        <p class="mb-4">Savor authentic Bangka flavors with Otak-Otak Ase!</p>
+        <div class="text-right">
+          <a href="https://maps.app.goo.gl/5xLkVZmVFgELWaYQ9" target="_blank" class="text-blue-500 hover:text-blue-700 font-bold">
+            Check it out
+            <span class="ml-2">&rarr;</span>
+          </a>
+        </div>             
+      </div>
+      <div class="p-6 rounded-lg bg-white shadow-lg">
+        <img src="{% static 'images/food2.jpeg' %}" alt="Berry Donut" class="w-full h-32 mb-4">
+        <h3 class="text-xl font-semibold mb-2">Mr Asui Restaurant</h3>
+        <p class="mb-4">Enjoy Bangka’s freshest seafood flavors at Mr. Asui!</p>
+        <div class="text-right">
+          <a href="https://maps.app.goo.gl/wvaDdLqD7v7qNM5Q9" target="_blank" class="text-blue-500 hover:text-blue-700 font-bold">
+            Check it out
+            <span class="ml-2">&rarr;</span>
+          </a>
+        </div> 
+      </div>
+      <div class="p-6 rounded-lg bg-white shadow-lg">
+        <img src="{% static 'images/food3.jpeg' %}" alt="Choco Mint Donut" class="w-full h-32 mb-4">
+        <h3 class="text-xl font-semibold mb-2">Mr. Adox Restaurant</h3>
+        <p class="mb-4">Indulge in mouthwatering seafood at wallet-friendly prices!</p>
+        <div class="text-right">
+          <a href="https://maps.app.goo.gl/xoLr1kjHTwMqkv2Z6" target="_blank" class="text-blue-500 hover:text-blue-700 font-bold">
+            Check it out
+            <span class="ml-2">&rarr;</span>
+          </a>
+        </div> 
+      </div>
+      <div class="p-6 rounded-lg bg-white shadow-lg">
+        <img src="{% static 'images/food4.jpg' %}" alt="Es Ayong" class="w-full h-32 mb-4">
+        <h3 class="text-xl font-semibold mb-2">Es Ayong</h3>
+        <p class="mb-4">Thirsty? Grab a legendary Es Lagendaris Ayong!</p>
+        <div class="text-right">
+          <a href="https://maps.app.goo.gl/mkaL53RzGBfMAARy8" target="_blank" class="text-blue-500 hover:text-blue-700 font-bold">
+            Check it out
+            <span class="ml-2">&rarr;</span>
+          </a>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer Section -->
+<footer class="bg-marron-800 py-10" style="background-color: #800000;">
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
+    
+    <!-- Contact Information Section -->
+    <div>
+          <h3 class="text-xl font-bold mb-3">Contact Us</h3>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <strong>Telephone:</strong> 
+              <a href="tel:+6283456789" class="hover:text-gray-300 ml-1">+62 8234567890</a>
+            </li>
+            <li class="flex items-center">
+              <strong>Email:</strong> 
+              <a href="mailto:info@lohkan.com" class="hover:text-gray-300 ml-1">info@lohkan.com</a>
+            </li>
+          </ul>
+        </div>
+    <!-- Resources Section -->
+    <div>
+      <h3 class="text-xl font-bold mb-3">Dataset Resources</h3>
+      <ul class="space-y-2">
+        <li><a href="https://hotelier.id/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Hotelier</a></li>
+        <li><a href="https://keluyuran.com/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Keluyuran</a></li>
+        <li><a href="https://tempatwisataseru.com/makanan-khas-bangka-belitung-paling-enak-oleh-oleh-jajanan-pasar/" class="hover:text-gray-300">Tempat Wisata Seru</a></li>
+        <li><a href="https://makananoleholeh.com/makanan-khas-daerah/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Makanan Oleh Oleh</a></li>
+        <li><a href="https://www.selasar.com/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Selasar</a></li>
+        <li><a href="https://www.wisatabelitung.net/kue-khas-bangka-belitung/" class="hover:text-gray-300">Wisata Belitung</a></li>
+        <li><a href="https://www.gotravelly.com/blog/oleh-oleh-khas-bangka-belitung/" class="hover:text-gray-300">Gotravelly</a></li>
+      </ul>
+    </div>
+
+    <!-- Find Us Here Section -->
+    <div>
+      <h3 class="text-xl font-bold mb-3 text-white">Find Us Here</h3>
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.183271344341!2d106.82447917446905!3d-6.370323693619821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ec1ad14fb6cf%3A0xc94e4d829420fa15!2sFakultas%20Ilmu%20Komputer%20(Fasilkom)%20UI!5e0!3m2!1sid!2sid!4v1727673094986!5m2!1sid!2sid" 
+        width="100%" 
+        height="200" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+  
+  <!-- Footer Bottom Section -->
+  <div class="bg-marron-900 py-4 text-center text-gray-400">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+      <p>©2024 LohKan. All rights reserved. | <a href="#" class="hover:text-white">Terms of Service</a> | <a href="#" class="hover:text-white">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelector('a[href="#section1"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector('#section1').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+  const textElement = document.getElementById("typewriter");
+  const text = textElement.textContent;
+  textElement.textContent = "";  // Clear the text
+
+  let index = 0;
+
+  function typeWriter() {
+    if (index < text.length) {
+      textElement.textContent += text.charAt(index);
+      index++;
+      setTimeout(typeWriter, 100);  // Adjust speed as needed
+    }
+  }
+
+  typeWriter();
+});
+</script>
+
+
+{% endblock content %}

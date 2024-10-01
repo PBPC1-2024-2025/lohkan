@@ -1,0 +1,78 @@
+input[type="text"], input[type="password"] {
+    border: 2px solid black; /* Border hitam selalu ada */
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+/* Menambahkan gaya saat input di klik (focus) */
+input[type="text"]:focus, input[type="password"]:focus {
+border-color: black; /* Tetap berwarna hitam ketika di klik */
+outline: none; /* Menghilangkan outline default browser */
+}
+  
+.card-shadow {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+.card-shadow:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 10px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.card {
+  animation: slideIn 0.5s ease forwards;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.typing-demo {
+  font-family: monospace;
+  white-space: nowrap;   /* Keeps the text on one line */
+  overflow: hidden;      /* Ensures the text is hidden until "typed" */
+  border-right: 3px solid white; /* Simulates the cursor */
+  display: inline-block;
+  width: fit-content;    /* Ensure the width adjusts correctly */
+  
+  /* Typing effect */
+  width: 5ch;                  
+  animation: typing 4s steps(15, end) infinite, blink 0.75s step-end infinite;
+}
+
+/* Typing keyframes */
+@keyframes typing {
+  0% { width: 0; }       /* Start with no width */
+  50% { width: 100%; }   /* Middle of the animation shows full text */
+  100% { width: 0; }     /* End with no width again for repeat */
+}
+
+/* Blinking cursor keyframes */
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Blinking exclamation mark */
+.blinking-exclamation {
+  display: inline-block;
+  animation: blink-exclamation 1s infinite;  /* Adjust speed here */
+}
+
+@keyframes blink-exclamation {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
