@@ -76,3 +76,108 @@ html {
   50% { opacity: 0; }
   100% { opacity: 1; }
 }
+
+.text-center {
+  text-align: center;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.bg-gray-100 {
+  background-color: #f7f7f7;
+}
+
+.p-8 {
+  padding: 2rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Custom colors */
+.text-custom-maroon {
+  color: #800000;
+}
+
+.bg-custom-light-maroon {
+  background-color: #9b3c3c;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+/* Coming Soon Section Styling */
+.coming-soon {
+  background-color: #f7f7f7;
+}
+
+.coming-soon h2 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.countdown span {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.email-subscription input {
+  border: 2px solid #ccc;
+}
+
+.email-subscription input:focus {
+  outline: none;
+  border-color: #800000;
+}
+
+.email-subscription button {
+  background-color: #9b3c3c;
+}
+
+.email-subscription button:hover {
+  background-color: #b85656;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+  .coming-soon .text-left {
+    text-align: left;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .md-w-1-2 {
+    width: 50%;
+  }
+}
+
+body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+.swiper-container {
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+}
+.swiper-slide {
+  display: flex; /* Ensure flex layout for centering */
+  justify-content: center; /* Center the content */
+  align-items: center; /* Center the content */
+  background-size: cover; /* Cover the slide */
+}
+
+@layer utilities {
+  .border-maroon-500 {
+    border-color: #800000;
+  }
+}
+
+.countdown {
+  color: red;
+}

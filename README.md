@@ -11,21 +11,23 @@
 
 ## <summary><strong>Filosofi munculnya LohKan : Lokal Hype Food :fork_and_knife: </strong></summary>
 <p>
-LohKan lahir dari keinginan untuk mengangkat dan mempopulerkan kekayaan kuliner lokal Bangka Belitung ke kancah yang lebih luas. Filosofi Lokal Hype Food terinspirasi dari keyakinan bahwa makanan tradisional tidak hanya menjadi bagian dari identitas budaya, tetapi juga bisa menjadi tren yang digemari oleh generasi muda dan wisatawan. Dengan mengemas makanan lokal secara modern dan interaktif, LohKan bertujuan menjadikan kuliner Bangka Belitung sebagai pusat perhatian baru dalam dunia gastronomi. Melalui platform ini, kami berharap setiap orang dapat merasakan keunikan rasa, cerita di balik setiap hidangan, dan turut menjaga warisan kuliner ini tetap hidup dan relevan di tengah perubahan zaman.
+LohKan hadir dari keinginan untuk mengangkat kekayaan kuliner lokal Bangka Belitung, khususnya di Kota Pangkalpinang, ke kancah yang lebih luas. Kota Pangkalpinang, sebagai jantung budaya dan sejarah Bangka Belitung, kaya akan variasi kuliner yang mencerminkan perpaduan budaya yang unik dan memikat. Kami percaya bahwa makanan tradisional bukan hanya cerminan dari identitas budaya, tetapi juga dapat menjadi tren populer di kalangan generasi muda dan wisatawan. Dengan platform LohKan, kami tidak hanya menampilkan rasa unik, tapi juga menghidangkan cerita di balik setiap sajian. Bergabunglah dengan kami untuk menjelajahi dan memelihara warisan kuliner Kota Pangkalpinang, menjadikannya tetap relevan dan hidup di tengah dinamika zaman yang terus berubah.
 </br>  </br>
-LohKan menjadi destinasi online yang menyajikan informasi kuliner lokal dari Bangka Belitung dengan segudang fitur menarik yang siap memanjakan para pecinta kuliner. Melalui fitur Explore, kamu bisa menjelajahi beragam makanan khas Bangka Belitung, lengkap dengan detail yang menggugah selera. Ada juga fitur Bucket List yang memungkinkan kamu menyimpan dan mengatur makanan favoritmu untuk dicoba nanti. Penasaran dengan cara membuat hidangan khas? Fitur Tanya Resep memungkinkan kamu langsung bertanya tentang resep makanan favoritmu. Tidak hanya itu, LohKan juga dilengkapi dengan galeri foto makanan yang diunggah oleh pengguna lain, memberikanmu inspirasi kuliner dari mereka yang telah mencicipi kelezatan hidangan-hidangan lokal ini.
+Temukan dan rasakan kekayaan kuliner Kota Pangkalpinang melalui LohKan, destinasi online yang menyajikan wawasan lengkap tentang makanan lokal dengan segudang fitur menarik. Dengan fitur Explore, nikmati pengalaman mendalam ke dalam kekayaan rasa makanan khas daerah ini, lengkap dengan deskripsi yang akan membangkitkan selera Anda. Tidak hanya itu, fitur Bucket List memungkinkan Anda menyimpan dan mengatur daftar hidangan yang ingin Anda coba di masa depan.
+</br> </br>
+Penasaran bagaimana mengkreasi hidangan lokal favorit Anda? Fitur Tanya Resep kami siap memandu Anda langkah demi langkah. Lengkapi pengalaman kuliner Anda dengan mengunjungi galeri foto kami, di mana Anda bisa mendapatkan inspirasi dari foto-foto makanan yang telah diunggah oleh pengguna lain. Bersama LohKan, setiap kunjungan adalah sebuah penemuan, dan setiap hidangan adalah sebuah cerita. Selamat menikmati kelezatan yang tidak terlupakan!
 <details>
   <summary><strong>View More</strong></summary>
 </p>
 Manfaat dari website ini adalah </br>
-1. Menemukan Kuliner Lokal Autentik
-LohKan membantu pengguna menemukan makanan khas Bangka Belitung yang mungkin belum banyak dikenal. Dengan berbagai informasi yang disajikan, pengguna dapat mengeksplorasi kekayaan kuliner lokal yang unik dan autentik.
+1. Penemuan Kuliner Lokal yang Autentik 
+Dengan LohKan, temukan keunikan kuliner Bangka Belitung yang mungkin belum pernah Anda dengar sebelumnya. Situs ini menawarkan informasi yang kaya untuk membantu Anda mengeksplorasi keanekaragaman kuliner lokal, membuka cakrawala Anda pada rasa autentik yang luar biasa.
 </br></br>
 2. Belajar Mengenal Masakan Lokal
-Fitur Tanya Resep memungkinkan pengguna untuk bertanya dan belajar membuat hidangan khas Bangka Belitung di rumah. Dengan akses mudah ke resep-resep tradisional, pengguna dapat memperluas kemampuan memasak mereka dan membawa cita rasa lokal ke dapur sendiri.
+Melalui fitur Tanya Resep, LohKan membuka kesempatan bagi Anda untuk bertanya dan belajar cara membuat hidangan khas Bangka Belitung langsung dari rumah Anda. Dapatkan akses ke resep-resep tradisional dan tingkatkan kemampuan kuliner Anda dengan membawa cita rasa lokal ke dapur Anda.
 </br></br>
 3. Mendukung Promosi Kuliner Lokal
-Dengan adanya LohKan, kuliner khas Bangka Belitung lebih dikenal oleh masyarakat luas. Website ini juga berperan dalam melestarikan dan mempromosikan warisan kuliner lokal, serta mendukung pelaku usaha makanan di daerah tersebut.
+LohKan tidak hanya sebagai platform informasi, tetapi juga sebagai sarana penting dalam melestarikan dan mempromosikan warisan kuliner Bangka Belitung. Situs ini mendukung pelaku usaha kuliner di daerah, memperkenalkan hidangan khas mereka ke audiens yang lebih luas, dan membantu mereka tumbuh dan berkembang.
 </details>
 </br>
 
@@ -52,7 +54,7 @@ Dikerjakan oleh Marla Marlena </br>
 Pengen tahu lebih dalam tentang produk lokal Bangka Belitung? Lohkan juga menyediakan wadah buat kamu nambah wawasan tentang produk lokal Bangka Belitung loh.. Dengan beragam artikel menarik seputar makanan dan tempat makan unik nan kece yang lagi trending dan ramai dikunjungi.  </br></br>
 
 # <summary><strong>Dataset :clipboard: </strong></summary>
-LohKan menggunakan dataset yang kami buat sendiri di link berikut ini dengan mengutip berbagai sumber diantaranya Hotelier, Makanan Oleh-Oleh , Tempat Wisata Seru, Selasar, Keluyuran, Tempat Wisata Seru, Wisata Belitung, dan Gotravelly. Dataset ini dibuat dengan field yang terdiri dari nama makanan, deskripsi makanan hingga range harga beserta fotonya agar para foodies dapat melihat secara langsung makanan yang dimaksud.</br></br>
+LohKan menggunakan dataset yang kami buat sendiri di link berikut ini https://bit.ly/InitialDatasetLohKan dengan mengutip berbagai sumber diantaranya Hotelier, Makanan Oleh-Oleh , Tempat Wisata Seru, Selasar, Keluyuran, Tempat Wisata Seru, Wisata Belitung, dan Gotravelly. Dataset ini dibuat dengan field yang terdiri dari nama makanan, deskripsi makanan hingga range harga beserta fotonya agar para foodies dapat melihat secara langsung makanan yang dimaksud.</br></br>
 
 # <summary><strong>Jenis Pengguna (Role) :family:</strong></summary>
 Pada website kami, terdapat dua jenis pengguna diantaranya</br>
