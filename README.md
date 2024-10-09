@@ -21,20 +21,20 @@ Penasaran bagaimana mengkreasi hidangan lokal favorit Anda? Fitur Tanya Resep ka
 </p>
 Manfaat dari website ini adalah </br>
 1. Penemuan Kuliner Lokal yang Autentik 
-Dengan LohKan, temukan keunikan kuliner Bangka Belitung yang mungkin belum pernah Anda dengar sebelumnya. Situs ini menawarkan informasi yang kaya untuk membantu Anda mengeksplorasi keanekaragaman kuliner lokal, membuka cakrawala Anda pada rasa autentik yang luar biasa.
+Dengan LohKan, temukan keunikan kuliner Kota Pangkalpinang yang mungkin belum pernah Anda dengar sebelumnya. Situs ini menawarkan informasi yang kaya untuk membantu Anda mengeksplorasi keanekaragaman kuliner lokal, membuka cakrawala Anda pada rasa autentik yang luar biasa.
 </br></br>
 2. Belajar Mengenal Masakan Lokal
-Melalui fitur Tanya Resep, LohKan membuka kesempatan bagi Anda untuk bertanya dan belajar cara membuat hidangan khas Bangka Belitung langsung dari rumah Anda. Dapatkan akses ke resep-resep tradisional dan tingkatkan kemampuan kuliner Anda dengan membawa cita rasa lokal ke dapur Anda.
+Melalui fitur Tanya Resep, LohKan membuka kesempatan bagi Anda untuk bertanya dan belajar cara membuat hidangan khas Kota Pangkalpinang langsung dari rumah Anda. Dapatkan akses ke resep-resep tradisional dan tingkatkan kemampuan kuliner Anda dengan membawa cita rasa lokal ke dapur Anda.
 </br></br>
 3. Mendukung Promosi Kuliner Lokal
-LohKan tidak hanya sebagai platform informasi, tetapi juga sebagai sarana penting dalam melestarikan dan mempromosikan warisan kuliner Bangka Belitung. Situs ini mendukung pelaku usaha kuliner di daerah, memperkenalkan hidangan khas mereka ke audiens yang lebih luas, dan membantu mereka tumbuh dan berkembang.
+LohKan tidak hanya sebagai platform informasi, tetapi juga sebagai sarana penting dalam melestarikan dan mempromosikan warisan kuliner Kota Pangkalpinang. Situs ini mendukung pelaku usaha kuliner di daerah, memperkenalkan hidangan khas mereka ke audiens yang lebih luas, dan membantu mereka tumbuh dan berkembang.
 </details>
 </br>
 
 # <summary><strong>Daftar Modul :closed_book: </strong></summary>
 <strong>Explore :bulb: </strong> </br>
 Dikerjakan oleh Fakhri Habibi </br>
-Fitur Explore memungkinkan kamu menjelajahi berbagai hidangan khas Bangka Belitung dengan mudah. Setiap makanan dilengkapi dengan informasi deskripsi dari makanan tersebut. Dengan fitur ini, kamu bisa menemukan kuliner-kuliner tersembunyi yang mungkin belum banyak diketahui wisatawan. Penjelajahan kuliner di Bangka Belitung kini lebih seru dengan LohKan!
+Fitur Explore memungkinkan kamu menjelajahi berbagai hidangan khas Kota Pangkalpinang dengan mudah. Setiap makanan dilengkapi dengan informasi deskripsi dari makanan tersebut. Dengan fitur ini, kamu bisa menemukan kuliner-kuliner tersembunyi yang mungkin belum banyak diketahui wisatawan. Penjelajahan kuliner di Kota Pangkalpinang kini lebih seru dengan LohKan!
 </br></br>
 
 <strong>Food Review :star: </strong></br>
@@ -47,11 +47,11 @@ Fitur Bucket List adalah tempat dimana kamu dapat menyimpan berbagai makanan yan
 
 <strong>Ask Recipe :question: </strong></br> 
 Dikerjakan oleh Muhammad Almerazka Yocendra </br>
-Fitur Tanya Resep adalah tempat bagi para penggemar masakan lokal yang ingin belajar lebih banyak tentang cara membuat makanan favorit mereka. Kamu bisa bertanya langsung dengan admin tentang resep-resep makanan khas Bangka Belitung yang ingin kamu coba buat di rumah. </br></br>
+Fitur Tanya Resep adalah tempat bagi para penggemar masakan lokal yang ingin belajar lebih banyak tentang cara membuat makanan favorit mereka. Kamu bisa bertanya langsung dengan admin tentang resep-resep makanan khas Kota Pangkalpinang yang ingin kamu coba buat di rumah. </br></br>
 
 <strong>Article 📰</strong> </br> 
 Dikerjakan oleh Marla Marlena </br>
-Pengen tahu lebih dalam tentang produk lokal Bangka Belitung? Lohkan juga menyediakan wadah buat kamu nambah wawasan tentang produk lokal Bangka Belitung loh.. Dengan beragam artikel menarik seputar makanan dan tempat makan unik nan kece yang lagi trending dan ramai dikunjungi.  </br></br>
+Pengen tahu lebih dalam tentang produk lokal Kota Pangkalpinang? Lohkan juga menyediakan wadah buat kamu nambah wawasan tentang produk lokal Kota Pangkalpinang loh.. Dengan beragam artikel menarik seputar makanan dan tempat makan unik nan kece yang lagi trending dan ramai dikunjungi.  </br></br>
 
 # <summary><strong>Dataset :clipboard: </strong></summary>
 LohKan menggunakan dataset yang kami buat sendiri di link berikut ini https://bit.ly/InitialDatasetLohKan dengan mengutip berbagai sumber diantaranya Hotelier, Makanan Oleh-Oleh , Tempat Wisata Seru, Selasar, Keluyuran, Tempat Wisata Seru, Wisata Belitung, dan Gotravelly. Dataset ini dibuat dengan field yang terdiri dari nama makanan, deskripsi makanan hingga range harga beserta fotonya agar para foodies dapat melihat secara langsung makanan yang dimaksud.</br></br>
