@@ -1,11 +1,12 @@
 {% load static %}
-<!-- TEST -->
 <nav class="bg-[#550000] shadow-lg fixed top-0 left-0 z-40 w-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
                 <div class="text-center">
+                    <a href="{% url 'main:show_main' %}">
                     <img src="{% static 'images/logo.png' %}" alt="Lohkan Logo" class="w-64 h-auto mx-auto" />
+                    </a>
                 </div>
             </div>
             <!-- Desktop Menu (hidden on mobile) -->
@@ -45,10 +46,19 @@
     <div class="mobile-menu hidden md:hidden px-4 w-full">
         <div class="pt-2 pb-3 space-y-1">
             {% if user.is_authenticated %}
-                <span class="block text-gray-300 px-3 py-2">Welcome, {{ user.username }}</span>
-                <a href="{% url 'authentication:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            <!-- Menu Section -->
+            <div class="flex flex-col">
+                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Explore</a>
+                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Food Review</a>
+                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Bucket List</a>
+                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Ask Recipe</a>
+                <a href="{% url 'article:full_article' %}" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Article</a>
+                
+                <a href="{% url 'authentication:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 mt-4">
                     Logout
                 </a>
+            </div>
+
             {% else %}
                 <a href="{% url 'authentication:login' %}" class="block text-center bg-[#550000] hover:bg-[#440000] text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
                     Login

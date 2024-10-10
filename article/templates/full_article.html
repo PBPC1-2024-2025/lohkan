@@ -22,7 +22,8 @@
     
     {% if user.is_authenticated and user.username == 'admin' %}
       <!-- Check if user is admin -->
-      <form action="{% url 'article:create_article' %}" method="get">
+      <form action="{% url 'article:create_article' %}" method="POST">
+        {% csrf_token %}
         <button button data-modal-target="crudModal" data-modal-toggle="crudModal" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
           Add Article
         </button>
@@ -76,14 +77,16 @@
         </div>
         <!-- Modal body -->
         <div class="px-6 py-4 space-y-6 form-style">
-          <form id="ArticleForm">
+          <form id="ArticleForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="mb-4">
               <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-              <input type="text" id="title" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Enter the title" required>
+              <input type="text" id="title" name="title" class="mt-1 block w-full" placeholder="Enter the title" required>
+
             </div>
             <div class="mb-4">
               <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-              <textarea id="Description" name="Description" rows="3" class="mt-1 block w-full h-52 resize-none border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Describe the article" required></textarea>
+              <textarea id="description" name="description" rows="3" class="mt-1 block w-full" placeholder="Describe the article" required></textarea>
             </div>
             <div class="mb-4">
               <label for="image" class="block text-sm font-medium text-gray-700">Article Image</label>
@@ -105,7 +108,7 @@
   <aside class="md:w-1/3 md:pl-8 mt-10 md:mt-0">
 
     <div class="bg-white p-6 rounded-lg shadow-md">
-      <h3 class="text-xl font-bold text-red-700 mb-4">What to Read Next</h3>
+      <h3 class="text-xl font-bold text-red-700 mb-4">Other Article</h3>
   
       <hr class="border-t-2 border-maroon-500 mb-4"> <!-- Maroon line added here -->
   
@@ -113,29 +116,28 @@
         <!-- Item 1 -->
         <li class="flex items-start space-x-3">
           <span class="font-bold text-red-700 text-lg">01</span>
-          <a href="#" class="text-black font-semibold hover:underline">
-            Podcast: Me, Myself, and AI
+          <a href="https://belitung.tribunnews.com/2024/10/04/food-court-mampau-belitung-tempat-nongkrong-enak-di-tanjungpandan-3-hari-lagi-buka-cek-jamnya" class="text-black font-semibold hover:underline">
+            Food Court Mampau Belitung Tempat Nongkrong Enak di Tanjungpandan
           </a>
         </li>
         <!-- Item 2 -->
         <li class="flex items-start space-x-3">
           <span class="font-bold text-red-700 text-lg">02</span>
-          <a href="#" class="text-black font-semibold hover:underline">
-            Artificial Intelligence Disclosures Are Key to Customer Trust
+          <a href="https://www.liputan6.com/regional/read/5601796/bong-li-piang-kue-kering-khas-bangka-yang-terlahir-dari-akulturasi-budaya" class="text-black font-semibold hover:underline">
+            Bong Li Piang, Kue Kering Khas Bangka yang Terlahir dari Akulturasi Budaya
           </a>
         </li>
         <!-- Item 3 -->
         <li class="flex items-start space-x-3">
           <span class="font-bold text-red-700 text-lg">03</span>
-          <a href="#" class="text-black font-semibold hover:underline">
-            Four Ways to Energize Your Dull Team Meetings
-          </a>
+          <a href="https://www.idntimes.com/food/dining-guide/ika-larasati-1/tempat-belanja-oleh-oleh-khas-bangka-di-pangkalpinang-c1c2" class="text-black font-semibold hover:underline">      	
+            5 Tempat Belanja Oleh-oleh khas Bangka di Pangkalpinang, Lengkap!  
         </li>
         <!-- Item 4 -->
         <li class="flex items-start space-x-3">
           <span class="font-bold text-red-700 text-lg">04</span>
-          <a href="#" class="text-black font-semibold hover:underline">
-            Fall 2024 Issue
+          <a href="https://www.idntimes.com/food/dining-guide/fasrinisyah-suryaningtyas-1/apakah-martabak-bangka-berasal-dari-bangka-ini-faktanya" class="text-black font-semibold hover:underline">
+            Apakah Martabak Bangka Berasal dari Bangka? Ini Faktanya!
           </a>
         </li>
       </ul>
@@ -144,25 +146,33 @@
     <!-- Coming Soon Section moved inside the aside -->
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
       <div class="text-center md:text-left">
-        <div class="logo mb-8">
-          <div class="flex justify-center items-center h-full"></div>
-          <img src="https://i.pinimg.com/564x/b6/e0/bc/b6e0bcb68d4afad0e229d45cd877043c.jpg" alt="Logo" class="block mx-auto" style="max-width: 250px; height: auto;">
+          <div class="logo mb-8">
+              <div class="flex justify-center items-center h-full"></div>
+              <img src="https://i.pinimg.com/564x/b6/e0/bc/b6e0bcb68d4afad0e229d45cd877043c.jpg" alt="Logo" class="block mx-auto" style="max-width: 250px; height: auto;">
+          </div>
+          <p class="text-2xl font-semibold mb-4 text-center">LohKan in App Store</p>
+
+
+          <!-- Countdown Timer -->
+          <div id="countdown" style="display: flex; justify-content: center; gap: 20px; font-size: 48px; font-weight: bold;">
+            <div style="text-align: center;">
+                <div id="days" style="padding: 10px; border: 2px solid red; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); color: red;"></div>
+                <span style="font-size: 16px; margin-top: 2px;">DAYS</span>
+            </div>
+            <div style="text-align: center;">
+                <div id="hours" style="padding: 10px; border: 2px solid red; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); color: red;"></div>
+                <span style="font-size: 16px; margin-top: 2px;">HOURS</span>
+            </div>
+            <div style="text-align: center;">
+                <div id="minutes" style="padding: 10px; border: 2px solid red; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); color: red;"></div>
+                <span style="font-size: 16px; margin-top: 2px;">MINUTES</span>
+            </div>
         </div>
-        <p class="text-2xl font-semibold mb-4">LohKan in App Store</p>
-  
-        <!-- Adjusted the font size to ensure the countdown fits inside the aside -->
-        <div class="countdown text-base font-bold flex justify-center md:justify-start space-x-2 my-4 text-red-500">
-          <span id="days">00</span>
-          <span> Days :</span>
-          <span id="hours">00</span>
-          <span> Hours :</span>
-          <span id="minutes">00</span>
-          <span> Minutes</span>
-        </div>
-  
-        <p class="text-gray-600 mb-6">Get ready to enjoy the authentic taste of Pangkalpinang with LohKan, your favorite app to explore local cuisine that will be launched soon!</p>
+          
+        <p class="text-gray-600 mb-6 text-justify">Get ready to enjoy the authentic taste of Pangkalpinang with LohKan, your favorite app to explore local cuisine that will be launched soon!</p>
+
       </div>
-    </div>
+  </div>
   
   </aside>
   
@@ -181,11 +191,13 @@
         Subscribe to stay updated on the latest news and offers.
       </p>
 
-      <form class="newsletter-form flex flex-col md:flex-row justify-center items-center w-full">
+      <form class="newsletter-form flex flex-col md:flex-row justify-center items-center w-full" id="newsletterForm">
         <input 
             type="email" 
             placeholder="Enter your email" 
-            class="email-input rounded-full py-3 px-6 text-gray-800 border border-gray-300 md:w-3/5 w-full mb-4 md:mb-0">
+            class="email-input rounded-full py-3 px-6 text-gray-800 border border-gray-300 md:w-3/5 w-full mb-4 md:mb-0"
+            id="emailInput"
+            required>
         
         <button 
             type="submit" 
@@ -194,6 +206,9 @@
             Subscribe
         </button>
     </form>
+    
+    <!-- The message will appear here -->
+    <p id="successMessage" class="text-green-600 mt-4 hidden">Subscription successfull! You can get more information about us soon.</p>
     
 
       <p class="text-gray-500 mt-4">
@@ -366,35 +381,48 @@
     },
   });
 
-  function startCountdown() {
-    const targetDate = new Date("2024-12-31T00:00:00").getTime(); // Set target date for countdown
+  // Set the date we're counting down to (replace this date with your desired launch date)
+  const launchDate = new Date("2024-12-31T00:00:00").getTime();
 
-    const countdownFunction = setInterval(function () {
+  // Function to update the countdown timer
+  const countdownFunction = setInterval(() => {
+      // Get today's date and time
       const now = new Date().getTime();
-      const timeLeft = targetDate - now;
 
-      // Calculate time components
-      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      // Find the distance between now and the launch date
+      const distance = launchDate - now;
 
-      // Display the result
-      document.getElementById("days").innerHTML = days < 10 ? '0' + days : days;
-      document.getElementById("hours").innerHTML = hours < 10 ? '0' + hours : hours;
-      document.getElementById("minutes").innerHTML = minutes < 10 ? '0' + minutes : minutes;
-      document.getElementById("seconds").innerHTML = seconds < 10 ? '0' + seconds : seconds;
+      // Time calculations for days, hours, minutes, and seconds
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-      // If the countdown is finished
-      if (timeLeft < 0) {
-        clearInterval(countdownFunction);
-        document.querySelector(".countdown").innerHTML = "Launched!";
+      // Display the result in the countdown element
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hours").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+
+      // If the countdown is over, display some text
+      if (distance < 0) {
+          clearInterval(countdownFunction);
+          document.getElementById("countdown").innerHTML = "Launched!";
       }
-    }, 1000);
-  }
+  }, 1000);
 
-  // Start the countdown when the page loads
-  window.onload = startCountdown;
+  // for subscribe
+  const form = document.getElementById('newsletterForm');
+    const successMessage = document.getElementById('successMessage');
+    
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        const emailInput = document.getElementById('emailInput').value;
+        
+        // Display the success message if the email is filled in
+        if (emailInput) {
+            successMessage.classList.remove('hidden'); // Show the message
+        }
+    });
 </script>
 
 {% endblock content %}

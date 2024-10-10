@@ -12,8 +12,8 @@ def full_article(request):
 @csrf_exempt
 @require_POST
 def create_article(request):
-   title = request.POST.get("mood")
-   description = request.POST.get("feelings")
+   title = request.POST.get("title")
+   description = request.POST.get("description")
    image = request.FILES.get('image')  
    user = request.user
 
