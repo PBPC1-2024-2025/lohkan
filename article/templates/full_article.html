@@ -1,3 +1,4 @@
+<!--articlenya blm bisa diarahkan ke artikel.html-->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -288,23 +289,32 @@ async function refreshArticles() {
       const title = DOMPurify.sanitize(item.fields.title);
       const description = DOMPurify.sanitize(item.fields.description);
       const image = DOMPurify.sanitize(item.fields.image);
+      const id = item.pk;
 
       htmlString += `
       <article class="bg-white p-4 rounded-lg shadow-lg flex flex-col justify-between w-full mb-6">
-        <div>
-          <img src="/media/${image}" alt="${title}" class="w-full h-48 object-cover rounded-md">
-          <h3 class="text-xl font-semibold mt-4">${title}</h3>
-          <p class="text-gray-600 mt-2">${description}</p>
-        </div>
-        <div class="flex justify-between">
-          {% if user.is_authenticated and user.username == 'admin' %}
-            <a href="/delete/${item.pk}">
-              <button type="submit" class="bg-white text-red-500 border border-red-500 px-3 py-1 rounded-lg hover:bg-red-500 hover:text-white transition flex items-center">
-                Delete
-              </button>
-            </a>
-          {% endif %}
-        </div>
+        <a href="/article/detail_article/${id}/">
+          <div>
+            <img src="/article/media/${image}" alt="${title}" class="w-full h-48 object-cover rounded-md">
+            <h3 class="text-xl font-semibold mt-4">${title}</h3>
+            <p class="text-gray-600 mt-2">${description}</p>
+          </div>
+          <div class="flex justify-end mt-6">
+            {% if user.is_authenticated and user.username == 'admin' %}
+              <a href="/article/edit-article/${item.pk}" >
+              <button type="submit" class="bg-white text-yellow-500 border border-yellow-500 px-3 py-1 rounded-lg hover:bg-yellow-500 hover:text-white transition flex items-center mr-2">
+                  Edit
+                </button>
+                </svg>
+              </a>
+              <a href="/article/delete/${item.pk}">
+                <button type="submit" class="bg-white text-red-500 border border-red-500 px-3 py-1 rounded-lg hover:bg-red-500 hover:text-white transition flex items-center">
+                  Delete
+                </button>
+              </a>
+            {% endif %}
+          </div>
+        </a>
       </article>
       `;
     });
@@ -314,6 +324,18 @@ async function refreshArticles() {
   document.getElementById("article_cards").innerHTML = htmlString;
 }
 refreshArticles();
+
+// Article Card Click Event
+document.addEventListener("DOMContentLoaded", function() {
+  const articleCards = document.querySelectorAll('.article-card'); // Pastikan class 'article-card' ada pada card HTML
+
+  articleCards.forEach(card => {
+    card.addEventListener('click', function() {
+      const articleId = this.dataset.id;  // Mengambil ID artikel
+      window.location.href = `/article/${articleId}/`;  // Mengarahkan ke URL detail artikel
+    });
+  });
+});
 
 // Countdown Timer
 const launchDate = new Date("2024-12-31T00:00:00").getTime();
@@ -347,4 +369,3 @@ const form = document.getElementById('newsletterForm');
   });
 </script>
 {% endblock content %}
-

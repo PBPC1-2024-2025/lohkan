@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse 
+from django.shortcuts import render, redirect, reverse , get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from article.models import Article
 from django.views.decorators.csrf import csrf_exempt
@@ -29,6 +29,23 @@ def delete_article(request, id):
     article = Article.objects.get(pk = id)
     article.delete()
     return HttpResponseRedirect(reverse('article:full_article'))
+
+def edit_article(request, id):
+    article = Article.objects.get(pk = id)
+    form = ArticleForm(request.POST or None, instance=article)
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('article:full_article'))
+    context = {'form': form}
+    return render(request, "edit_article.html", context)
+
+def detail_article(request, id):
+    article = get_object_or_404(Article, pk=id)
+    return render(request, 'article.html', {
+        'title': article.title,
+        'description': article.description,
+        'image': article.image,
+    })
 
 def show_article(request):
    return render(request, 'full_article.html')
