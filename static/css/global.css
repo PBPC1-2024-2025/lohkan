@@ -1,16 +1,17 @@
+/* Authentication */
 input[type="text"], input[type="password"] {
-    border: 2px solid black; /* Border hitam selalu ada */
+    border: 2px solid black; 
     padding: 8px;
     width: 100%;
     border-radius: 4px;
   }
   
-/* Menambahkan gaya saat input di klik (focus) */
 input[type="text"]:focus, input[type="password"]:focus {
-border-color: black; /* Tetap berwarna hitam ketika di klik */
-outline: none; /* Menghilangkan outline default browser */
+border-color: black; 
+outline: none;
 }
   
+/* Card */
 .card-shadow {
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -21,54 +22,35 @@ outline: none; /* Menghilangkan outline default browser */
     transform: translateY(-5px);
 }
 
-@keyframes slideIn {
-  0% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-.card {
-  animation: slideIn 0.5s ease forwards;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
+/* Typing text */
 .typing-demo {
   font-family: monospace;
-  white-space: nowrap;   /* Keeps the text on one line */
-  overflow: hidden;      /* Ensures the text is hidden until "typed" */
-  border-right: 3px solid white; /* Simulates the cursor */
+  white-space: nowrap;  
+  overflow: hidden;     
+  border-right: 3px solid white; 
   display: inline-block;
-  width: fit-content;    /* Ensure the width adjusts correctly */
-  
-  /* Typing effect */
-  width: 5ch;                  
+  width: fit-content;    
+  width: 3ch;                  
   animation: typing 4s steps(15, end) infinite, blink 0.75s step-end infinite;
 }
 
-/* Typing keyframes */
 @keyframes typing {
-  0% { width: 0; }       /* Start with no width */
-  50% { width: 100%; }   /* Middle of the animation shows full text */
-  100% { width: 0; }     /* End with no width again for repeat */
+  0% { width: 0; }      
+  50% { width: 100%; }   
+  100% { width: 0; }     
 }
 
-/* Blinking cursor keyframes */
 @keyframes blink {
   50% { border-color: transparent; }
 }
 
-/* Blinking exclamation mark */
 .blinking-exclamation {
   display: inline-block;
-  animation: blink-exclamation 1s infinite;  /* Adjust speed here */
+  animation: blink-exclamation 1s infinite;  
 }
 
 @keyframes blink-exclamation {
@@ -98,10 +80,6 @@ html {
   margin-right: auto;
 }
 
-/* Custom colors */
-.text-custom-maroon {
-  color: #800000;
-}
 
 .bg-custom-light-maroon {
   background-color: #9b3c3c;
@@ -111,7 +89,7 @@ html {
   border-radius: 9999px;
 }
 
-/* Coming Soon Section Styling */
+/* Coming Soon */
 .coming-soon {
   background-color: #f7f7f7;
 }
@@ -121,7 +99,7 @@ html {
   color: #333;
 }
 
-
+/* Email Subscription */
 .email-subscription input {
   border: 2px solid #ccc;
 }
@@ -155,19 +133,10 @@ html {
 }
 
 body {
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-.swiper-container {
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-}
-.swiper-slide {
-  display: flex; /* Ensure flex layout for centering */
-  justify-content: center; /* Center the content */
-  align-items: center; /* Center the content */
-  background-size: cover; /* Cover the slide */
+  overflow-x: hidden; 
 }
 
+/* Countdown Timer */
 @layer utilities {
   .border-maroon-500 {
     border-color: #800000;
@@ -177,4 +146,3 @@ body {
 .countdown {
   color: red;
 }
-

@@ -1,36 +1,30 @@
-<!-- ADD ARTICLE BLM BISA, EDIT DAN DELETE BLM ADA, FILTER BLM BISA -->
 {% extends 'base.html' %}
 {% load static %}
 
 {% block meta %}
 <title>Lohkan</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5U8/pdu5ZL3tLiOaXlA1zJ1L6pup1T2RO9g59" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
-{% endblock meta %}
 
+{% endblock meta %}
 
 {% block content %}
 {% include 'navbar.html' %}
 <!-- Main Content -->
 <div class="container mx-auto py-16 px-4 md:flex mt-20"> 
-  
-  <!-- Main Blog Section -->
   <section class="md:w-2/3">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-2xl font-bold">Browse Articles</h2>
-    
+    <!-- Check if user is admin -->
     {% if user.is_authenticated and user.username == 'admin' %}
-      <!-- Check if user is admin -->
-      <form action="{% url 'article:create_article' %}" method="POST">
-        {% csrf_token %}
-        <button button data-modal-target="crudModal" data-modal-toggle="crudModal" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
-          Add Article
-        </button>
-      </form>
+      <button button data-modal-target="crudModal" data-modal-toggle="crudModal" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" onclick="showModal();">
+        Add Article
+      </button>
     {% endif %}
     </div>
-    <!-- Filter Section (like in the screenshot) -->
+    <!-- Filter Section-->
     <div class="bg-gray-100 p-4 rounded-lg mb-6">
       <form method="GET" action="">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -60,7 +54,7 @@
     </div>
 
     <!-- Articles Grid -->
-    <div id="article_cards"></div>
+    <div id="article_cards" class="grid grid-cols-1 gap-6" style="width: 100%"></div>
     <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
       <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
         <!-- Modal header -->
@@ -86,8 +80,10 @@
             </div>
             <div class="mb-4">
               <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-              <textarea id="description" name="description" rows="3" class="mt-1 block w-full" placeholder="Describe the article" required></textarea>
-            </div>
+              <textarea id="description" name="description" rows="3" 
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                placeholder="Describe the article" required></textarea>
+            </div>            
             <div class="mb-4">
               <label for="image" class="block text-sm font-medium text-gray-700">Article Image</label>
               <input type="file" id="image" name="image" accept="image/*" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" required>
@@ -174,13 +170,10 @@
       </div>
   </div>
   
-  </aside>
-  
-  
-
+  </aside>  
 </div>
 
-<!-- Combined Newsletter and Coming Soon Section -->
+<!--Newsletter -->
 <section class="combined-section py-16 bg-gray-100">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
 
@@ -209,220 +202,149 @@
     
     <!-- The message will appear here -->
     <p id="successMessage" class="text-green-600 mt-4 hidden">Subscription successfull! You can get more information about us soon.</p>
-    
-
       <p class="text-gray-500 mt-4">
         *Your data security will be guaranteed by us
       </p>
     </div>
   </div>
 </section>
-
-
-
-
-<!-- Footer Section -->
-<footer class="bg-marron-800 py-10" style="background-color: #800000;">
-  <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
-    
-    <!-- Contact Information Section -->
-    <div>
-          <h3 class="text-xl font-bold mb-3">Contact Us</h3>
-          <ul class="space-y-2">
-            <li class="flex items-center">
-              <strong>Telephone:</strong> 
-              <a href="tel:+6283456789" class="hover:text-gray-300 ml-1">+62 8234567890</a>
-            </li>
-            <li class="flex items-center">
-              <strong>Email:</strong> 
-              <a href="mailto:info@lohkan.com" class="hover:text-gray-300 ml-1">info@lohkan.com</a>
-            </li>
-          </ul>
-        </div>
-    <!-- Resources Section -->
-    <div>
-      <h3 class="text-xl font-bold mb-3">Dataset Resources</h3>
-      <ul class="space-y-2">
-        <li><a href="https://hotelier.id/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Hotelier</a></li>
-        <li><a href="https://keluyuran.com/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Keluyuran</a></li>
-        <li><a href="https://tempatwisataseru.com/makanan-khas-bangka-belitung-paling-enak-oleh-oleh-jajanan-pasar/" class="hover:text-gray-300">Tempat Wisata Seru</a></li>
-        <li><a href="https://makananoleholeh.com/makanan-khas-daerah/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Makanan Oleh Oleh</a></li>
-        <li><a href="https://www.selasar.com/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Selasar</a></li>
-        <li><a href="https://www.wisatabelitung.net/kue-khas-bangka-belitung/" class="hover:text-gray-300">Wisata Belitung</a></li>
-        <li><a href="https://www.gotravelly.com/blog/oleh-oleh-khas-bangka-belitung/" class="hover:text-gray-300">Gotravelly</a></li>
-      </ul>
-    </div>
-
-    <!-- Find Us Here Section -->
-    <div>
-      <h3 class="text-xl font-bold mb-3 text-white">Find Us Here</h3>
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.183271344341!2d106.82447917446905!3d-6.370323693619821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ec1ad14fb6cf%3A0xc94e4d829420fa15!2sFakultas%20Ilmu%20Komputer%20(Fasilkom)%20UI!5e0!3m2!1sid!2sid!4v1727673094986!5m2!1sid!2sid" 
-        width="100%" 
-        height="200" 
-        style="border:0;" 
-        allowfullscreen="" 
-        loading="lazy">
-      </iframe>
-    </div>
-  </div>
-  
-  <!-- Footer Bottom Section -->
-  <div class="bg-marron-900 py-4 text-center text-gray-400">
-    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-      <p>©2024 LohKan. All rights reserved. | <a href="#" class="hover:text-white">Terms of Service</a> | <a href="#" class="hover:text-white">Privacy Policy</a></p>
-    </div>
-  </div>
-</footer>
+{% include 'footer.html' %}
 
 <script>
-  async function getArticles(){
-      return fetch("{% url 'article:show_json' %}").then((res) => res.json())
-  }
-  async function refreshArticles() {
-    document.getElementById("article_cards").innerHTML = "";
-    document.getElementById("article_cards").className = "";
-    const articles = await getArticles();
-    let htmlString = "";
-    let classNameString = "";
-
-    if (articles.length === 0) {
-        classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
-        htmlString = `
-            <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
-                <p class="text-center text-gray-600 mt-4">Belum ada data</p>
-            </div>
-        `;
-    }
-    else {
-      classNameString = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-h-[calc(100vh-16rem)] overflow-y-scroll";
-      articles.forEach((item) => {
-        const title = DOMPurify.sanitize(item.fields.title);
-        const description = DOMPurify.sanitize(item.fields.description);
-        const image = DOMPurify.sanitize(item.fields.image);
-
-        htmlString += `
-        <article class="bg-white p-4 rounded-lg shadow-md flex flex-col justify-between">
-            <div>
-                <img src="/media/${image}" alt="${title}" class="w-full h-48 object-cover rounded-md">
-                <h3 class="text-xl font-semibold mt-4">${title}</h3>
-                <p class="text-gray-600 mt-2">${description}</p>
-            </div>
-        </article>
-        `;
-      });
-
-    }
-    document.getElementById("article_cards").className = classNameString;
-    document.getElementById("article_cards").innerHTML = htmlString;
-  }
-  refreshArticles();
-
-  const modal = document.getElementById('crudModal');
-  const modalContent = document.getElementById('crudModalContent');
-
-  function showModal() {
-      const modal = document.getElementById('crudModal');
-      const modalContent = document.getElementById('crudModalContent');
-
-      modal.classList.remove('hidden'); 
-      setTimeout(() => {
-        modalContent.classList.remove('opacity-0', 'scale-95');
-        modalContent.classList.add('opacity-100', 'scale-100');
-      }, 50); 
-  }
-
-  function hideModal() {
-      const modal = document.getElementById('crudModal');
-      const modalContent = document.getElementById('crudModalContent');
-
-      modalContent.classList.remove('opacity-100', 'scale-100');
-      modalContent.classList.add('opacity-0', 'scale-95');
-
-      setTimeout(() => {
-        modal.classList.add('hidden');
-      }, 150); 
-  }
-
-  document.getElementById("cancelButton").addEventListener("click", hideModal);
-  document.getElementById("closeModalBtn").addEventListener("click", hideModal);
-
-  function createArticle() {
-    fetch("{% url 'article:create_article' %}", {
-        method: "POST",
-        body: new FormData(document.querySelector('#ArticleForm')),
-    })
-    .then(response => refreshArticles())
-
-    document.getElementById("ArticleForm").reset(); 
-    document.querySelector("[data-modal-toggle='crudModal']").click();
-
-    return false;
-  }
-
-  document.getElementById("ArticleForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    createArticle();
+// Create Article
+function createArticle() {
+  fetch("{% url 'article:create_article' %}", {
+      method: "POST",
+      body: new FormData(document.querySelector('#ArticleForm')),
   })
+  .then(response => refreshArticles())
 
-  var swiper = new Swiper('.swiper-container', {
-    loop: true,
-    autoplay: {
-      delay: 3500,
-      disableOnInteraction: false, // Keeps autoplay even after interaction
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-  });
+  document.getElementById("ArticleForm").reset(); 
+  document.querySelector("[data-modal-toggle='crudModal']").click();
 
-  // Set the date we're counting down to (replace this date with your desired launch date)
-  const launchDate = new Date("2024-12-31T00:00:00").getTime();
+  return false;
+}
 
-  // Function to update the countdown timer
-  const countdownFunction = setInterval(() => {
-      // Get today's date and time
-      const now = new Date().getTime();
+document.getElementById("ArticleForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  createArticle();
+})
 
-      // Find the distance between now and the launch date
-      const distance = launchDate - now;
+// Fetch Articles
+async function getArticles(){
+  return fetch("{% url 'article:show_json' %}").then((res) => res.json())
+}
 
-      // Time calculations for days, hours, minutes, and seconds
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+// CRUD Modal
+const modal = document.getElementById('crudModal');
+const modalContent = document.getElementById('crudModalContent');
 
-      // Display the result in the countdown element
-      document.getElementById("days").innerHTML = days;
-      document.getElementById("hours").innerHTML = hours;
-      document.getElementById("minutes").innerHTML = minutes;
+function showModal() {
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
 
-      // If the countdown is over, display some text
-      if (distance < 0) {
-          clearInterval(countdownFunction);
-          document.getElementById("countdown").innerHTML = "Launched!";
-      }
-  }, 1000);
+    modal.classList.remove('hidden'); 
+    setTimeout(() => {
+      modalContent.classList.remove('opacity-0', 'scale-95');
+      modalContent.classList.add('opacity-100', 'scale-100');
+    }, 50); 
+}
 
-  // for subscribe
-  const form = document.getElementById('newsletterForm');
-    const successMessage = document.getElementById('successMessage');
-    
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        
-        const emailInput = document.getElementById('emailInput').value;
-        
-        // Display the success message if the email is filled in
-        if (emailInput) {
-            successMessage.classList.remove('hidden'); // Show the message
-        }
+function hideModal() {
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    modalContent.classList.remove('opacity-100', 'scale-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 150); 
+}
+
+document.getElementById("cancelButton").addEventListener("click", hideModal);
+document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+
+// Refresh Articles
+async function refreshArticles() {
+  document.getElementById("article_cards").innerHTML = "";
+  document.getElementById("article_cards").className = "";
+  const articles = await getArticles();
+  let htmlString = "";
+  let classNameString = "";
+
+  if (articles.length === 0) {
+      classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
+      htmlString = `
+          <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+              <p class="text-center text-gray-600 mt-4">Belum ada data</p>
+          </div>
+      `;
+  }
+  else {
+    const classNameString = "grid grid-cols-1 gap-6 max-h-[calc(100vh-16rem)] overflow-y-scroll";
+
+    articles.forEach((item) => {
+      const title = DOMPurify.sanitize(item.fields.title);
+      const description = DOMPurify.sanitize(item.fields.description);
+      const image = DOMPurify.sanitize(item.fields.image);
+
+      htmlString += `
+      <article class="bg-white p-4 rounded-lg shadow-lg flex flex-col justify-between w-full mb-6">
+        <div>
+          <img src="/media/${image}" alt="${title}" class="w-full h-48 object-cover rounded-md">
+          <h3 class="text-xl font-semibold mt-4">${title}</h3>
+          <p class="text-gray-600 mt-2">${description}</p>
+        </div>
+        <div class="flex justify-between">
+          {% if user.is_authenticated and user.username == 'admin' %}
+            <a href="/delete/${item.pk}">
+              <button type="submit" class="bg-white text-red-500 border border-red-500 px-3 py-1 rounded-lg hover:bg-red-500 hover:text-white transition flex items-center">
+                Delete
+              </button>
+            </a>
+          {% endif %}
+        </div>
+      </article>
+      `;
     });
-</script>
 
+  }
+  document.getElementById("article_cards").className = classNameString;
+  document.getElementById("article_cards").innerHTML = htmlString;
+}
+refreshArticles();
+
+// Countdown Timer
+const launchDate = new Date("2024-12-31T00:00:00").getTime();
+const countdownFunction = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = launchDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+
+    if (distance < 0) {
+        clearInterval(countdownFunction);
+        document.getElementById("countdown").innerHTML = "Launched!";
+    }
+}, 1000);
+
+// Subscribe
+const form = document.getElementById('newsletterForm');
+  const successMessage = document.getElementById('successMessage'); 
+  form.addEventListener('submit', function(event) {
+      event.preventDefault();      
+      const emailInput = document.getElementById('emailInput').value;     
+      if (emailInput) {
+          successMessage.classList.remove('hidden'); 
+      }
+  });
+</script>
 {% endblock content %}
+
