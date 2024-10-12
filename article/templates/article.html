@@ -9,7 +9,7 @@
 {% block content %}
 <div class="container mx-auto py-16 px-4">
   <div class="article">
-    <h1 class="text-3xl font-bold mb-4">{{ article.title }}</h1>
+    <h1 class="text-3xl font-bold mb-4">{{ form.title.value }}</h1>
     <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-auto mb-6">
     <p class="text-lg text-gray-700">{{ article.description }}</p>
   </div>
