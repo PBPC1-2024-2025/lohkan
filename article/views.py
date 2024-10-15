@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 from django.core import serializers
 from article.forms import ArticleForm
+from django.contrib import messages
 
 
 def full_article(request):
@@ -30,22 +31,53 @@ def delete_article(request, id):
     article.delete()
     return HttpResponseRedirect(reverse('article:full_article'))
 
-def edit_article(request, id):
-    article = Article.objects.get(pk = id)
-    form = ArticleForm(request.POST or None, instance=article)
-    if form.is_valid() and request.method == "POST":
-        form.save()
-        return HttpResponseRedirect(reverse('article:full_article'))
-    context = {'form': form}
-    return render(request, "edit_article.html", context)
+# def edit_article(request, id):
+#     article = Article.objects.get(pk = id)
+#     form = ArticleForm(request.POST or None, instance=article)
+#     if form.is_valid() and request.method == "POST":
+#         form.save()
+#         return HttpResponseRedirect(reverse('article:full_article'))
+#     context = {'form': form}
+#     return render(request, "edit_article.html", context)
 
-def detail_article(request, id):
-    article = get_object_or_404(Article, pk=id)
-    return render(request, 'article.html', {
-        'title': article.title,
-        'description': article.description,
-        'image': article.image,
-    })
+def edit_article(request, id):
+    # Mencari produk berdasarkan ID
+    article = Article.objects.filter(pk=id).first() 
+
+    if not article:
+        # Jika produk tidak ditemukan, tampilkan pesan error
+        messages.error(request, 'Produk tidak ditemukan.')
+        return redirect('article:full_article')
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        image = request.FILES.get('image')  
+
+        if not title or not description:
+            # Menampilkan pesan error jika field kosong
+            messages.error(request, 'Silakan isi semua field terlebih dahulu.')
+
+        else:
+            # Memperbarui produk jika semua field diisi
+            article.title = title
+            article.description = description
+            
+            if image:
+                article.image = image
+
+            article.save()
+            messages.success(request, 'Produk berhasil diperbarui.')
+            return redirect('article:full_article')
+
+    # Mengirim data produk ke template untuk mengisi form dengan nilai lama
+    context = {
+        'article':  article
+    }
+    return render(request, 'edit_article.html', context)
+
+def article(request):
+    return render(request, 'article.html')
 
 def show_article(request):
    return render(request, 'full_article.html')

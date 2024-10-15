@@ -2,16 +2,39 @@
 {% load static %}
 
 {% block meta %}
-<title>{{ article.title }}</title>
-<link rel="stylesheet" href="{% static 'css/article.css' %}">
+    <title>{{ article.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/article.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5U8/pdu5ZL3tLiOaXlA1zJ1L6pup1T2RO9g59" crossorigin="anonymous">
 {% endblock meta %}
 
 {% block content %}
 <div class="container mx-auto py-16 px-4">
-  <div class="article">
-    <h1 class="text-3xl font-bold mb-4">{{ form.title.value }}</h1>
-    <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-auto mb-6">
-    <p class="text-lg text-gray-700">{{ article.description }}</p>
+    <div class="article">
+        <h1 class="text-3xl font-bold mb-4">{{ article.title }}</h1>
+        <p class="text-sm text-gray-500 mb-2">{{ article.category }} | {{ article.reading_time }} mins</p>
+
+        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-auto mb-6 rounded-lg">
+        
+        <div class="article-info flex items-center justify-between mb-4">
+            <div class="author text-gray-600">
+                <p>By <strong>{{ article.author }}</strong></p>
+                <p class="text-xs">Published on {{ article.published_date }}</p>
+            </div>
+            <div class="reading-time text-sm text-gray-500">
+                <i class="far fa-clock"></i> {{ article.reading_time }} min read
+            </div>
+        </div>
+
+        <p class="text-lg text-gray-700 leading-relaxed mb-6">{{ article.description }}</p>
+        
+        <h2 class="text-2xl font-bold text-green-700 mb-4">Establishing a sustainable exercise habit</h2>
+        <p class="text-lg text-gray-700 leading-relaxed">{{ article.description }}</p>
+    </div>
+
+    <div class="back-button mt-8">
+      <a href="{% url 'article:full_article' %}" class="inline-block bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 transition duration-200">
+          <i class="fas fa-arrow-left"></i> Back to Full Articles
+      </a>
   </div>
 </div>
 {% endblock content %}
