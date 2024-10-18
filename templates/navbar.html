@@ -5,21 +5,26 @@
             <div class="flex items-center">
                 <div class="text-center">
                     <a href="{% url 'main:show_main' %}">
-                    <img src="{% static 'images/logo.png' %}" alt="Lohkan Logo" class="w-64 h-auto mx-auto" />
+                        <img src="{% static 'images/logo.png' %}" alt="Lohkan Logo" class="w-64 h-auto mx-auto" />
                     </a>
                 </div>
             </div>
             <!-- Desktop Menu (hidden on mobile) -->
-            <div class="hidden md:flex items-center">
+            <div class="hidden md:flex items-center ml-0">
                 {% if user.is_authenticated %}
-                    <!-- Additional Menu Item -->
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Explore</a>
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Food Review</a>
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Bucket List</a>
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Ask Recipe</a>
-                    <a href="{% url 'article:full_article' %}" class="text-gray-300 hover:text-white mr-4 ">Article</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4">Explore</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4">Food Review</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4">Bucket List</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4">Ask Recipe</a>
+                    <a href="{% url 'article:full_article' %}" class="text-gray-300 hover:text-white mx-4">Article</a>
 
-                    <a href="{% url 'authentication:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    <!-- User Icon and Name -->
+                    <div class="flex items-center ml-4">
+                        <img src="{% static 'images/user.jpeg' %}" alt="User Icon" class="user-icon" />
+                        <span class="username ml-2 text-gray-300">Welcome, {{ user.username }}</span>
+                    </div>
+
+                    <a href="{% url 'authentication:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ml-4">
                         Logout
                     </a>
                 {% else %}
@@ -81,4 +86,13 @@
         });
     });
     </script>
+
+    <style>
+        .user-icon {
+            width: 40px; /* Atur ukuran gambar sesuai kebutuhan */
+            height: 40px; /* Atur ukuran gambar sesuai kebutuhan */
+            border-radius: 50%; /* Membuat gambar menjadi bulat */
+            object-fit: cover; /* Menjaga proporsi gambar saat dipotong */
+        }
+    </style>
 </nav>

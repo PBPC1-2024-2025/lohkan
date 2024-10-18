@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse , get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from article.models import Article
+from article.models import Article, Comment
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
@@ -71,6 +71,12 @@ def article_detail(request, id):
     article = get_object_or_404(Article, pk=id) 
     return render(request, 'article.html', {'article': article})
 
+def add_comment(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        Comment.objects.create(article=article, user=request.user, content=content)
+    return redirect('article:full_article', article_id=article_id)
 
 def show_article(request):
    return render(request, 'full_article.html')

@@ -2,39 +2,52 @@
 {% load static %}
 
 {% block meta %}
-    <title>{{ article.title }}</title>
+    <title>Article Lohkan</title>
     <link rel="stylesheet" href="{% static 'css/article.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5U8/pdu5ZL3tLiOaXlA1zJ1L6pup1T2RO9g59" crossorigin="anonymous">
 {% endblock meta %}
 
 {% block content %}
-<div class="container mx-auto py-16 px-4">
-    <div class="article">
-        <h1 class="text-3xl font-bold mb-4">{{ article.title }}</h1>
-        <p class="text-sm text-gray-500 mb-2">{{ article.category }} | {{ article.reading_time }} mins</p>
-
-        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-auto mb-6 rounded-lg">
-        
-        <div class="article-info flex items-center justify-between mb-4">
-            <div class="author text-gray-600">
-                <p>By <strong>{{ article.author }}</strong></p>
-                <p class="text-xs">Published on {{ article.published_date }}</p>
-            </div>
-            <div class="reading-time text-sm text-gray-500">
-                <i class="far fa-clock"></i> {{ article.reading_time }} min read
-            </div>
-        </div>
-
-        <p class="text-lg text-gray-700 leading-relaxed mb-6">{{ article.description }}</p>
-        
-        <h2 class="text-2xl font-bold text-green-700 mb-4">Establishing a sustainable exercise habit</h2>
-        <p class="text-lg text-gray-700 leading-relaxed">{{ article.description }}</p>
+{% include 'navbar.html' %}
+<div class="container mx-auto py-16 px-4" style="margin-top: 50px;">
+    <div class="back-button mt-8">
+        <a href="{% url 'article:full_article' %}" class="inline-block bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 transition duration-200">
+            &#8592; Back to Full Articles
+        </a>
+    </div>
+    
+    <div class="article-header" style="margin-top: 10px;">
+        <h1 style="font-size: 3.5rem; font-weight: 800; text-align: center; margin-bottom: 1rem;">
+            {{ article.title }}
+        </h1>        
+        <p style="text-align: right; color: gray; font-size: 0.875rem; margin-bottom: 2rem;">
+            by Admin
+        </p>        
     </div>
 
-    <div class="back-button mt-8">
-      <a href="{% url 'article:full_article' %}" class="inline-block bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 transition duration-200">
-          <i class="fas fa-arrow-left"></i> Back to Full Articles
-      </a>
-  </div>
+    <div class="article-image mb-8">
+        <img src="{ article.media.image.url }" alt="{{ article.title }}" class="w-full h-auto rounded-lg shadow-lg">
+    </div>
+
+    <blockquote class="text-xl font-semibold italic text-gray-800 my-8 px-6 py-4 border-l-4 border-red-600 bg-gray-100">
+        {{ article.description }}
+    </blockquote>
+
+    {% if user.is_authenticated %}
+    <div class="comment-form my-8">
+        <h3 class="font-semibold mb-2" style="font-size: 1.5rem;">Leave a comment</h3>
+        <form action="{% url 'article:add_comment' article.pk %}" method="POST">
+            {% csrf_token %}
+            <textarea name="content" required 
+                style="width: 100%; border: 1px solid #ccc; padding: 10px; box-sizing: border-box; resize: vertical;"></textarea>
+            <button type="submit" 
+                style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer; float: right; margin-top: 10px;">Add Comment</button>
+        </form>
+    </div>
+    {% else %}
+        <p class="text-red-500">You must be <a href="{% url 'login' %}" class="underline">logged in</a> to leave a comment.</p>
+    {% endif %}
 </div>
+{% include 'footer.html' %}
 {% endblock content %}
+
