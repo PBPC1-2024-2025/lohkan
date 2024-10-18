@@ -31,15 +31,6 @@ def delete_article(request, id):
     article.delete()
     return HttpResponseRedirect(reverse('article:full_article'))
 
-# def edit_article(request, id):
-#     article = Article.objects.get(pk = id)
-#     form = ArticleForm(request.POST or None, instance=article)
-#     if form.is_valid() and request.method == "POST":
-#         form.save()
-#         return HttpResponseRedirect(reverse('article:full_article'))
-#     context = {'form': form}
-#     return render(request, "edit_article.html", context)
-
 def edit_article(request, id):
     # Mencari produk berdasarkan ID
     article = Article.objects.filter(pk=id).first() 
@@ -76,8 +67,10 @@ def edit_article(request, id):
     }
     return render(request, 'edit_article.html', context)
 
-def article(request):
-    return render(request, 'article.html')
+def article_detail(request, id):
+    article = get_object_or_404(Article, pk=id) 
+    return render(request, 'article.html', {'article': article})
+
 
 def show_article(request):
    return render(request, 'full_article.html')
