@@ -71,12 +71,16 @@ def article_detail(request, id):
     article = get_object_or_404(Article, pk=id) 
     return render(request, 'article.html', {'article': article})
 
-def add_comment(request, article_id):
-    article = get_object_or_404(Article, pk=article_id)
+def add_comment(request, id):  # Menggunakan 'id' sebagai parameter
+    article = get_object_or_404(Article, pk=id)  # Gunakan 'id' di sini
+
     if request.method == 'POST':
         content = request.POST.get('content')
-        Comment.objects.create(article=article, user=request.user, content=content)
-    return redirect('article:full_article', article_id=article_id)
+        if content:
+            Comment.objects.create(article=article, content=content, user=request.user)
+            return redirect('article:full_article', id=id)  # Pastikan ini juga menggunakan 'id'
+
+    return redirect('article:full_article', id=id)
 
 def show_article(request):
    return render(request, 'full_article.html')

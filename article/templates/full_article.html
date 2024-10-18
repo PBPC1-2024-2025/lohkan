@@ -1,4 +1,4 @@
-<!--articlenya blm bisa diarahkan ke artikel.html-->
+<!--articlenya blm bisa per page 4 buah artikel-->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -28,16 +28,57 @@
     <!-- Articles Grid -->
     <div class="container mx-auto py-16 px-4">
       <div id="article_cards" class="grid grid-cols-1 gap-6">
-          {% for article in articles %}
-          <article class="bg-white p-4 rounded-lg shadow-lg flex flex-col justify-between mb-6">
-              <a href="{% url 'article:article_detail' article.id %}">
-                  <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded-md">
-                  <h3 class="text-xl font-semibold mt-4">{{ article.title }}</h3>
-                  <p class="text-gray-600 mt-2">{{ article.description }}</p>
-              </a>
-          </article>
-          {% endfor %}
-      </div>
+        {% for article in page_obj %}
+        <article class="bg-white p-4 rounded-lg shadow-lg flex flex-col justify-between mb-6">
+            <a href="{% url 'article:article_detail' article.id %}">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded-md">
+                <h3 class="text-xl font-semibold mt-4">{{ article.title }}</h3>
+                <p class="text-gray-600 mt-2">{{ article.description }}</p>
+            </a>
+        </article>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination Navigation -->
+    <div class="pagination-container flex justify-end mt-6">
+        <nav aria-label="Page navigation">
+            <ul class="inline-flex items-center">
+                {% if page_obj.has_previous %}
+                <li>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="py-2 px-4 bg-gray-300 text-black rounded-l hover:bg-gray-400">
+                        Previous
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <span class="py-2 px-4 bg-gray-200 text-gray-500 rounded-l">Previous</span>
+                </li>
+                {% endif %}
+    
+                <!-- Display page numbers -->
+                {% for i in page_obj.paginator.page_range %}
+                <li>
+                  <a href="?page={{ i }}" class="py-2 px-4 bg-white text-black border {% if page_obj.number == i %}border-black{% else %}border-gray-300{% endif %}">
+                    {{ i }}
+                </a>
+                
+                </li>
+                {% endfor %}
+    
+                {% if page_obj.has_next %}
+                <li>
+                    <a href="?page={{ page_obj.next_page_number }}" class="py-2 px-4 bg-gray-300 text-black rounded-r hover:bg-gray-400">
+                        Next
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <span class="py-2 px-4 bg-gray-200 text-gray-500 rounded-r">Next</span>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
   </div>
     <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
       <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
