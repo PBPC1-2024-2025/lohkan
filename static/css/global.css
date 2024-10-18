@@ -199,3 +199,47 @@ blockquote {
   background-color: #9ca3af;
 }
 
+/* Container for messages */
+.chatbot-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between messages */
+}
+
+/* User message styling */
+.user-message {
+  background-color: #e0f7fa; /* Light cyan for user messages */
+  border-radius: 20px 20px 5px 20px; /* Rounded edges */
+  padding: 10px 16px; /* Adjust padding for visual appeal */
+  border: 1px solid #00796b; /* Darker border for contrast */
+  align-self: flex-end; /* Align user messages to the right */
+  max-width: 75%; /* Limit width */
+  margin-bottom: 8px; /* Add margin below the user message */
+  position: relative; /* Still needed for layout control */
+}
+
+/* Add top margin to the first user message */
+.user-message:first-child {
+  margin-top: 12px; /* Add some top margin to the first message */
+}
+
+/* Bot message styling */
+.bot-message {
+  background-color: #ffe0b2; /* Light orange for bot messages */
+  border-radius: 20px 20px 20px 5px; /* Rounded edges */
+  padding: 10px 16px; /* Adjust padding for visual appeal */
+  border: 1px solid #ff6f00; /* Darker border for contrast */
+  align-self: flex-start; /* Align bot messages to the left */
+  max-width: 75%; /* Limit width */
+  margin-bottom: 8px; /* Add margin below the bot message */
+  position: relative; /* Still needed for layout control */
+}
+
+/* Add top margin to the first bot message */
+.bot-message:first-child {
+  margin-top: 12px; /* Add some top margin to the first message */
+}
+
+
+
+  
