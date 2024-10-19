@@ -101,4 +101,5 @@ def show_json_by_id(request, id):
     data = Article.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-
+def index(request):
+    return HttpResponse("Try Unit Test!")

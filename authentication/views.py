@@ -12,9 +12,9 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()  # Simpan user baru ke database
+            form.save() 
             messages.success(request, 'Your account has been successfully created!')
-            return redirect('authentication:login')  # Redirect ke halaman login setelah sukses
+            return redirect('authentication:login')  
     context = {'form': form}
     return render(request, 'register.html', context)
 

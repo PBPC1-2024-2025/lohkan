@@ -7,9 +7,13 @@ from article.views import (
     show_xml_by_id, show_json_by_id, edit_article, article_detail, add_comment, full_article
 )
 
+from .views import index
+
 app_name = 'article'
 
 urlpatterns = [
+    path('index/', index, name='index'),
+    path('bonus_tdd/', index, name='bonus_tdd'), 
     path('', views.full_article, name='full_article'),
     path('create-article', create_article, name='create_article'),
     path('xml/', show_xml, name='show_xml'),
