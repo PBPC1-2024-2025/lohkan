@@ -68,8 +68,10 @@ def edit_article(request, id):
     return render(request, 'edit_article.html', context)
 
 def article_detail(request, id):
-    article = get_object_or_404(Article, pk=id) 
-    return render(request, 'article.html', {'article': article})
+    article = get_object_or_404(Article, pk=id)
+    comments = Comment.objects.filter(article=article).order_by('-created_at')  # Fetch article-specific comments
+    return render(request, 'article.html', {'article': article, 'comments': comments})
+
 
 def add_comment(request, id):  # Menggunakan 'id' sebagai parameter
     article = get_object_or_404(Article, pk=id)  # Gunakan 'id' di sini

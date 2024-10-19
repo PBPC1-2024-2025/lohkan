@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block meta %}
-    <title>Article Lohkan</title>
+    <title>LohKan - Article</title>
     <link rel="stylesheet" href="{% static 'css/article.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5U8/pdu5ZL3tLiOaXlA1zJ1L6pup1T2RO9g59" crossorigin="anonymous">
 {% endblock meta %}
@@ -44,9 +44,23 @@
                 style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer; float: right; margin-top: 10px;">Add Comment</button>
         </form>
     </div>
+
+    <!-- Display comments -->
+    <div class="comments-section mt-8">
+        <b><h3>Comments</h3></b>
+        {% for comment in comments %}
+            <div class="comment-item my-4 p-4 border border-gray-200 rounded-lg">
+                <p>{{ comment.content }}</p>
+                <small>Posted by {{ comment.user.username }} on {{ comment.created_at }}</small>
+            </div>
+        {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
+    </div>
     {% else %}
-        <p class="text-red-500">You must be <a href="{% url 'login' %}" class="underline">logged in</a> to leave a comment.</p>
+    <p class="text-red-500">You must be <a href="{% url 'login' %}" class="underline">logged in</a> to leave a comment.</p>
     {% endif %}
+
 </div>
 {% include 'footer.html' %}
 {% endblock content %}
