@@ -1,18 +1,18 @@
-<!--articlenya blm bisa per page 4 buah artikel-->
 {% extends 'base.html' %}
 {% load static %}
 
 {% block meta %}
 <title>Lohkan</title>
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5U8/pdu5ZL3tLiOaXlA1zJ1L6pup1T2RO9g59" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
 
 {% endblock meta %}
-
 {% block content %}
 {% include 'navbar.html' %}
+
 <!-- Main Content -->
 <div class="container mx-auto py-16 px-4 md:flex mt-20"> 
   <section class="md:w-2/3">
@@ -37,49 +37,10 @@
             </a>
         </article>
         {% endfor %}
+      </div>
     </div>
-    
-    <!-- Pagination Navigation -->
-    <div class="pagination-container flex justify-end mt-6">
-        <nav aria-label="Page navigation">
-            <ul class="inline-flex items-center">
-                {% if page_obj.has_previous %}
-                <li>
-                    <a href="?page={{ page_obj.previous_page_number }}" class="py-2 px-4 bg-gray-300 text-black rounded-l hover:bg-gray-400">
-                        Previous
-                    </a>
-                </li>
-                {% else %}
-                <li>
-                    <span class="py-2 px-4 bg-gray-200 text-gray-500 rounded-l">Previous</span>
-                </li>
-                {% endif %}
-    
-                <!-- Display page numbers -->
-                {% for i in page_obj.paginator.page_range %}
-                <li>
-                  <a href="?page={{ i }}" class="py-2 px-4 bg-white text-black border {% if page_obj.number == i %}border-black{% else %}border-gray-300{% endif %}">
-                    {{ i }}
-                </a>
-                
-                </li>
-                {% endfor %}
-    
-                {% if page_obj.has_next %}
-                <li>
-                    <a href="?page={{ page_obj.next_page_number }}" class="py-2 px-4 bg-gray-300 text-black rounded-r hover:bg-gray-400">
-                        Next
-                    </a>
-                </li>
-                {% else %}
-                <li>
-                    <span class="py-2 px-4 bg-gray-200 text-gray-500 rounded-r">Next</span>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
-    </div>
-  </div>
+
+    <!-- CRUD Modal -->
     <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
       <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
         <!-- Modal header -->
@@ -122,39 +83,31 @@
         </div>
       </div>
     </div>
-...
   </section>
 
   <!-- Sidebar -->
   <aside class="md:w-1/3 md:pl-8 mt-10 md:mt-0">
-
     <div class="bg-white p-6 rounded-lg shadow-md">
       <h3 class="text-xl font-bold text-red-700 mb-4">Other Article</h3>
-  
-      <hr class="border-t-2 border-maroon-500 mb-4"> <!-- Maroon line added here -->
-  
+      <hr class="border-t-2 border-maroon-500 mb-4"> 
       <ul class="space-y-4">
-        <!-- Item 1 -->
         <li class="flex items-start space-x-3">
           <span class="font-bold text-red-700 text-lg">01</span>
           <a href="https://belitung.tribunnews.com/2024/10/04/food-court-mampau-belitung-tempat-nongkrong-enak-di-tanjungpandan-3-hari-lagi-buka-cek-jamnya" class="text-black font-semibold hover:underline">
             Food Court Mampau Belitung Tempat Nongkrong Enak di Tanjungpandan
           </a>
         </li>
-        <!-- Item 2 -->
         <li class="flex items-start space-x-3">
           <span class="font-bold text-red-700 text-lg">02</span>
           <a href="https://www.liputan6.com/regional/read/5601796/bong-li-piang-kue-kering-khas-bangka-yang-terlahir-dari-akulturasi-budaya" class="text-black font-semibold hover:underline">
             Bong Li Piang, Kue Kering Khas Bangka yang Terlahir dari Akulturasi Budaya
           </a>
         </li>
-        <!-- Item 3 -->
         <li class="flex items-start space-x-3">
           <span class="font-bold text-red-700 text-lg">03</span>
           <a href="https://www.idntimes.com/food/dining-guide/ika-larasati-1/tempat-belanja-oleh-oleh-khas-bangka-di-pangkalpinang-c1c2" class="text-black font-semibold hover:underline">      	
             5 Tempat Belanja Oleh-oleh khas Bangka di Pangkalpinang, Lengkap!  
         </li>
-        <!-- Item 4 -->
         <li class="flex items-start space-x-3">
           <span class="font-bold text-red-700 text-lg">04</span>
           <a href="https://www.idntimes.com/food/dining-guide/fasrinisyah-suryaningtyas-1/apakah-martabak-bangka-berasal-dari-bangka-ini-faktanya" class="text-black font-semibold hover:underline">
@@ -173,7 +126,6 @@
           </div>
           <p class="text-2xl font-semibold mb-4 text-center">LohKan in App Store</p>
 
-
           <!-- Countdown Timer -->
           <div id="countdown" style="display: flex; justify-content: center; gap: 20px; font-size: 48px; font-weight: bold;">
             <div style="text-align: center;">
@@ -188,27 +140,22 @@
                 <div id="minutes" style="padding: 10px; border: 2px solid red; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); color: red;"></div>
                 <span style="font-size: 16px; margin-top: 2px;">MINUTES</span>
             </div>
-        </div>
+          </div>
           
         <p class="text-gray-600 mb-6 text-justify">Get ready to enjoy the authentic taste of Pangkalpinang with LohKan, your favorite app to explore local cuisine that will be launched soon!</p>
-
       </div>
-  </div>
-  
+    </div>
   </aside>  
 </div>
 
 <!--Newsletter -->
 <section class="combined-section py-16 bg-gray-100">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
-
-    <!-- Newsletter Section (Right for Larger Screens) -->
     <div class="w-full p-4 mb-8 md:mb-0 shadow-lg rounded-lg border-t-4 border-gray-600 flex flex-col justify-center items-center text-center" style="min-height: 450px;">
       <h2 class="text-3xl font-bold mb-4">Don't miss our daily updates</h2>
       <p class="text-gray-600 mt-4 mb-6">
         Subscribe to stay updated on the latest news and offers.
       </p>
-
       <form class="newsletter-form flex flex-col md:flex-row justify-center items-center w-full" id="newsletterForm">
         <input 
             type="email" 
@@ -223,7 +170,7 @@
             style="background-color: #550000;">
             Subscribe
         </button>
-    </form>
+      </form>
     
     <!-- The message will appear here -->
     <p id="successMessage" class="text-green-600 mt-4 hidden">Subscription successfull! You can get more information about us soon.</p>
@@ -233,8 +180,8 @@
     </div>
   </div>
 </section>
-{% include 'footer.html' %}
 
+{% include 'footer.html' %}
 <script>
 // Create Article
 function createArticle() {

@@ -19,6 +19,5 @@ urlpatterns = [
     path('delete/<uuid:id>', delete_article, name='delete_article'),
     path('edit-article/<uuid:id>', edit_article, name='edit_article'),
     path('article/<uuid:id>/', article_detail, name='article_detail'),  
-    path('full-article/<uuid:id>/', full_article, name='full_article'),
     path('article/<uuid:id>/add_comment/', add_comment, name='add_comment'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
