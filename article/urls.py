@@ -4,17 +4,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from article.views import (
     create_article, show_xml, show_json, delete_article, 
-    show_xml_by_id, show_json_by_id, edit_article, article_detail, add_comment, full_article
+    show_xml_by_id, show_json_by_id, edit_article, article_detail, add_comment, full_article, index
 )
-
-from .views import index
 
 app_name = 'article'
 
 urlpatterns = [
-    path('index/', index, name='index'),
-    path('bonus_tdd/', index, name='bonus_tdd'),
-    path('article/<uuid:id>/', article_detail, name='article_detail'),
+    path('article', index, name='article'),
+    path('article/<uuid:id>/', article_detail, name='full_article'),
     path('', views.full_article, name='full_article'),
     path('create-article', create_article, name='create_article'),
     path('xml/', show_xml, name='show_xml'),

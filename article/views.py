@@ -7,7 +7,6 @@ from django.http import HttpResponse
 from django.core import serializers
 from article.forms import ArticleForm
 from django.contrib import messages
-from django.core.paginator import Paginator
 
 # menampilkan semua artikel
 def full_article(request):
@@ -102,4 +101,4 @@ def show_json_by_id(request, id):
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def index(request):
-    return HttpResponse("Try Unit Test!")
+    return render(request, 'full_article.html')
