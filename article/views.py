@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 from django.core import serializers
-from article.forms import ArticleForm
 from django.contrib import messages
 
 # menampilkan semua artikel
@@ -18,7 +17,7 @@ def full_article(request):
 def create_article(request):
    title = request.POST.get("title")
    description = request.POST.get("description")
-   image = request.FILES.get('image')  
+   image = request.FILES.get('image') 
 
    new_article = Article(
       title=title, description=description, image=image
@@ -67,7 +66,7 @@ def edit_article(request, id):
 # menampilkan detail artikel
 def article_detail(request, id):
     article = get_object_or_404(Article, pk=id)
-    comments = Comment.objects.filter(article=article).order_by('-created_at')  # Fetch article-specific comments
+    comments = Comment.objects.filter(article=article).order_by('-created_at') 
     return render(request, 'article.html', {'article': article, 'comments': comments})
 
 # menambahkan komentar di masing-masing artikel
