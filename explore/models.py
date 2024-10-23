@@ -1,6 +1,8 @@
 import uuid
 
 from django.db import models
+from django.template.defaultfilters import default
+
 
 # Create your models here.
 class Food(models.Model):
@@ -10,3 +12,4 @@ class Food(models.Model):
     description = models.TextField()
     min_price = models.IntegerField()
     max_price = models.IntegerField()
+    image_link = models.URLField(default='')
