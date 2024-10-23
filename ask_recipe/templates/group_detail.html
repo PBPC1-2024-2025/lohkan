@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>{{ group.name }}</title>
+{% endblock meta %}
+
+{% block content %}
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-2">{{ group.name }}</h1>
+        <p class="mb-4">{{ group.description }}</p>
+        
+        <h2 class="text-xl font-semibold mb-2">Chat Messages</h2>
+        <div id="chat-messages" class="bg-gray-50 p-4 rounded shadow mb-4">
+            {% for message in messages %}
+                <p class="mb-2"><strong>{{ message.user.username }}:</strong> {{ message.message }} <em class="text-gray-500">{{ message.timestamp }}</em></p>
+            {% endfor %}
+        </div>
+        
+        <h3 class="text-lg font-semibold mb-2">Add a Message</h3>
+        <form method="post" id="chat-form" class="bg-white p-4 rounded shadow">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ group.id }}">
+            <textarea name="content" rows="4" required class="border rounded w-full p-2 mb-2" placeholder="Type your message here..."></textarea><br>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Send Message</button>
+        </form>
+
+        <a href="{% url 'group_list' %}" class="text-blue-500 underline mt-4 block">Back to Group List</a>
+    </div>
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Recipe Groups</title>
+{% endblock meta %}
+
+{% block content %}
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4">Recipe Groups</h1>
+        <ul class="space-y-2">
+            {% for group in groups %}
+                <li class="bg-gray-100 p-4 rounded shadow">
+                    <a href="{% url 'group_detail' group.id %}" class="font-semibold text-blue-600">{{ group.name }}</a>
+                    <p class="text-gray-700">{{ group.description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'create_recipe_group' %}" class="bg-blue-500 text-white p-2 rounded mt-4 inline-block">Create New Group</a>
+    </div>
+{% endblock content %}
