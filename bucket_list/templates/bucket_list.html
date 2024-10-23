@@ -9,12 +9,98 @@
 {% block content %}
 {% include 'navbar.html' %}
 
+<div id="bucket_list_entry"></div>
 
 <script>
-    {% comment %} tinggal ganti url {% endcomment %}
-    async function getFoodEntries() {
-        return fetch("{% url 'main:show_json' %}").then((res) => res.json())
+    async function getBucketListEntries() {
+        return fetch("{% url 'bucket_list:show_json' %}").then((res) => res.json())
     }
+
+    async function refreshBucketListEntries() {
+        document.getElementById("bucket_list_entry").innerHTML = "";
+        document.getElementById("bucket_list_entry").className = "";
+        const bucketListEntries = await getBucketListEntries();
+        let htmlString = "";
+        let classNameString = "";
+
+        if (bucketListEntries.length === 0) {
+            classNameString = "flex flex-col gap-2 w-full h-[90vh] border-2 justify-center items-center";
+            htmlString = `
+                <h2 class="text-lg font-bold">Yuk, mulai isi bucket list kamu!</h2>
+                <div data-model-target="addBucketListModal" data-modal-toggle="addBucketListModal" class="flex items-center btn bg-black cursor-pointer rounded-2xl px-6 py-2 transform">
+                    <p class="text-white font-bold">Add new list</p>
+                </div>
+
+                <div id="addBucketListModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto">
+                    <div id="addBucketListModalContent" class="relative bg-white p-6 rounded-2xl shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/4 mx-4 sm:mx-0 transform">
+
+                        <div id="closeModal" class="absolute right-4 top-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold mt-2">Add new bucket list</h2>
+                        </div>
+
+                        <div>
+                            <input type="text" class="border-2 border-[#CCC7BA] px-2 py-1 mt-4 w-full rounded-lg font-bold placeholder-[#CCC7BA]" placeholder="List name" required>
+                        </div>
+
+                        <div class="flex justify-end mt-0.5">
+                            <p class="text-[#CCC7BA] font-bold text-sm">0/20</p>
+                        </div>
+
+                        <div class="flex justify-center items-center px-2 py-1 mt-2 rounded-lg bg-black">
+                            <p class="text-white font-bold">Add new collection</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        document.getElementById("bucket_list_entry").className = classNameString;
+        document.getElementById("bucket_list_entry").innerHTML = htmlString;
+    }
+    refreshBucketListEntries()
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById('addBucketListModal');
+        const modalContent = document.getElementById('addBucketListModalContent');
     
+        // Show Modal
+        function showModal() {
+            modal.classList.remove('hidden'); 
+            setTimeout(() => {}, 50); 
+        }
+    
+        // Hide Modal
+        function hideModal() {
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150); 
+        }
+    
+        // Add event listener for the "Add new list" button
+        const addButton = document.querySelector('[data-model-target="addBucketListModal"]');
+        if (addButton) {
+            addButton.addEventListener('click', showModal);
+        }
+    
+        // Close modal when clicking the close button
+        document.getElementById("closeModal").addEventListener("click", () => {
+            hideModal();
+        });
+    
+        // Close modal when clicking outside of modal content
+        modal.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                hideModal();
+            }
+        });
+    });
+    {% comment %} async function getFoodEntries() {
+        return fetch("{% url 'main:show_json' %}").then((res) => res.json())
+    } {% endcomment %}
+
+</script>
 
 {% endblock content %}

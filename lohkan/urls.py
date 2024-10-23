@@ -21,4 +21,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('main.urls')),
     path('auth/', include('authentication.urls')),
+    path('bucket-list/', include('bucket_list.urls')),
 ]
