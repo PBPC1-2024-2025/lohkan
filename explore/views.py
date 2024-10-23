@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-def show_main(request):
+def show_explore(request):
     context = {
         'test': 'test',
     }
