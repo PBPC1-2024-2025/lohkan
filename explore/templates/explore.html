@@ -19,6 +19,13 @@
     <td>{{food.description}}</td>
     <td>{{food.min_price}}</td>
     <td>{{food.max_price}}</td>
+    <td>
+        <a href="{% url 'main:edit_food' food.pk %}">
+            <button>
+                Edit
+            </button>
+        </a>
+    </td>
 </tr>
 {% endfor %}
 </table>
