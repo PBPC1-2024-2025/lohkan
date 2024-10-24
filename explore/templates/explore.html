@@ -1,33 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Explore</h1>
-{% if not mood_entries %}
-<p>Belum ada data food.</p>
+{% if not foods %}
+    <p>Belum ada data food.</p>
 {% else %}
-<table>
-  <tr>
-    <th>Food Name</th>
-    <th>Time</th>
-    <th>Description</th>
-    <th>Price</th>
-  </tr>
+    <table>
+      <tr>
+        <th>Food Name</th>
+        <th>Time</th>
+        <th>Description</th>
+        <th>Price</th>
+      </tr>
 
-{% for food in foods %}
-<tr>
-    <td>{{food.name}}</td>
-    <td>{{food.time}}</td>
-    <td>{{food.description}}</td>
-    <td>{{food.min_price}}</td>
-    <td>{{food.max_price}}</td>
-    <td>
-        <a href="{% url 'main:edit_food' food.pk %}">
-            <button>
-                Edit
-            </button>
-        </a>
-    </td>
-</tr>
-{% endfor %}
+    {% for food in foods %}
+        <tr>
+            <td>{{food.name}}</td>
+            <td>{{food.time}}</td>
+            <td>{{food.description}}</td>
+            <td>{{food.min_price}}</td>
+            <td>{{food.max_price}}</td>
+            <td>
+                <a href="{% url 'explore:edit_food' food.pk %}">
+                    <button>
+                        Edit
+                    </button>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'explore:delete_food' food.pk %}">
+                    <button>
+                        Delete
+                    </button>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
 </table>
 {% endif %}
 
