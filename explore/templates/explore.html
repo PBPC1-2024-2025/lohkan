@@ -1,7 +1,6 @@
- {% extends 'base.html' %}
- {% block content %}
- <h1>Explore</h1>
- <p>{{ test }}<p>
+{% extends 'base.html' %}
+{% block content %}
+<h1>Explore</h1>
 {% if not mood_entries %}
 <p>Belum ada data food.</p>
 {% else %}
@@ -13,21 +12,21 @@
     <th>Price</th>
   </tr>
 
-  {% for food in foods %}
-  <tr>
+{% for food in foods %}
+<tr>
     <td>{{food.name}}</td>
     <td>{{food.time}}</td>
     <td>{{food.description}}</td>
     <td>{{food.min_price}}</td>
     <td>{{food.max_price}}</td>
-  </tr>
-  {% endfor %}
+</tr>
+{% endfor %}
 </table>
 {% endif %}
 
 <br />
 
 <a href="{% url 'explore:add_food' %}">
-  <button>Add Food</button>
+    <button>Add Food</button>
 </a>
 {% endblock content %}
