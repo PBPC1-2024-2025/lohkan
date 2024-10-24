@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
+import uuid
 
 class RecipeGroup(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Tambahkan UUID
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -11,6 +13,7 @@ class RecipeGroup(models.Model):
         return self.name
 
 class Recipe(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Tambahkan UUID
     group = models.ForeignKey(RecipeGroup, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     ingredients = models.TextField()
@@ -24,6 +27,7 @@ class Recipe(models.Model):
         return self.title
     
 class ChatMessage(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Tambahkan UUID
     group = models.ForeignKey(RecipeGroup, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
