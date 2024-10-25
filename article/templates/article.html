@@ -62,7 +62,7 @@
         {% endfor %}
     </div>
     {% else %}
-    <p class="text-red-500">You must be <a href="{% url 'login' %}" class="underline">logged in</a> to leave a comment.</p>
+    <p class="text-red-500">You must be <a href="{% url 'authentication:login' %}" class="underline">logged in</a> to leave a comment.</p>
     {% endif %}
 
 </div>
