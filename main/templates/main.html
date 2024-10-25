@@ -189,15 +189,19 @@
 
 <!-- Kotak Chatbot -->
 <div id="chatbot" class="chatbot hidden fixed bottom-16 right-5 bg-white shadow-lg rounded-lg p-4 w-80">
-  <div class="chatbot-header bg-[#440000] text-white p-2 rounded-t-lg">
-    <h3 class="font-bold">LoBot</h3>
-    <span id="chatbot-close" class="cursor-pointer absolute top-4 right-6 text-2xl text-white">&times;</span>
+  <!-- Tombol Tanda Silang -->
+  <span id="chatbot-close" class="cursor-pointer absolute top-0 right-0 text-2xl text-[#800000] z-10">&times;</span>
+  
+  <div id="chatbot-messages" class="chatbot-messages overflow-y-auto h-96 mb-2">
+    <!-- Iframe Dialogflow -->
+    <iframe
+        allow="microphone;"
+        width="100%"
+        height="430"
+        src="https://console.dialogflow.com/api-client/demo/embedded/aed8634c-d1ff-4d4a-886b-e6d1cd321ac3">
+    </iframe>
+  </div>
 </div>
-  <div id="chatbot-messages" class="chatbot-messages overflow-y-auto h-48 mb-2"></div>
-  <input type="text" id="chatbot-input" class="border rounded w-full p-2" placeholder="Type text here...">
-</div>
-
-
 
 <script>
   document.querySelector('a[href="#section1"]').addEventListener('click', function(e) {
@@ -223,90 +227,20 @@
   typeWriter();
 });
 
-// chatbot
-document.addEventListener("DOMContentLoaded", function() {
-    const chatbotToggle = document.getElementById('chatbot-toggle');
-    const chatbot = document.getElementById('chatbot');
-    const chatbotClose = document.getElementById('chatbot-close');
-    const chatbotInput = document.getElementById('chatbot-input');
-    const chatbotMessages = document.getElementById('chatbot-messages');
+  // Mendapatkan elemen tombol dan kotak chatbot
+  const chatbotToggle = document.getElementById('chatbot-toggle');
+  const chatbot = document.getElementById('chatbot');
+  const chatbotClose = document.getElementById('chatbot-close');
 
-    // Menampilkan atau menyembunyikan chatbot saat tombol diklik
-    chatbotToggle.addEventListener('click', function() {
-        chatbot.classList.toggle('hidden');
-        chatbotInput.focus(); // Fokus pada input ketika chatbot ditampilkan
-    });
+  // Event listener untuk membuka chatbot
+  chatbotToggle.addEventListener('click', function() {
+    chatbot.classList.toggle('hidden');
+  });
 
-    // Menutup chatbot
-    chatbotClose.addEventListener('click', function() {
-        chatbot.classList.add('hidden');
-    });
-
-    // Mengirim pesan saat pengguna menekan Enter
-    chatbotInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter' && chatbotInput.value.trim() !== '') {
-            sendMessage(chatbotInput.value);
-        }
-    });
-
-    // Menambahkan pengiriman pesan saat tombol Send ditekan
-    document.getElementById('chatbot-send').addEventListener('click', function() {
-        if (chatbotInput.value.trim() !== '') {
-            sendMessage(chatbotInput.value);
-        }
-    });
-
-    // Fungsi untuk mengirim pesan
-    function sendMessage(message) {
-        const userMessage = document.createElement('div');
-        userMessage.textContent = message;
-        userMessage.classList.add('user-message');
-        chatbotMessages.appendChild(userMessage);
-        chatbotInput.value = ''; // Mengosongkan input setelah mengirim
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Menggulir ke bawah
-
-        respondToUser(message); // Panggil fungsi respons
-    }
-
-    // Fungsi respons chatbot
-    function respondToUser(userMessage) {
-    const response = document.createElement('div');
-    let botMessage = '';
-
-    const lowerCaseMessage = userMessage.toLowerCase(); // Konversi input ke huruf kecil
-
-    // Menggunakan if-else untuk menentukan respon
-    if (lowerCaseMessage === 'hello' || 
-        lowerCaseMessage === 'hi' || 
-        lowerCaseMessage === 'halo' || 
-        lowerCaseMessage === 'hai') {
-        botMessage = 'Hello, can I help you?';
-    } else if (lowerCaseMessage === 'what is your name?') {
-        botMessage = 'Hola, my name is LoBot!';
-    } else if (lowerCaseMessage === 'who are you?') {
-      botMessage = 'I am LoBot, your virtual assistant in LohKan Website!';
-    } else if (lowerCaseMessage === 'what is this?') {
-        botMessage = 'You can call this website LohKan!. This website will help you to find the best culinary experience in Pangkalpinang!';
-    } else if (lowerCaseMessage === 'who make this?') {
-        botMessage = 'This website is made by CO1 group of University of Indonesia students. We are currently working on this project as our final project in PBP course.';
-    } else if (lowerCaseMessage === 'what features are there on this website?') {
-        // Mengganti '\n' dengan '<br>' untuk menampilkan enter
-        botMessage = 'This website has 5 interesting features, including:<br>' +
-                     '1. Explore Feature: Explore Bangka Belitung\'s special dishes with complete food descriptions.<br>' +
-                     '2. Food Review: See interesting reviews from other users to make your choice easier.<br>' +
-                     '3. Bucket List: Save food you want to try in the future.<br>' +
-                     '4. Ask for Recipe: Learn how to make your favorite local food.<br>' +
-                     '5. Local Products: Increase your insight into local Bangka Belitung products.';
-    } else {
-        botMessage = 'Sorry, I am still learning. I will get back to you soon!';
-    }
-
-    // Menggunakan innerHTML untuk menampilkan pesan dengan format
-    response.innerHTML = botMessage; // Menggunakan innerHTML untuk menyertakan <br>
-    response.classList.add('bot-message');
-    chatbotMessages.appendChild(response);
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Menggulir ke bawah
-}
-});
+  // Event listener untuk menutup chatbot
+  chatbotClose.addEventListener('click', function() {
+    chatbot.classList.add('hidden');
+  });
+  
 </script>
 {% endblock content %}
