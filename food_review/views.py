@@ -13,18 +13,27 @@ from django.db.models import Count
 def page_review(request):
     # Aggregate reviews and count each unique food name
     food_type_filter = request.GET.get('type', 'All')
+    search_query = request.GET.get('search', '').strip()  # Get search query
     
-    if food_type_filter != 'All':
-        reviews = (ReviewEntry.objects.filter(food_type=food_type_filter)
+    if search_query:  # If there is a search query
+        reviews = (ReviewEntry.objects
+                   .filter(name__icontains=search_query)  # Case-insensitive search
                    .values('name', 'food_type')
                    .annotate(review_count=Count('id'))
                    .order_by('name'))
     else:
-        reviews = (ReviewEntry.objects
-                   .values('name', 'food_type')
-                   .annotate(review_count=Count('id'))
-                   .order_by('name'))
-    
+        if food_type_filter != 'All':
+            reviews = (ReviewEntry.objects.filter(food_type=food_type_filter)
+                       .values('name', 'food_type')
+                       .annotate(review_count=Count('id'))
+                       .order_by('name'))
+        else:
+            reviews = (ReviewEntry.objects
+                       .values('name', 'food_type')
+                       .annotate(review_count=Count('id'))
+                       .order_by('name'))
+
+
     return render(request, 'page_review.html', {'reviews': reviews})
 
 # membuat review baru

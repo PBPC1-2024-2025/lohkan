@@ -17,14 +17,18 @@
         <h1 style=" font-size: 4rem; color: #900000; font-family: 'Helvetica', sans-serif; font-weight: bold; text-align: center; margin-bottom: 10px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
         See How Others Rate the Food 😍
         </h1>
-        <div class="search-bar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
-            <input type="text" placeholder="Find reviews by food name..." style="width: 60%; padding: 10px 20px; font-size: 1.0rem; font-family: 'Arial', sans-serif; border: 2px solid #900000; border-radius: 30px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); margin-right: 15px; outline: none; 
-                transition: box-shadow 0.3s ease-in-out;">
-            <button id="searchButton" class="search-button" style="padding: 12px 20px; background-color: #900000; color: #ffffff; border: none;  border-radius: 30px; font-size: 1.0rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
-                transition: background-color 0.3s ease-in-out, transform 0.2s;">
-                Search
-            </button>
+        <div class="search-bar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px; width: 100%;">
+            <form id="searchForm" method="GET" action="{% url 'food_review:page_review' %}" style="display: flex; justify-content: center; align-items: center; width: 90%;">
+                <input type="text" name="search" placeholder="Find reviews by food name..." style="width: 75%; padding: 10px 20px; font-size: 1.0rem; font-family: 'Arial', sans-serif; border: 2px solid #900000; border-radius: 30px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); outline: none; transition: box-shadow 0.3s ease-in-out;">
+                <button type="submit" id="searchButton" class="search-button" style="padding: 12px 20px; background-color: #900000; color: #ffffff; border: none; border-radius: 30px; font-size: 1.0rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease-in-out, transform 0.2s; margin-left: 10px;">
+                    Search
+                </button>
+                <button type="button" id="resetButton" class="reset-button" onclick="resetFilter()" style="padding: 12px 20px; background-color: #CCC; color: #000; border: none; border-radius: 30px; font-size: 1.0rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease-in-out, transform 0.2s; margin-left: 5px;">
+                    Reset
+                </button>
+            </form>
         </div>
+        
         <div style="text-align: center; margin-bottom: 20px;">
             <button id="reviewButton" class="review-button" style="padding: 15px 30px; background-color: #900000; color: #ffffff; border: none; border-radius: 30px; font-size: 1.2rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
                 transition: background-color 0.3s ease-in-out, transform 0.2s;">
@@ -115,7 +119,7 @@
                 </button>
             </div>
             {% empty %}
-            <p>No reviews yet.</p>
+            <p>Data makanannya belum ada nih 😔</p>
             {% endfor %}
         </div>
         
@@ -159,6 +163,11 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+// Handle the reset functionality
+function resetFilter() {
+    // Redirect to the page_review URL without any filters or reset the filter state as needed
+    window.location.href = '{% url "food_review:page_review" %}?type=All';
+}
 $(document).ready(function(){
     var modal = $('#reviewModal'); // Ensure this is the correct ID
     var btn = $('#reviewButton'); // Button that triggers the modal
