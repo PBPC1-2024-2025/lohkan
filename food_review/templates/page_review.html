@@ -33,7 +33,7 @@
                 <div class="food-type" style="background-color: #f0f0f0; padding: 5px; margin-bottom: 10px;">
                     Type: {{ review.food_type }}
                 </div>
-                <button onclick="window.location.href='{% url 'food_review:see_reviews' review.name review.food_type %}'">See Reviews</button>
+                <button onclick="window.location.href='{% url 'food_review:see_reviews' review.name review.food_type %}'">See Reviews ({{ review.review_count }})</button>
             </div>
             {% empty %}
             <p>No reviews yet.</p>

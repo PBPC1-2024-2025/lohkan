@@ -5,12 +5,17 @@ from django.views.decorators.http import require_POST
 from food_review.models import ReviewEntry
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 # from article.forms import ArticleForm
 # from django.contrib import messages
 
 # menampilkan semua review
 def page_review(request):
-    reviews = ReviewEntry.objects.all()  # Ambil semua review dari database
+    # Aggregate reviews and count each unique food name
+    reviews = (ReviewEntry.objects
+               .values('name', 'food_type')  # Ensure food_type is included if necessary
+               .annotate(review_count=Count('id'))
+               .order_by('name'))  # Order by name or any other attribute
     return render(request, 'page_review.html', {'reviews': reviews})
 
 # membuat review baru
@@ -19,27 +24,32 @@ def page_review(request):
 @csrf_exempt
 @require_POST
 def add_review_ajax(request):
-    name = request.POST.get('name')
+    raw_name = request.POST.get('name').strip()  # Get the raw name input
+    name = raw_name.lower()  # Normalize name to lowercase for comparison
     food_type = request.POST.get('food_type')
     rating = request.POST.get('rating')
     comments = request.POST.get('comments')
     user = request.user  # Assuming you are using Django's authentication
 
-    # Check if the review already exists for the same food item and type
-    existing_review = ReviewEntry.objects.filter(name=name, food_type=food_type, user=user).first()
+    # Check if the review already exists for the same normalized food item and type
+    existing_review = ReviewEntry.objects.filter(name__iexact=raw_name, food_type=food_type, user=user).first()
     if existing_review:
         # If existing, update the existing review
         existing_review.rating = rating
         existing_review.comments = comments
         existing_review.save()
-        return  HttpResponse(b"CREATED", status= 201)
+        return HttpResponse(b"UPDATED", status=200)  # Changed response for clarity
     else:
         # If not existing, create a new review
-        new_review = ReviewEntry(name=name, food_type=food_type, rating=rating, comments=comments, user=user)
+        new_review = ReviewEntry(
+            name=raw_name.title(),  # Store name in title case
+            food_type=food_type,
+            rating=rating,
+            comments=comments,
+            user=user
+        )
         new_review.save()
-        return  HttpResponse(b"CREATED", status= 201)
-
-# Other view functions remain the same
+        return HttpResponse(b"CREATED", status=201)
 
 # menampilkan artikel dalam format JSON
 def show_xml(request):
