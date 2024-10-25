@@ -6,16 +6,28 @@
 {% block content %}
 <!-- Navbar -->
 {% include 'navbar.html' %}
-<div class="flex pt-32 pl-10 bg-gray-100">
+<div class="flex pl-10 pt-20 bg-gray-100 items-center justify-between">
     <h1 class="text-4xl font-semibold sm:text-4xl pb-8">What are your cravings today, <span class="capitalize ">{{user.username}}</span>?</h1>
+    <div class="w-96">
+        <img src="{% static 'images/couple-eating-explore.png' %}" class="h-32">
+    </div>
 </div>
-<div class="flex flex-col pt-12 pl-10">
+<div class="flex flex-col pt-12 px-10 items-start shrink-0 w-7xl">
+    {% if user.is_authenticated and user.username == 'admin' %}
+        <a class="font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300" href="{% url 'explore:add_food' %}">
+            <span class="font-black text-3xl pb-1.5 pl-2">+</span>
+            <span class="pl-1 pr-4">Add Food</span>
+        </a>
+    {% endif %}
+
     {% if not foods %}
         <p>Belum ada data food.</p>
     {% else %}
-        {% for food in foods %}
+        <div class="flex flex-col border-2 rounded-xl border-gray-300">
+            {% for food in foods %}
             {% include 'food_card.html' with food=food %}
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% endif %}
 </div>
 {% endblock content %}
