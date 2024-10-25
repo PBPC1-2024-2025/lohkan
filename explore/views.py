@@ -6,6 +6,7 @@ from explore.forms import FoodForm
 from explore.models import Food
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 @login_required(login_url='auth/login')
 def show_explore(request):
@@ -20,17 +21,16 @@ def show_explore(request):
 @csrf_exempt
 @require_POST
 def add_food_ajax(request):
-    name = request.POST.get('name')
-    description = request.POST.get('description')
+    name = strip_tags(request.POST.get('name'))
+    description = strip_tags(request.POST.get('description'))
     min_price = request.POST.get('min_price')
     max_price = request.POST.get('max_price')
     image_link = request.POST.get('image_link')
     type = request.POST.get('type')
-    user = request.user
     new_food = Food(
         name=name, description=description,
         min_price=min_price, max_price=max_price,
-        image_link=image_link, type=type, user=user
+        image_link=image_link, type=type
     )
     new_food.save()
     return HttpResponse(b"CREATED", status=201)

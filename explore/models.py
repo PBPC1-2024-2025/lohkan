@@ -8,7 +8,7 @@ from django.template.defaultfilters import default
 
 # Create your models here.
 class Food(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     class TypeChoices(models.TextChoices):
         MC = 'MC', 'Main Course'
         DS = 'DS', 'Dessert'
