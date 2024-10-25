@@ -11,8 +11,10 @@ from explore.models import Food
 @login_required(login_url='auth/login')
 def show_explore(request):
     foods = Food.objects.all()
+    user = request.user
     context = {
         'foods': foods,
+        'user': user,
     }
     return render(request, "explore.html", context)
 

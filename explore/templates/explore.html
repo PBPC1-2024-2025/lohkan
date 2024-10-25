@@ -1,50 +1,21 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block meta %}
+<title>Explore</title>
+{% endblock meta %}
 {% block content %}
-{#<!-- Navbar -->#}
-{#{% include 'navbar.html' %}#}
-
-<h1>Explore</h1>
-{% if not foods %}
-    <p>Belum ada data food.</p>
-{% else %}
-    <table>
-      <tr>
-        <th>Food Name</th>
-        <th>Time</th>
-        <th>Description</th>
-        <th>Price</th>
-      </tr>
-
-    {% for food in foods %}
-        <tr>
-            <td>{{food.name}}</td>
-            <td>{{food.time}}</td>
-            <td>{{food.description}}</td>
-            <td>{{food.min_price}}</td>
-            <td>{{food.max_price}}</td>
-            <td>
-                <a href="{% url 'explore:edit_food' food.pk %}">
-                    <button>
-                        Edit
-                    </button>
-                </a>
-            </td>
-            <td>
-                <a href="{% url 'explore:delete_food' food.pk %}">
-                    <button>
-                        Delete
-                    </button>
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-{% endif %}
-
-<br />
-
-<a href="{% url 'explore:add_food' %}">
-    <button>Add Food</button>
-</a>
+<!-- Navbar -->
+{% include 'navbar.html' %}
+<div class="flex pt-32 pl-10 bg-gray-100">
+    <h1 class="text-4xl font-semibold sm:text-4xl pb-8">What are your cravings today, <span class="capitalize ">{{user.username}}</span>?</h1>
+</div>
+<div class="flex flex-col pt-12 pl-10">
+    {% if not foods %}
+        <p>Belum ada data food.</p>
+    {% else %}
+        {% for food in foods %}
+            {% include 'food_card.html' with food=food %}
+        {% endfor %}
+    {% endif %}
+</div>
 {% endblock content %}
