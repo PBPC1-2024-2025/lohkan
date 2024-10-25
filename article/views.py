@@ -6,10 +6,12 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 from django.core import serializers
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 # menampilkan semua artikel
 def full_article(request):
-    return render(request, 'full_article.html')
+    article_list = Article.objects.all().order_by('-id')
+    return render(request, 'full_article.html', {'article_list': article_list})
 
 # membuat artikel baru
 @csrf_exempt
@@ -69,15 +71,16 @@ def article_detail(request, id):
     comments = Comment.objects.filter(article=article).order_by('-created_at') 
     return render(request, 'article.html', {'article': article, 'comments': comments})
 
-# menambahkan komentar di masing-masing artikel
+
 def add_comment(request, id):  
     article = get_object_or_404(Article, pk=id) 
     if request.method == 'POST':
         content = request.POST.get('content')
         if content:
             Comment.objects.create(article=article, content=content, user=request.user)
-            return redirect('article:full_article', id=id) 
-    return redirect('article:full_article', id=id)
+            return redirect('article:article_detail', id=id)  # Redirect to article detail after adding a comment
+    return redirect('article:article_detail', id=id)
+
 
 # menampilkan artikel dalam format JSON
 def show_xml(request):

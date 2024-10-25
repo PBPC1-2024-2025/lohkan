@@ -26,19 +26,19 @@
     {% endif %}
     </div>
     <!-- Articles Grid -->
-    <div class="container mx-auto py-16 px-4">
-      <div id="article_cards" class="grid grid-cols-1 gap-6">
-        {% for article in page_obj %}
-        <article class="bg-white p-4 rounded-lg shadow-lg flex flex-col justify-between mb-6">
-            <a href="{% url 'article:article_detail' article.id %}">
-                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded-md">
-                <h3 class="text-xl font-semibold mt-4">{{ article.title }}</h3>
-                <p class="text-gray-600 mt-2">{{ article.description }}</p>
-            </a>
-        </article>
-        {% endfor %}
-      </div>
+  <div class="container mx-auto py-16 px-4">
+    <div id="article_cards" class="grid grid-cols-1 gap-6">
+      {% for article in page_obj %}
+      <article class="bg-white p-4 rounded-lg shadow-lg flex flex-col justify-between mb-6">
+          <a href="{% url 'article:article_detail' article.id %}">
+              <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded-md">
+              <h3 class="text-xl font-semibold mt-4">{{ article.title }}</h3>
+              <p class="text-gray-600 mt-2">{{ article.description }}</p>
+          </a>
+      </article>
+      {% endfor %}
     </div>
+  </div>
 
     <!-- CRUD Modal -->
     <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">

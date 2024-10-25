@@ -40,7 +40,7 @@
     {% if user.is_authenticated %}
     <div class="comment-form my-8">
         <h3 class="font-semibold mb-2" style="font-size: 1.5rem;">Leave a comment</h3>
-        <form action="{% url 'article:add_comment' article.pk %}" method="POST">
+        <form action="{% url 'article:add_comment' article.id %}" method="POST">
             {% csrf_token %}
             <textarea name="content" required 
                 style="width: 100%; border: 1px solid #ccc; padding: 10px; box-sizing: border-box; resize: vertical;"></textarea>

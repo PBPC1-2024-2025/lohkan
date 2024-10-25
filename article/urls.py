@@ -10,9 +10,9 @@ from article.views import (
 app_name = 'article'
 
 urlpatterns = [
-    path('article', index, name='article'),
-    path('article/<uuid:id>/', article_detail, name='full_article'),
-    path('', views.full_article, name='full_article'),
+    path('', index, name='article'),
+    path('article/<uuid:id>/', article_detail, name='article_detail'),
+    path('', full_article, name='full_article'),
     path('create-article/', create_article, name='create_article'),
     path('xml/', show_xml, name='show_xml'),
     path('json/', show_json, name='show_json'),
