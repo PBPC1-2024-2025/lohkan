@@ -63,11 +63,12 @@ def send_message(request):
         message = ChatMessage.objects.create(group=group, user=request.user, message=content)
 
         return HttpResponse(
-            f"""
-            <div class="flex justify-end mb-2">
-                <div class="bg-blue-500 text-white p-2 rounded-lg max-w-xs">
-                    <p>{message.message}</p>
-                    <p class="text-xs text-gray-200 mt-1">
+             f"""
+            <div class="flex justify-end mb-4">
+                <div class="bg-red-800 text-white p-4 rounded-xl shadow-md max-w-md">
+                    <p class="text-xs font-semibold mb-1 text-gray-300">{message.user.username}</p>
+                    <p class="text-sm leading-relaxed break-words">{message.message}</p>
+                    <p class="text-xs text-gray-300 mt-2">
                         {message.timestamp.strftime('%Y-%m-%d %H:%M:%S')}
                     </p>
                 </div>
@@ -80,6 +81,13 @@ def send_message(request):
 def delete_group(request, group_id):
     group = get_object_or_404(RecipeGroup, id=group_id)
     group.delete()
+    return redirect('ask_recipe:ask_recipe')
+
+@csrf_exempt
+@require_POST
+def delete_message(request, message_id):
+    message = get_object_or_404(ChatMessage, id=message_id)
+    message.delete()
     return redirect('ask_recipe:ask_recipe')
 
 def show_xml(request):

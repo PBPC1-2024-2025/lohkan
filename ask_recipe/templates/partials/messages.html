@@ -22,6 +22,14 @@
                 {% if message.user == user %}text-gray-300{% else %}text-gray-500{% endif %}">
                 {{ message.timestamp|date:"Y-m-d H:i:s" }}
             </div>
+
+            <!-- Form Hapus Pesan -->
+            {% if message.user == user or user.is_staff %}
+                <form action="{% url 'ask_recipe:delete_message' message.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="text-white">Delete</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 {% endfor %}
