@@ -22,5 +22,4 @@ urlpatterns = [
     path('', include('main.urls')),
     path('auth/', include('authentication.urls')),
     path('', include('explore.urls')),
-    path('', include('food_review.urls')),
 ]
