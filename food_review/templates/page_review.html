@@ -13,126 +13,569 @@
     <title>Review Food</title>
 </head>
 <body>
-    <div class="container" style="padding-top: 100px;">
+    <div class="container" style="padding-top: 90px;">
+    <!-- Top Rated Food -->
+        <!-- Top Rated Food (Podium Leaderboard) -->
+        <div class="podium">
+            <h2 class="podium-heading">🏆 Top-Rated Dishes You Should Try 🤩</h2>
+            <div class="podium-container">
+                {% for dish in top_rated_dishes %}
+                {% if forloop.counter0 == 0 %}
+                    <!-- First Place -->
+                    <div class="podium-item first-place">
+                        <div class="podium-rank">1</div>
+                        <div class="podium-dish-name">{{ dish.name }}</div>
+                        <div class="podium-dish-type">{{ dish.food_type }}</div>
+                        <div class="podium-dish-rating">{{ dish.avg_rating|floatformat:2 }} </div>
+                        <div class="podium-dish-reviews">{{ dish.review_count }} Reviews</div>
+                    </div>
+                {% elif forloop.counter0 == 1 %}
+                    <!-- Second Place -->
+                    <div class="podium-item second-place">
+                        <div class="podium-rank">2</div>
+                        <div class="podium-dish-name">{{ dish.name }}</div>
+                        <div class="podium-dish-type">{{ dish.food_type }}</div>
+                        <div class="podium-dish-rating">{{ dish.avg_rating|floatformat:2 }} </div>
+                        <div class="podium-dish-reviews">{{ dish.review_count }} Reviews</div>
+                    </div>
+                {% elif forloop.counter0 == 2 %}
+                    <!-- Third Place -->
+                    <div class="podium-item third-place">
+                        <div class="podium-rank">3</div>
+                        <div class="podium-dish-name">{{ dish.name }}</div>
+                        <div class="podium-dish-type">{{ dish.food_type }}</div>
+                        <div class="podium-dish-rating">{{ dish.avg_rating|floatformat:2 }}</div>
+                        <div class="podium-dish-reviews">{{ dish.review_count }} Reviews</div>
+                    </div>
+                {% endif %}
+                {% empty %}
+                    <p>No top-rated dishes found 😔.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+<body>
+    <div class="container" style="padding-top: 10px;">
         <h1 style=" font-size: 4rem; color: #900000; font-family: 'Helvetica', sans-serif; font-weight: bold; text-align: center; margin-bottom: 10px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
         See How Others Rate the Food 😍
         </h1>
-        <div class="search-bar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px; width: 100%;">
-            <form id="searchForm" method="GET" action="{% url 'food_review:page_review' %}" style="display: flex; justify-content: center; align-items: center; width: 90%;">
-                <input type="text" name="search" placeholder="Find reviews by food name..." style="width: 75%; padding: 10px 20px; font-size: 1.0rem; font-family: 'Arial', sans-serif; border: 2px solid #900000; border-radius: 30px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); outline: none; transition: box-shadow 0.3s ease-in-out;">
-                <button type="submit" id="searchButton" class="search-button" style="padding: 12px 20px; background-color: #900000; color: #ffffff; border: none; border-radius: 30px; font-size: 1.0rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease-in-out, transform 0.2s; margin-left: 10px;">
+            <!-- Search Bar -->
+        <div class="search-bar">
+            <form id="searchForm" method="GET" action="{% url 'food_review:page_review' %}">
+                <input type="text" name="search" placeholder="Find reviews by food name...">
+                <button type="submit" id="searchButton" class="search-button">
                     Search
                 </button>
-                <button type="button" id="resetButton" class="reset-button" onclick="resetFilter()" style="padding: 12px 20px; background-color: #CCC; color: #000; border: none; border-radius: 30px; font-size: 1.0rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease-in-out, transform 0.2s; margin-left: 5px;">
+                <button type="button" id="resetButton" class="reset-button" onclick="resetFilter()">
                     Reset
                 </button>
             </form>
         </div>
-        
-        <div style="text-align: center; margin-bottom: 20px;">
-            <button id="reviewButton" class="review-button" style="padding: 15px 30px; background-color: #900000; color: #ffffff; border: none; border-radius: 30px; font-size: 1.2rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
-                transition: background-color 0.3s ease-in-out, transform 0.2s;">
+
+        <!-- Tombol Review -->
+        <div class="button-container">
+            <button id="reviewButton" class="review-button">
                 Review Your Food
             </button>
         </div>
-        <div class="categories" style="text-align: center; margin: 20px 0;">
-            <a href="{% url 'food_review:page_review' %}?type=All" 
-                style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
-                onmouseover="this.style.backgroundColor='#600000';" 
-                onmouseout="this.style.backgroundColor='#900000';">
-            All
-            </a>
-            <a href="{% url 'food_review:page_review' %}?type=Main Course" 
-                style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
-                onmouseover="this.style.backgroundColor='#600000';" 
-                onmouseout="this.style.backgroundColor='#900000';">
-               Main Course
-            </a>
-            <a href="{% url 'food_review:page_review' %}?type=Dessert" 
-               style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
-               onmouseover="this.style.backgroundColor='#600000';" 
-               onmouseout="this.style.backgroundColor='#900000';">
-               Dessert
-            </a>
-            <a href="{% url 'food_review:page_review' %}?type=Drinks" 
-                style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
-                onmouseover="this.style.backgroundColor='#600000';" 
-                onmouseout="this.style.backgroundColor='#900000';">
-               Drinks
-            </a>
-            <a href="{% url 'food_review:page_review' %}?type=Snacks" 
-                style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
-                onmouseover="this.style.backgroundColor='#600000';" 
-                onmouseout="this.style.backgroundColor='#900000';">
-               Snacks
-            </a>
+
+        <!-- Kategori -->
+        <div class="categories">
+            <a href="{% url 'food_review:page_review' %}?type=All">All</a>
+            <a href="{% url 'food_review:page_review' %}?type=Main Course">Main Course</a>
+            <a href="{% url 'food_review:page_review' %}?type=Dessert">Dessert</a>
+            <a href="{% url 'food_review:page_review' %}?type=Drinks">Drinks</a>
+            <a href="{% url 'food_review:page_review' %}?type=Snacks">Snacks</a>
         </div>
-        
-        <div class="food-item" style="display: flex; flex-wrap: wrap; justify-content: center;">
+
+        <!-- Item Makanan -->
+        <div class="food-item">
             {% for review in reviews %}
-            <div class="review-card" style="
-                border: 1px solid #B3AE94; 
-                padding: 15px; 
-                margin: 10px; 
-                background: linear-gradient(145deg, #FFF9E9, #F2E3D5); 
-                border-radius: 30px; 
-                box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), 
-                            -5px -5px 15px rgba(255, 255, 255, 0.7); 
-                width: 250px; /* Adjust width as necessary */ 
-                transition: transform 0.3s, box-shadow 0.3s;">
-        
-                <div class="food-type" style="
-                    background-color: #550000; 
-                    color: #FFFFFF; 
-                    padding: 5px 15px; 
-                    border-radius: 20px; 
-                    text-transform: capitalize; 
-                    display: inline-block; 
-                    font-weight: bold; 
-                    position: absolute; 
-                    top: 15px; 
-                    left: 15px;">
+            <div class="review-card">
+                <div class="food-type">
                     {{ review.food_type }}
                 </div>
-                
-                <h2 class="food-name" style="
-                    margin-top: 50px; /* Adjust margin for food name placement */
-                    font-size: 1.5rem; 
-                    font-weight: bold; 
-                    color: #550000; 
-                    text-align: center;">
+                <h2 class="food-name">
                     {{ review.name }}
                 </h2>
-                
-                <button onclick="window.location.href='{% url 'food_review:see_reviews' review.name review.food_type %}'" 
-                    style="
-                    padding: 10px 20px; 
-                    background-color: #550000; 
-                    color: #FFFFFF; 
-                    border: none; 
-                    border-radius: 25px; 
-                    cursor: pointer; 
-                    transition: background-color 0.3s, transform 0.3s; 
-                    width: 100%; 
-                    margin-top: 20px;">
+                <button onclick="window.location.href='{% url 'food_review:see_reviews' review.name review.food_type %}'" class="see-reviews-button">
                     See Reviews ({{ review.review_count }})
                 </button>
             </div>
             {% empty %}
-            <p>Data makanannya belum ada nih 😔</p>
+            <p>Looks like there's no food data here yet 😔</p>
             {% endfor %}
         </div>
         
         <style>
+            /* Gaya Umum */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #FFF9E9; /* Offwhite */
+            color: #000000; /* Black */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        /* Heading Utama */
+        .main-heading {
+            font-size: 2.5rem;
+            color: #550000; /* Maroon */
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-bar form {
+            display: flex;
+            width: 90%;
+        }
+
+        .search-bar input[type="text"] {
+            width: 75%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #CCC7BA; /* Dark cream */
+            border-radius: 30px 0 0 30px;
+            outline: none;
+        }
+
+        .search-bar .search-button,
+        .search-bar .reset-button {
+            padding: 12px 20px;
+            background-color: #550000; /* Maroon */
+            color: #FFFFFF; /* White */
+            border: none;
+            border-radius: 0 30px 30px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: -5px; /* Untuk overlapping tombol dengan input */
+        }
+
+        .search-bar .reset-button {
+            background-color: #6e5049; /* Dark cream */
+            color: #e7e7e7; /* Black */
+            margin-left: 10px;
+            border-radius: 30px;
+        }
+
+        .search-bar .search-button:hover,
+        .search-bar .reset-button:hover {
+            background-color: #400000; /* Maroon lebih gelap */
+        }
+
+        /* Podium Leaderboard Styles */
+        .podium {
+            margin-top: 10px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #FFF9E9 0%, #F2E3D5 100%); /* Gradasi lembut */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .podium::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-color: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .podium:hover::before {
+            opacity: 1;
+        }
+
+        .podium-heading {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #900000;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .podium-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        .podium-item {
+            width: 200px;
+            padding: 20px;
+            margin: 0 10px;
+            background-color: #fff7e9;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Horizontal center */
+            justify-content: center; /* Vertical center */
+        }
+
+        .podium-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .podium-item .podium-rank {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background-color: #900000;
+            color: #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .podium-item .podium-dish-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #550000;
+            margin-top: 20px; /* Adjusted to accommodate rank badge */
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .podium-item .podium-dish-type,
+        .podium-item .podium-dish-rating,
+        .podium-item .podium-dish-reviews {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .podium-item .podium-dish-type::before {
+            content: '🍽️';
+            margin-right: 8px;
+        }
+
+        .podium-item .podium-dish-rating::before {
+            content: '⭐';
+            margin-right: 8px;
+        }
+
+        .podium-item .podium-dish-reviews::before {
+            content: '💬';
+            margin-right: 8px;
+        }
+
+        /* Tinggi untuk setiap tempat podium */
+        .first-place {
+            height: 300px;
+        }
+
+        .second-place {
+            height: 250px;
+        }
+
+        .third-place {
+            height: 200px;
+        }
+
+        /* Animasi */
+        .podium-item {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Delay animasi untuk setiap item */
+        .first-place {
+            animation-delay: 0s;
+        }
+
+        .second-place {
+            animation-delay: 0.5s;
+        }
+
+        .third-place {
+            animation-delay: 1s;
+        }
+
+        /* Desain Responsif */
+        @media (max-width: 768px) {
+            .podium-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .podium-item {
+                margin: 20px 0;
+            }
+
+            .first-place,
+            .second-place,
+            .third-place {
+                height: 250px;
+            }
+        }
+
+
+        /* Kontainer Tombol */
+        .button-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .button-container .review-button {
+            padding: 15px 30px;
+            background-color: #550000; /* Maroon */
+            color: #FFFFFF; /* White */
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-container .review-button:hover {
+            background-color: #400000; /* Maroon lebih gelap */
+        }
+
+        /* Kategori */
+        .categories {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .categories a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #FFF9E9; /* Offwhite */
+            color: #550000; /* Maroon */
+            text-decoration: none;
+            border: 1px solid #CCC7BA; /* Dark cream */
+            border-radius: 20px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .categories a:hover {
+            background-color: #CCC7BA; /* Dark cream */
+            transform: translateY(-5px);
+        }
+
+        /* Item Makanan */
+        .food-item {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            background-color: #f5e0d0; /* Warna baru untuk kontainer */
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #CCC7BA; /* Dark cream */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 50px; /* Tambahkan margin bawah untuk spasi */
+        }
+
         .review-card {
-            position: relative; /* Ensure food type tag is positioned correctly */
+            position: relative;
+            background-color: #fffcf5; /* White */
+            border: 1px solid #B3AE94; /* Dark cream */
+            border-radius: 20px;
+            padding: 15px;
+            margin: 10px 0;
+            width: 18%; /* 5 kartu per baris */
+            box-sizing: border-box;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 150px; /* Mengurangi tinggi kartu */
         }
-        
+
         .review-card:hover {
-            transform: translateY(-5px); /* Lift the card slightly on hover */
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2), 
-                        -5px -5px 20px rgba(255, 255, 255, 0.8); /* Enhance shadow on hover */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
+
+        .review-card .food-type {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #550000; /* Maroon */
+            color: #FFFFFF; /* White */
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .review-card .food-name {
+            margin-top: 50px; /* Sesuaikan agar teks berada di tengah kartu */
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1rem;
+            color: #000000; /* Black */
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.2;
+            height: 40px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .review-card .see-reviews-button {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            padding: 8px 0;
+            background-color: #550000; /* Maroon */
+            color: #FFFFFF; /* White */
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .review-card .see-reviews-button:hover {
+            background-color: #400000; /* Maroon lebih gelap */
+        }
+
+        /* Gaya Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: #FFF9E9; /* Offwhite */
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 15px;
+            width: 50%;
+            position: relative;
+            border: 1px solid #CCC7BA; /* Dark cream borders */
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            color: #550000; /* Maroon */
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #550000; /* Maroon */
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .modal-content input[type="text"],
+        .modal-content input[type="number"],
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            border: 1px solid #CCC7BA; /* Dark cream borders */
+            border-radius: 10px;
+            outline: none;
+            background-color: #FFFFFF; /* White */
+            color: #000000; /* Black */
+        }
+
+        .modal-content button[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #550000; /* Maroon */
+            color: #FFFFFF; /* White */
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button[type="submit"]:hover {
+            background-color: #400000; /* Maroon lebih gelap */
+        }
+
+        /* Desain Responsif */
+        @media (max-width: 1200px) {
+            .review-card {
+                width: 23%; /* 4 kartu per baris */
+            }
+        }
+
+        @media (max-width: 992px) {
+            .review-card {
+                width: 31%; /* 3 kartu per baris */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .review-card {
+                width: 48%; /* 2 kartu per baris */
+            }
+            .modal-content {
+                width: 80%;
+            }
+            .search-bar input[type="text"] {
+                width: 70%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .review-card {
+                width: 100%; /* 1 kartu per baris */
+            }
+        }
+
         </style>
         
         
@@ -143,7 +586,7 @@
         <div class="modal-content" style="background-color: #e7e2d8; margin: 10% auto; padding: 30px; border: none; border-radius: 15px; width: 40%; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); font-family: 'Arial', sans-serif;">
             <span class="close" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
             <form id="reviewForm">
-                <h2 style="font-size: 2rem; color: #333; margin-bottom: 20px; text-align: center; font-weight: bold;">📝 Write a Review</h2>
+                <h2 style="font-size: 2rem; color: #333; margin-bottom: 20px; text-align: center; font-family: Arial; font-weight: bold;">📝 Write a Review</h2>
                 {% csrf_token %}
                 <input type="text" name="name" placeholder="Food Name" required style="width: 100%; padding: 12px 15px; margin-bottom: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); outline: none;">
                 <select name="food_type" style="width: 100%; padding: 12px 15px; margin-bottom: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); outline: none;">

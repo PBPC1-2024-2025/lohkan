@@ -7,46 +7,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Assuming your custom styles are here -->
     <title>Food Reviews for {{ food_name }} - {{ food_type }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Assuming your custom styles are here -->
+    <!-- Inline CSS -->
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: #f4f4f4;
+            background-color: #FFF9E9; /* Offwhite */
+            color: #000000; /* Black */
             margin: 0;
             padding: 0;
-            color: #333;
         }
 
         .container {
-            width: 90%;
-            margin: auto;
-            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
         }
 
         h1 {
-            font-size: 2em;
-            color: #333;
+            font-size: 2.5em;
+            color: #900000;
             text-align: center;
-            padding-bottom: 20px;
-        }
-
-        .review-card {
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 20px;
             margin-bottom: 20px;
-            transition: all 0.3s ease-in-out;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
         }
 
-        .review-card:hover {
-            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        /* Average Rating Container */
+        .average-rating-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
-        .rating {
-            font-size: 16px;
-            color: #DDAC17; /* gold color for stars */
+        .average-rating-card {
+            background: linear-gradient(135deg, #FFF9E9, #f3dad0);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+            overflow: hidden;
+        }
+
+        .average-rating-card::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, rgba(252, 247, 236, 0.5), rgba(246, 224, 203, 0.5));
+            border-radius: 25px;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        .average-rating-value {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #900000;
+            margin: 0;
+            animation: bounce 1s ease-in-out infinite alternate;
+        }
+
+        .average-rating-label {
+            font-size: 1.2em;
+            font-weight: bolder;
+            color: #550000;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
 
         .back-button {
@@ -54,35 +116,97 @@
             width: 200px;
             padding: 10px;
             margin: 20px auto;
-            background-color: #007BFF;
+            background-color: #550000; /* Maroon */
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
             text-align: center;
             font-size: 16px;
             cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
         }
 
         .back-button:hover {
-            background-color: #0056b3;
+            background-color: #400000; /* Darker maroon */
+        }
+
+        .reviews-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            background-color: #F2E3D5; /* Dark cream */
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #CCC7BA;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .review-card {
+            background-color: #FFFFFF;
+            border: 1px solid #B3AE94;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px 0;
+            width: 30%; /* Adjusted width */
+            box-sizing: border-box;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            font-size: 1rem;
+            color: #DDAC17; /* Gold color for stars */
+            margin-bottom: 10px;
+        }
+
+        .comments {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .review-card {
+                width: 100%; /* One card per row on smaller screens */
+            }
         }
 
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="container" style="padding-top: 100px;">
+    <div class="container" style="padding-top: 100px;">
         <h1>Reviews for {{ food_name }} (Type: {{ food_type }})</h1>
-        <a href="{% url 'food_review:page_review' %}" class="back-button">Back to Main Reviews</a>
-        {% for review in reviews %}
-        <div class="review-card">
-            <p class="reviewer-name"><strong>Reviewed by:</strong> {{ review.user.username }}</p>
-            <p class="rating"><strong>Rating:</strong> {{ review.rating }}/5 <span>&#9733;</span></p>
-            <p><strong>Comments:</strong> {{ review.comments }}</p>
+
+        <!-- Average Rating Section -->
+        <div class="average-rating-container">
+            <div class="average-rating-card">
+                <p class="average-rating-value">{{ average_rating|floatformat:1 }}</p>
+                <p class="average-rating-label">{{ rating_label }}</p>
+            </div>
         </div>
-        {% empty %}
-        <p>No reviews yet.</p>
-        {% endfor %}
+
+        <a href="{% url 'food_review:page_review' %}" class="back-button">Back to Main Reviews</a>
+        <div class="reviews-container">
+            {% for review in reviews %}
+            <div class="review-card">
+                <p class="reviewer-name">Reviewed by: {{ review.user.username }}</p>
+                <p class="rating">Rating: {{ review.rating }}/5 &#9733;</p>
+                <p class="comments">Comments: {{ review.comments }}</p>
+            </div>
+            {% empty %}
+            <p>No reviews yet.</p>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>

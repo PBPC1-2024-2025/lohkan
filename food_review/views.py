@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from food_review.models import ReviewEntry
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Avg
 # from article.forms import ArticleForm
 # from django.contrib import messages
 
@@ -13,28 +13,36 @@ from django.db.models import Count
 def page_review(request):
     # Aggregate reviews and count each unique food name
     food_type_filter = request.GET.get('type', 'All')
-    search_query = request.GET.get('search', '').strip()  # Get search query
+    search_query = request.GET.get('search', '').strip()
     
-    if search_query:  # If there is a search query
+    if search_query:
         reviews = (ReviewEntry.objects
-                   .filter(name__icontains=search_query)  # Case-insensitive search
+                   .filter(name__icontains=search_query)
                    .values('name', 'food_type')
-                   .annotate(review_count=Count('id'))
-                   .order_by('name'))
+                   .annotate(review_count=Count('id'), avg_rating=Avg('rating'))
+                   .order_by('-avg_rating', 'name'))
     else:
         if food_type_filter != 'All':
             reviews = (ReviewEntry.objects.filter(food_type=food_type_filter)
                        .values('name', 'food_type')
-                       .annotate(review_count=Count('id'))
-                       .order_by('name'))
+                       .annotate(review_count=Count('id'), avg_rating=Avg('rating'))
+                       .order_by('-avg_rating', 'name'))
         else:
             reviews = (ReviewEntry.objects
                        .values('name', 'food_type')
-                       .annotate(review_count=Count('id'))
-                       .order_by('name'))
+                       .annotate(review_count=Count('id'), avg_rating=Avg('rating'))
+                       .order_by('-avg_rating', 'name'))
 
+    # Fetch top 3 rated dishes independently of search or filters
+    top_rated_dishes = (ReviewEntry.objects
+                        .values('name', 'food_type')
+                        .annotate(review_count=Count('id'), avg_rating=Avg('rating'))
+                        .order_by('-avg_rating', 'name')[:3])
 
-    return render(request, 'page_review.html', {'reviews': reviews})
+    return render(request, 'page_review.html', {
+        'reviews': reviews,
+        'top_rated_dishes': top_rated_dishes
+    })
 
 # membuat review baru
 
@@ -96,4 +104,24 @@ def index(request):
 def see_reviews(request, food_name, food_type):
    # Fetch all reviews for the given food name and type
     reviews = ReviewEntry.objects.filter(name=food_name, food_type=food_type).select_related('user')
-    return render(request, 'see_reviews.html', {'reviews': reviews, 'food_name': food_name, 'food_type': food_type})
+    if reviews.exists():
+        average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
+        if average_rating <= 2:
+            rating_label = "Not quite good 🤔"
+        elif 2 < average_rating <= 3:
+            rating_label = "Maybe later 😬"
+        elif 3 < average_rating <= 4:
+            rating_label = "Maybe try some 😄"
+        else:
+            rating_label = "Recommended! 🤤"
+    else:
+        average_rating = 0
+        rating_label = "No reviews yet. 😢"
+
+    return render(request, 'see_reviews.html', {
+        'reviews': reviews,
+        'food_name': food_name,
+        'food_type': food_type,
+        'average_rating': average_rating,
+        'rating_label': rating_label
+    })
