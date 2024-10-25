@@ -14,7 +14,7 @@ def show_explore(request):
     user = request.user
     context = {
         'foods': foods,
-        'user': user,
+        'user': user
     }
     return render(request, "explore.html", context)
 
