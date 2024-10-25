@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.categories button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #f2f2f2;
+    border: none;
+    cursor: pointer;
+}
+
+.categories button:hover {
+    background-color: #ddd;
+}
+
+.food-item {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.food-item h2 {
+    margin-bottom: 10px;
+}
+
+.food-item button {
+    padding: 10px 20px;
+    background-color: orange;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.food-item button:hover {
+    background-color: darkorange;
+}
