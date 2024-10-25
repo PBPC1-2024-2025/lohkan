@@ -134,3 +134,44 @@ body {
 .see-reviews-btn:hover {
     background-color: #45a049; /* Darker green on hover */
 }
+
+.category-button {
+    padding: 10px 20px;
+    margin: 0 10px 10px 0;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.category-button:hover, .category-button:focus {
+    background-color: #367C39; /* Slightly darker green on hover/focus */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.category-button.active {
+    background-color: #285229;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2) inset; /* Inner shadow for active state */
+}
+
+/* Apply general improvements to the layout */
+.container {
+    max-width: 960px; /* Set a max-width for larger screens */
+    margin: auto; /* Center the container */
+    padding: 20px;
+    text-align: center; /* Center align text */
+    padding-top: 50px; /* Adjust top padding */
+}
+
+/* Styling for the search bar for better appearance */
+.search-bar input {
+    padding: 10px;
+    width: calc(100% - 22px); /* adjust width to properly include padding and borders */
+    border: 1px solid #ccc; /* subtle border */
+    border-radius: 5px; /* rounded borders for the input field */
+}

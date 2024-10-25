@@ -12,10 +12,19 @@ from django.db.models import Count
 # menampilkan semua review
 def page_review(request):
     # Aggregate reviews and count each unique food name
-    reviews = (ReviewEntry.objects
-               .values('name', 'food_type')  # Ensure food_type is included if necessary
-               .annotate(review_count=Count('id'))
-               .order_by('name'))  # Order by name or any other attribute
+    food_type_filter = request.GET.get('type', 'All')
+    
+    if food_type_filter != 'All':
+        reviews = (ReviewEntry.objects.filter(food_type=food_type_filter)
+                   .values('name', 'food_type')
+                   .annotate(review_count=Count('id'))
+                   .order_by('name'))
+    else:
+        reviews = (ReviewEntry.objects
+                   .values('name', 'food_type')
+                   .annotate(review_count=Count('id'))
+                   .order_by('name'))
+    
     return render(request, 'page_review.html', {'reviews': reviews})
 
 # membuat review baru

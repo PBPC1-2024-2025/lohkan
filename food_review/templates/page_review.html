@@ -14,54 +14,148 @@
 </head>
 <body>
     <div class="container" style="padding-top: 100px;">
-        <h1>See How Others Rate the Food</h1>
-        <div class="search-bar">
-            <input type="text" placeholder="Find reviews by food name...">
-            <button id="reviewButton" class="review-button">Review Your Food</button>
+        <h1 style=" font-size: 4rem; color: #900000; font-family: 'Helvetica', sans-serif; font-weight: bold; text-align: center; margin-bottom: 10px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
+        See How Others Rate the Food 😍
+        </h1>
+        <div class="search-bar" style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
+            <input type="text" placeholder="Find reviews by food name..." style="width: 60%; padding: 10px 20px; font-size: 1.0rem; font-family: 'Arial', sans-serif; border: 2px solid #900000; border-radius: 30px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); margin-right: 15px; outline: none; 
+                transition: box-shadow 0.3s ease-in-out;">
+            <button id="searchButton" class="search-button" style="padding: 12px 20px; background-color: #900000; color: #ffffff; border: none;  border-radius: 30px; font-size: 1.0rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
+                transition: background-color 0.3s ease-in-out, transform 0.2s;">
+                Search
+            </button>
         </div>
-        <div class="categories">
-            <button>All</button>
-            <button>Main Course</button>
-            <button>Dessert</button>
-            <button>Drinks</button>
-            <button>Snacks</button>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="reviewButton" class="review-button" style="padding: 15px 30px; background-color: #900000; color: #ffffff; border: none; border-radius: 30px; font-size: 1.2rem; font-family: 'Arial', sans-serif; cursor: pointer; box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
+                transition: background-color 0.3s ease-in-out, transform 0.2s;">
+                Review Your Food
+            </button>
         </div>
-        <div class="food-item">
+        <div class="categories" style="text-align: center; margin: 20px 0;">
+            <a href="{% url 'food_review:page_review' %}?type=All" 
+                style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
+                onmouseover="this.style.backgroundColor='#600000';" 
+                onmouseout="this.style.backgroundColor='#900000';">
+            All
+            </a>
+            <a href="{% url 'food_review:page_review' %}?type=Main Course" 
+                style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
+                onmouseover="this.style.backgroundColor='#600000';" 
+                onmouseout="this.style.backgroundColor='#900000';">
+               Main Course
+            </a>
+            <a href="{% url 'food_review:page_review' %}?type=Dessert" 
+               style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
+               onmouseover="this.style.backgroundColor='#600000';" 
+               onmouseout="this.style.backgroundColor='#900000';">
+               Dessert
+            </a>
+            <a href="{% url 'food_review:page_review' %}?type=Drinks" 
+                style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
+                onmouseover="this.style.backgroundColor='#600000';" 
+                onmouseout="this.style.backgroundColor='#900000';">
+               Drinks
+            </a>
+            <a href="{% url 'food_review:page_review' %}?type=Snacks" 
+                style="padding: 10px 20px; margin: 5px; background-color: #900000; color: white; font-weight: normal; text-decoration: none; border-radius: 8px; transition: background-color 0.3s ease-in-out; display: inline-block; font-family: 'Arial', sans-serif; border: 1px solid #ccc;"
+                onmouseover="this.style.backgroundColor='#600000';" 
+                onmouseout="this.style.backgroundColor='#900000';">
+               Snacks
+            </a>
+        </div>
+        
+        <div class="food-item" style="display: flex; flex-wrap: wrap; justify-content: center;">
             {% for review in reviews %}
-            <div class="review-card" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <h2 class="food-name">{{ review.name }}</h2>
-                <div class="food-type" style="background-color: #f0f0f0; padding: 5px; margin-bottom: 10px;">
-                    Type: {{ review.food_type }}
+            <div class="review-card" style="
+                border: 1px solid #B3AE94; 
+                padding: 15px; 
+                margin: 10px; 
+                background: linear-gradient(145deg, #FFF9E9, #F2E3D5); 
+                border-radius: 30px; 
+                box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), 
+                            -5px -5px 15px rgba(255, 255, 255, 0.7); 
+                width: 250px; /* Adjust width as necessary */ 
+                transition: transform 0.3s, box-shadow 0.3s;">
+        
+                <div class="food-type" style="
+                    background-color: #550000; 
+                    color: #FFFFFF; 
+                    padding: 5px 15px; 
+                    border-radius: 20px; 
+                    text-transform: capitalize; 
+                    display: inline-block; 
+                    font-weight: bold; 
+                    position: absolute; 
+                    top: 15px; 
+                    left: 15px;">
+                    {{ review.food_type }}
                 </div>
-                <button onclick="window.location.href='{% url 'food_review:see_reviews' review.name review.food_type %}'">See Reviews ({{ review.review_count }})</button>
+                
+                <h2 class="food-name" style="
+                    margin-top: 50px; /* Adjust margin for food name placement */
+                    font-size: 1.5rem; 
+                    font-weight: bold; 
+                    color: #550000; 
+                    text-align: center;">
+                    {{ review.name }}
+                </h2>
+                
+                <button onclick="window.location.href='{% url 'food_review:see_reviews' review.name review.food_type %}'" 
+                    style="
+                    padding: 10px 20px; 
+                    background-color: #550000; 
+                    color: #FFFFFF; 
+                    border: none; 
+                    border-radius: 25px; 
+                    cursor: pointer; 
+                    transition: background-color 0.3s, transform 0.3s; 
+                    width: 100%; 
+                    margin-top: 20px;">
+                    See Reviews ({{ review.review_count }})
+                </button>
             </div>
             {% empty %}
             <p>No reviews yet.</p>
             {% endfor %}
         </div>
+        
+        <style>
+        .review-card {
+            position: relative; /* Ensure food type tag is positioned correctly */
+        }
+        
+        .review-card:hover {
+            transform: translateY(-5px); /* Lift the card slightly on hover */
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2), 
+                        -5px -5px 20px rgba(255, 255, 255, 0.8); /* Enhance shadow on hover */
+        }
+        </style>
+        
+        
     </div>
 
     <!-- Modal for Submitting New Review -->
-    <div id="reviewModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close">&times;</span>
+    <div id="reviewModal" class="modal" style="display:none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.6);">
+        <div class="modal-content" style="background-color: #e7e2d8; margin: 10% auto; padding: 30px; border: none; border-radius: 15px; width: 40%; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); font-family: 'Arial', sans-serif;">
+            <span class="close" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
             <form id="reviewForm">
-                <h2>Submit Your Review</h2>
+                <h2 style="font-size: 2rem; color: #333; margin-bottom: 20px; text-align: center; font-weight: bold;">📝 Write a Review</h2>
                 {% csrf_token %}
-                <input type="text" name="name" placeholder="Food Name" required>
-                <select name="food_type">
+                <input type="text" name="name" placeholder="Food Name" required style="width: 100%; padding: 12px 15px; margin-bottom: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); outline: none;">
+                <select name="food_type" style="width: 100%; padding: 12px 15px; margin-bottom: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); outline: none;">
+                    <option value="" disabled selected>Select food type</option>
                     <option value="Main Course">Main Course</option>
                     <option value="Dessert">Dessert</option>
                     <option value="Drinks">Drinks</option>
                     <option value="Snacks">Snacks</option>
                 </select>
-                <input type="number" name="rating" placeholder="Rating (1-5)" required min="1" max="5">
-                <textarea name="comments" placeholder="Comments"></textarea>
-                <button type="submit">Submit Review</button>
+                <input type="number" name="rating" placeholder="Rating (1-5)" required min="1" max="5" style="width: 100%; padding: 12px 15px; margin-bottom: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); outline: none;">
+                <textarea name="comments" placeholder="Comments" style="width: 100%; padding: 15px; margin-bottom: 20px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); resize: vertical; outline: none;"></textarea>
+                <button type="submit" style="width: 100%; padding: 15px; background-color: #812828; color: #ffffff; font-size: 1.2rem; font-family: 'Arial', sans-serif; border: none; border-radius: 25px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);">🚀 Publish!</button>
             </form>
         </div>
     </div>
-
+    
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -109,8 +203,10 @@ $(document).ready(function(){
             }
         });
     });
+    
 });
 </script>
+
 
 </html>
 {% endblock content %}
