@@ -20,9 +20,30 @@ def add_bucket_list(request):
     
     return HttpResponse(b"CREATED", status=201)
 
+# def edit_bucket_list(request, id):
+#     bucket_list = BucketList.objects.get(pk=id)
+
+#     form = BucketListForm(request.POST or None, instance=product)
+
+#     if form.is_valid() and request.method == "POST":
+#         form.save()
+#         return HttpResponseRedirect(reverse('bucket_list:show_bucket_list'))
+
+#     context = {'form': form}
+#     return render(request, "edit_product.html", context)
+
+def delete_bucket_list(request, id):
+    bucket_list = BucketList.objects.get(pk=id)
+    bucket_list.delete()
+    return HttpResponseRedirect(reverse('bucket_list:show_bucket_list'))
+
 @login_required
 def show_bucket_list(request):
     return render(request, "bucket_list.html")
+
+@login_required
+def show_bucket_list_history(request):
+    return render(request, "bucket_list_history.html")
 
 def show_json(request):
     data = BucketList.objects.filter(user=request.user)
