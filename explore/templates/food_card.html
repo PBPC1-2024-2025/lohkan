@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <a href="#">
+        <div class="max-w-2xl mt-24 hover:-translate-y-1 hover:shadow-md tranisition duration-700">
+            <div class="flex gap-3 bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start">
+                <div class="relative w-32 h-32 flex-shrink-0">
+                    <img class="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50"
+                        loading="lazy" src="https://via.placeholder.com/150">
+                </div>
+                <div class="flex flex-col gap-2 py-2">
+                    <p class="text-xl font-bold">{food.name}</p>
+                    <p class="text-gray-500">
+                        {food.description}
+                    </p>
+                    <span class="flex items-center justify-start text-gray-500">
+                        {food.average_review}
+                    </span>
+            
+                </div>
+            
+            </div>
+        </div>
+    </a>
+    
+</body>
+</html>
