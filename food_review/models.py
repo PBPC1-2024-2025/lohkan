@@ -18,4 +18,4 @@ class ReviewEntry(models.Model):
     food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES)
     rating = models.IntegerField()
     comments = models.TextField()
-    food_id = models.ForeignKey(Food, on_delete=models.CASCADE)
+    food_id = models.ForeignKey(Food, on_delete=models.CASCADE, default=0)
