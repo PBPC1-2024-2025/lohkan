@@ -14,7 +14,7 @@
 </div>
 <div class="flex flex-col pt-12 px-10 items-start shrink-0 w-7xl mb-24">
     {% if user.is_authenticated and user.username == 'admin' %}
-        <a class="font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-lg hover:-translate-y-1 transition duration-300" href="{% url 'explore:add_food' %}">
+        <a class="font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300" href="{% url 'explore:add_food' %}">
             <span class="font-black text-3xl pb-1.5 pl-2">+</span>
             <span class="pl-1 pr-4">Add Food</span>
         </a>
@@ -35,18 +35,18 @@
                     </svg>
                 </div>
                 <input type="search" id="default-search"
-                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-2 border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-2 border-gray-300 rounded-lg bg-gray-50"
                     placeholder="Search Main Course, Snacks, ..." required />
                 <button type="submit"
-                    class="text-white absolute end-2.5 bottom-2.5 bg-[#550000] font-medium rounded-lg text-sm px-4 py-2 hover:bg-[rgb(140,0,0)] hover:-translate-y-0.5 hover:shadow-md transition duration-300">Search</button>
+                    class="text-white absolute end-2.5 bottom-2.5 bg-[#550000] font-medium rounded-lg text-sm px-4 py-2 hover:bg-[rgb(140,0,0)] hover:shadow-md transition duration-300">Search</button>
             </div>
         </form>
 
         <div class="flex gap-2 justify-start mt-2 mb-4">
-            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:-translate-y-1 transition duration-300" href="#">Main Course</a>
-            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:-translate-y-1 transition duration-300" href="#">Dessert</a>
-            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:-translate-y-1 transition duration-300" href="#">Drinks</a>
-            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:-translate-y-1 transition duration-300" href="#">Snacks</a>
+            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Main Course</a>
+            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Dessert</a>
+            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Drinks</a>
+            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Snacks</a>
         </div>
         <div class="flex flex-col border-2 rounded-xl border-gray-300">
             {% for food in foods %}

@@ -24,3 +24,6 @@ class Food(models.Model):
         choices=TypeChoices.choices,
         default=TypeChoices.MC
     )
+
+    def __str__(self):
+        return str(self.name)
