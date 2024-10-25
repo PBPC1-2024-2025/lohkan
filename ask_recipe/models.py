@@ -3,24 +3,24 @@ from django.db import models
 import uuid
 
 class RecipeGroup(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Tambahkan UUID
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # UUID untuk ID unik
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Grup dibuat oleh user
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
 class Recipe(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Tambahkan UUID
-    group = models.ForeignKey(RecipeGroup, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # UUID untuk ID unik
+    group = models.OneToOneField(RecipeGroup, on_delete=models.CASCADE)  # Relasi One-to-One dengan RecipeGroup
     title = models.CharField(max_length=100)
     ingredients = models.TextField()
     instructions = models.TextField()
     cooking_time = models.IntegerField()
     servings = models.IntegerField()
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Resep ditambahkan oleh user
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -28,7 +28,7 @@ class Recipe(models.Model):
     
 class ChatMessage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Tambahkan UUID
-    group = models.ForeignKey(RecipeGroup, on_delete=models.CASCADE)
+    group = models.OneToOneField(RecipeGroup, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)

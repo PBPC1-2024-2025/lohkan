@@ -7,63 +7,45 @@ from django.http import HttpResponse
 from django.core import serializers
 
 def ask_recipe(request):
-    return render(request, 'ask_recipe.html')
+    groups = RecipeGroup.objects.all()  # Ambil semua grup
+    return render(request, 'ask_recipe.html', {'groups': groups})
 
 #untuk ngebuat grup resep baru
 @csrf_exempt
 @require_POST
 def create_recipe(request):
-    title = request.POST.get("title")
-    ingredients = request.POST.get("ingredients")
-    instructions = request.POST.get("instructions")
-    cooking_time = request.POST.get("cooking_time")
-    servings = request.POST.get("servings")
+    if request.method == "POST":
+        title = request.POST.get("title")
+        ingredients = request.POST.get("ingredients")
+        instructions = request.POST.get("instructions")
+        cooking_time = int(request.POST.get("cooking_time"))
+        servings = int(request.POST.get("servings"))
 
-    new_recipe = Recipe(
-        title=title, 
-        ingredients=ingredients, 
-        instructions=instructions,
-        cooking_time=cooking_time,
-        servings=servings
-    )
-    new_recipe.save()
+        # Buat grup otomatis untuk resep ini
+        group = RecipeGroup.objects.create(
+            name=f"Discussion for {title}",
+            description=f"Diskusi untuk resep: {title}",
+            created_by=request.user
+        )
 
-    return HttpResponse(b"CREATED", status=201)
+        # Buat resep dan hubungkan dengan grup
+        recipe = Recipe.objects.create(
+            group=group,
+            title=title,
+            ingredients=ingredients,
+            instructions=instructions,
+            cooking_time=cooking_time,
+            servings=servings,
+            added_by=request.user
+        )
 
-# # #untuk nampilin daftar grup
-# def group_list(request):
-#     groups = RecipeGroup.objects.all()
-#     return render(request, 'group_list.html', {'groups': groups})
+        # Render HTML fragment untuk resep baru
+        return render(request, 'partials/recipe_item.html', {'recipe': recipe})
 
-# # #untuk menampilkan detail grup
-# def group_detail(request, id):
-#     group = get_object_or_404(RecipeGroup, pk=id)
-#     messages = ChatMessage.objects.filter(group=group).order_by('timestamp')
-#     return render(request, 'group_detail.html', {
-#         'group': group,
-#         'messages': messages,
-#         'form': ChatMessageForm()
-#     })
+    # Render halaman utama
+    recipes = Recipe.objects.all()
+    return render(request, 'ask_recipe.html', {'recipes': recipes})
 
-# # #untuk nambahin pesan baru
-# @csrf_exempt
-# def add_chat_message(request):
-#     if request.method == 'POST':
-#         id = request.POST.get('id')
-#         content = request.POST.get('content')
-#         group = get_object_or_404(RecipeGroup, pk=id)
-
-#         # Buat pesan baru
-#         message = ChatMessage.objects.create(
-#             group=group,
-#             user=request.user,
-#             content=content
-#         )
-        
-#         # Buat respons HTML
-#         response_content = f"<p><strong>{message.user.username}:</strong> {message.content} <em>{message.timestamp}</em></p>"
-#         return HttpResponse(response_content)
-    
 def show_xml(request):
     data = Recipe.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")

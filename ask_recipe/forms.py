@@ -1,12 +1,12 @@
 from django import forms
-from .models import RecipeGroup, ChatMessage
+from .models import Recipe, ChatMessage
 
 class RecipeGroupForm(forms.ModelForm):
     class Meta:
-        model = RecipeGroup
-        fields = ['name', 'description']
+        model = Recipe
+        fields = ['title', 'ingredients']
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 4, 'cols': 40}), 
+            'ingredients': forms.Textarea(attrs={'rows': 4, 'cols': 40}), 
         }
 
 class ChatMessageForm(forms.ModelForm):
