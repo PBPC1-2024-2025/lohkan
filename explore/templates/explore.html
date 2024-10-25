@@ -14,128 +14,257 @@
 </div>
 <div class="flex flex-col pt-12 px-10 items-start shrink-0 w-7xl mb-24">
     {% if user.is_authenticated and user.username == 'admin' %}
-        <a class="font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300" href="{% url 'explore:add_food' %}">
+        <!-- <a class="font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300" href="{% url 'explore:add_food' %}">
             <span class="font-black text-3xl pb-1.5 pl-2">+</span>
             <span class="pl-1 pr-4">Add Food</span>
-        </a>
+        </a> -->
+        <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300" onclick="showModal();">
+            <span class="font-black text-3xl pb-1.5 pl-2">+</span>
+            <span class="pl-1 pr-4">Add Food</span>
+        </button>
     {% endif %}
-
-    {% if not foods %}
-        <p>Belum ada data food.</p>
-    {% else %}
-        <!-- search bar -->
-        <form class="w-[50%]">
-            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-            <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-                <input type="search" id="default-search"
-                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-2 border-gray-300 rounded-lg bg-gray-50"
-                    placeholder="Search Main Course, Snacks, ..." required />
-                <button type="submit"
-                    class="text-white absolute end-2.5 bottom-2.5 bg-[#550000] font-medium rounded-lg text-sm px-4 py-2 hover:bg-[rgb(140,0,0)] hover:shadow-md transition duration-300">Search</button>
+    <!-- search bar -->
+    <form class="w-[50%]">
+        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+        <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
             </div>
-        </form>
+            <input type="search" id="default-search"
+                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-2 border-gray-300 rounded-lg bg-gray-50"
+                placeholder="Search Main Course, Snacks, ..." required />
+            <button type="submit"
+                class="text-white absolute end-2.5 bottom-2.5 bg-[#550000] font-medium rounded-lg text-sm px-4 py-2 hover:bg-[rgb(140,0,0)] hover:shadow-md transition duration-300">Search</button>
+        </div>
+    </form>
 
-        <div class="flex gap-2 justify-start mt-2 mb-4">
-            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Main Course</a>
-            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Dessert</a>
-            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Drinks</a>
-            <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Snacks</a>
-        </div>
-        <div class="flex flex-col border-2 rounded-xl border-gray-300">
+    <div class="flex gap-2 justify-start mt-2 mb-4">
+        <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Main Course</a>
+        <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Dessert</a>
+        <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Drinks</a>
+        <a class="text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300" href="#">Snacks</a>
+    </div>
+    <!-- <div class="flex flex-col border-2 rounded-xl border-gray-300">
+        {% if not foods %}
+            <p>Belum ada data food.</p>
+        {% else %}
             {% for food in foods %}
-            {% include 'food_card.html' with food=food %}
+                {% include 'food_card.html' with food=food %}
             {% endfor %}
+            <p>a</p>
+        {% endif %}
+        </div> -->
+    
+    <!-- Food Cards -->
+    <div id="food_cards"></div>
+    
+    <!-- Crud Modal -->
+    <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+        <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between p-4 border-b rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">
+                Add Food
+            </h3>
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                id="closeModalBtn">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
         </div>
-    {% endif %}
+        <!-- Modal Body -->
+        <div class="px-6 py-4 space-y-6 form-style">
+            <form id="foodForm">
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" id="name" name="name"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-[#550000]"
+                        placeholder="Enter food name..." required>
+                </div>
+                <div class="mb-4">
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="description" name="description" rows="3"
+                        class="mt-1 block w-full h-16 resize-none border border-gray-300 rounded-md p-2 hover:border-[#550000]"
+                        placeholder="Enter short description..." required></textarea>
+                </div>
+                <div class="flex justify-between">
+                    <div class="mb-4">
+                        <label for="min_price" class="block text-sm font-medium text-gray-700">Min Price (IDR)</label>
+                        <input type="number" id="minPrice" name="min_price"
+                            class="mt-1 block w-[90%] border border-gray-300 rounded-md p-2 hover:border-[#550000]" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price (IDR)</label>
+                        <input type="number" id="maxPrice" name="max_price"
+                            class="mt-1 block w-[90%] border border-gray-300 rounded-md p-2 hover:border-[#550000]" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="image_link" class="block text-sm font-medium text-gray-700">Image Link</label>
+                    <input type="url" id="imageLink" name="image_link" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-[#550000]"
+                        placeholder="Enter image URL..." required>
+                </div>
+                <div class="mb-4">
+                    <label for="type">Food Type</label>
+                    <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#550000] focus:border-[#550000] block w-full p-2.5">
+                        <option value="MC">Main Course</option>
+                        <option value="DS">Dessert</option>
+                        <option value="DR">Drinks</option>
+                        <option value="SN">Snacks</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+            <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg"
+                id="cancelButton">Cancel</button>
+            <button type="submit" id="submitFood" form="foodForm"
+                class="bg-[#550000] hover:bg-[rgb(140,0,0)] text-white font-bold py-2 px-4 rounded-lg">Save</button>
+        </div>
+    </div>
 </div>
 
-<!-- Footer Section -->
-<footer class="bg-marron-800 py-10" style="background-color: #800000;">
-    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
-
-        <!-- Contact Information Section -->
-        <div>
-            <h3 class="text-xl font-bold mb-3">Contact Us</h3>
-            <ul class="space-y-2">
-                <li class="flex items-center">
-                    <strong>Telephone:</strong>
-                    <a href="tel:+6283456789" class="hover:text-gray-300 ml-1">+62 8234567890</a>
-                </li>
-                <li class="flex items-center">
-                    <strong>Email:</strong>
-                    <a href="mailto:info@lohkan.com" class="hover:text-gray-300 ml-1">info@lohkan.com</a>
-                </li>
-            </ul>
-        </div>
-        <!-- Resources Section -->
-        <div>
-            <h3 class="text-xl font-bold mb-3">Dataset Resources</h3>
-            <ul class="space-y-2">
-                <li><a href="https://hotelier.id/makanan-khas-bangka-belitung/" class="hover:text-gray-300">Hotelier</a>
-                </li>
-                <li><a href="https://keluyuran.com/makanan-khas-bangka-belitung/"
-                        class="hover:text-gray-300">Keluyuran</a></li>
-                <li><a href="https://tempatwisataseru.com/makanan-khas-bangka-belitung-paling-enak-oleh-oleh-jajanan-pasar/"
-                        class="hover:text-gray-300">Tempat Wisata Seru</a></li>
-                <li><a href="https://makananoleholeh.com/makanan-khas-daerah/makanan-khas-bangka-belitung/"
-                        class="hover:text-gray-300">Makanan Oleh Oleh</a></li>
-                <li><a href="https://www.selasar.com/makanan-khas-bangka-belitung/"
-                        class="hover:text-gray-300">Selasar</a></li>
-                <li><a href="https://www.wisatabelitung.net/kue-khas-bangka-belitung/"
-                        class="hover:text-gray-300">Wisata Belitung</a></li>
-                <li><a href="https://www.gotravelly.com/blog/oleh-oleh-khas-bangka-belitung/"
-                        class="hover:text-gray-300">Gotravelly</a></li>
-            </ul>
-        </div>
-
-        <!-- Find Us Here Section -->
-        <div>
-            <h3 class="text-xl font-bold mb-3 text-white">Find Us Here</h3>
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.183271344341!2d106.82447917446905!3d-6.370323693619821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ec1ad14fb6cf%3A0xc94e4d829420fa15!2sFakultas%20Ilmu%20Komputer%20(Fasilkom)%20UI!5e0!3m2!1sid!2sid!4v1727673094986!5m2!1sid!2sid"
-                width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy">
-            </iframe>
-        </div>
-    </div>
-
-    <!-- Footer Bottom Section -->
-    <div class="bg-marron-900 py-4 text-center text-gray-400">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-            <p>©2024 LohKan. All rights reserved. | <a href="#" class="hover:text-white">Terms of Service</a> | <a
-                    href="#" class="hover:text-white">Privacy Policy</a></p>
-        </div>
-    </div>
-</footer>
 
 <script>
-    document.querySelector('a[href="#section1"]').addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector('#section1').scrollIntoView({ behavior: 'smooth' });
-    });
+    function addFood() {
+        fetch("{% url 'explore:add_food_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#foodForm')),
+        }).then(response => refreshFoods());
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const textElement = document.getElementById("typewriter");
-        const text = textElement.textContent;
-        textElement.textContent = "";  // Clear the text
+        document.getElementById("foodForm").reset();
+        document.querySelector("[data-modal-toggle='crudModal']").click();
 
-        let index = 0;
+        return false;
+    }
+    async function getFoods() {
+        return fetch("{% url 'explore:show_json' %}").then((res) => res.json())
+    }
 
-        function typeWriter() {
-            if (index < text.length) {
-                textElement.textContent += text.charAt(index);
-                index++;
-                setTimeout(typeWriter, 100);  // Adjust speed as needed
-            }
+    async function refreshFoods(){
+        document.getElementById("food_cards").innerHTML = "";
+        document.getElementById("food_cards").className = "";
+        const foods = await getFoods();
+        let htmlString = "";
+        let classNameString = "";
+
+        if (foods.length === 0) {
+            classNameString = "flex flex-col border-2 rounded-xl border-gray-300";
+            htmlString = `
+<div class="flex flex-col border-2 rounded-xl border-gray-300">
+    <p>Belum ada data food.</p>
+</div>`;
+        } else {
+            classNameString = "flex flex-col border-2 rounded-xl border-gray-300";
+            foods.forEach((item) => {
+                htmlString += `
+<div class="flex px-4 py-2 border-b-2 border-gray-300 items-center hover:bg-gray-100 hover:-translate-y-1 hover:rounded-xl hover:shadow-lg transition duration-700 w-full">
+    <div class="relative w-24 h-24 gap-3px">
+        <img class="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50 rounded-xl" loading="lazy"
+            src="${item.fields.image_link}" alt="${item.fields.name}">
+    </div>
+    <div class="flex flex-col pl-4 w-[50%]">
+        <div class="flex">
+            <p class="text-xl font-bold">
+                ${item.fields.name}
+            </p>
+            <div class="flex items-center ml-2">
+                ${item.fields.type === 'MC' ? '<p class="text-sm font-semibold bg-green-400 rounded-xl px-2 -pb-2 shadow-sm">Main Course</p>' : ''}
+                ${item.fields.type === 'DS' ? '<p class="text-sm font-semibold bg-yellow-400 rounded-xl px-2 -pb-2 shadow-sm">Dessert</p>' : ''}
+                ${item.fields.type === 'DR' ? '<p class="text-sm font-semibold bg-pink-400 rounded-xl px-2 -pb-2 shadow-sm">Drinks</p>' : ''}
+                ${item.fields.type === 'SN' ? '<p class="text-sm font-semibold bg-red-400 rounded-xl px-2 -pb-2 shadow-sm">Snacks</p>' : ''}
+            </div>
+        </div>
+        <p class="line-clamp-1 break-all">
+            ${item.fields.description}
+        </p>
+        <p class="text-gray-500">
+            Price: Rp${item.fields.min_price} - Rp${item.fields.max_price}
+        </p>
+    </div>
+    <div class="flex gap-3 w-[40%] justify-end">
+        {% if user.is_authenticated and user.username == 'admin' %}        
+        <a href="/edit-food/${item.pk}"
+            class="text-gray-500 hover:bg-yellow-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+            </svg>
+
+            <span class="sr-only">Edit Food</span>
+        </a>
+        <a href="/delete-food/${item.pk}"
+            class="text-gray-500 hover:bg-red-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+            </svg>
+
+            <span class="sr-only">Delete Food</span>
+        </a>
+        {% endif %}
+        <a href="#"
+            class="text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+            </svg>
+            <span class="sr-only">Bookmark Food</span>
+        </a>
+    </div>
+</div>`;
+            });
         }
+        document.getElementById("food_cards").className = classNameString;
+        document.getElementById("food_cards").innerHTML = htmlString;
+    }
+    refreshFoods();
 
-        typeWriter();
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    function showModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modalContent.classList.remove('opacity-0', 'scale-95');
+            modalContent.classList.add('opacity-100', 'scale-100');
+        }, 50);
+    }
+
+    function hideModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+
+        modalContent.classList.remove('opacity-100', 'scale-100');
+        modalContent.classList.add('opacity-0', 'scale-95');
+
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 150);
+    }
+
+    document.getElementById("cancelButton").addEventListener("click", hideModal);
+    document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+
+    document.getElementById("foodForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        addFood();
     });
 </script>
 {% endblock content %}

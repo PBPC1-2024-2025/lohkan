@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body> -->
 <div class="flex px-4 py-2 border-b-2 border-gray-300 items-center hover:bg-gray-100 hover:-translate-y-1 hover:rounded-xl hover:shadow-lg transition duration-700 w-full">
     <div class="relative w-24 h-24 gap-3px">
         <img class="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50 rounded-xl" loading="lazy"
@@ -54,7 +54,7 @@
         </a>
         <a href="{% url 'explore:delete_food' food.pk %}"
             class="text-gray-500 hover:bg-red-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500"
-            href="{% url 'explore:edit_food' food.pk %}">
+            href="{% url 'explore:delete_food' food.pk %}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -76,31 +76,6 @@
         </a>
     </div>
 </div>
-<!-- <a href="#">
-    <div
-        class="max-w-4xl hover:-translate-y-1 hover:bg-gray-200 hover:shadow-md transition duration-700 break-inside-avoid">
-        <div class="flex gap-3 border-b-2 border-gray-300 overflow-hidden items-center justify-start">
-            <div class="relative w-24 h-24">
-                <img class="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50"
-                    loading="lazy" src="{{food.image_link}}" alt="{{food.name}}">
-            </div>
-            <div class="flex flex-col gap-2 py-2 px-4">
-                <p class="text-xl font-bold">{{food.name}}</p>
-                <p class="text-gray-500 line-clamp-1">
-                    {{food.description}}
-                </p>
-                <span class="flex items-center justify-start text-gray-500">
-                    Avg. price: {{food.average_review}}
-                </span>
-                {% if user.is_authenticated and user.username == 'admin' %}
-                <div class="flex">
-                    <a href="{% url 'explore:edit_food' food.pk %}" class="text-yellow-700 mr-3">Edit product</a>
-                    <a href="{% url 'explore:delete_food' food.pk %}" class="text-red-700 mr-3">Delete product</a>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</a> -->
+<!-- 
 </body>
-</html>
+</html> -->

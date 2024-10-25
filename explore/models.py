@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Avg
 from django.template.defaultfilters import default
@@ -7,6 +8,7 @@ from django.template.defaultfilters import default
 
 # Create your models here.
 class Food(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     class TypeChoices(models.TextChoices):
         MC = 'MC', 'Main Course'
         DS = 'DS', 'Dessert'
@@ -24,6 +26,5 @@ class Food(models.Model):
         choices=TypeChoices.choices,
         default=TypeChoices.MC
     )
-
     def __str__(self):
         return str(self.name)
