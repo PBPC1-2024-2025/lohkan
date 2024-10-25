@@ -51,7 +51,7 @@
             </div>
 
             <!-- Chat Area: Tampil saat resep dipilih -->
-            <div id="chat-area" class="hidden flex flex-col h-full">
+            <div id="chat-area" class="hidden flex flex-col h-full space-y-4">
                 <!-- Header Chat -->
                 <div class="flex justify-between items-center mb-4">
                     <p id="chat-header" class="text-xl font-bold"></p>
@@ -59,17 +59,17 @@
                         <button><i class="fas fa-search"></i></button>
                     </div>
                 </div>
-
+            
                 <!-- Konten Chat -->
-                <div class="chat-content flex-1 overflow-y-auto space-y-4 mb-4"></div>
-
+                <div class="chat-content flex-1 overflow-y-auto space-y-4 mb-4" data-group-id="{{ selected_group.id }}"></div>
+            
                 <!-- Input Pesan -->
                 <div class="flex items-center space-x-2">
-                    <input type="text" placeholder="Type a message" 
+                    <input type="text" id="message-input" placeholder="Type a message" 
                         class="flex-1 p-3 rounded-full border border-gray-300">
-                    <button class="p-3 bg-red-800 text-white rounded-full">
+                    <button id="send-button" class="p-3 bg-red-800 text-white rounded-full">
                         <i class="fas fa-paper-plane"></i>
-                    </button>
+                    </button> 
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 border-b rounded-t bg-red-800">
                 <h3 class="text-xl font-semibold text-white">
-                    Create New Recipe
+                    Add Your Recipe
                 </h3>
                 <button type="button" class="text-gray-300 hover:bg-red-800 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -96,7 +96,7 @@
 
                     <div class="grid gap-6 mb-4">
                         <div>
-                            <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                            <label for="title" class="block text-sm font-medium text-gray-700">Name</label>
                             <input type="text" id="title" name="title" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
                         </div>
                     </div>
@@ -217,7 +217,11 @@
         const instructions = element.getAttribute('data-instructions');
         const servings = element.getAttribute('data-servings');
         const cookingTime = element.getAttribute('data-cooking-time');
+        const groupId = element.getAttribute('data-group-id');
         const creator = element.getAttribute('data-creator');
+
+        console.log("Servings:", servings);
+        console.log("Cooking Time:", cookingTime);
 
         // Temukan elemen chat dan header
         const chatArea = document.getElementById('chat-area');
@@ -229,41 +233,105 @@
         chatPlaceholder.classList.add('hidden');
         chatArea.classList.remove('hidden');
 
+        // Simpan group_id di elemen chat-content untuk referensi selanjutnya
+        chatContent.setAttribute('data-group-id', groupId);
+
         // Update header dengan judul resep
         chatHeader.textContent = `Recipe for ${title}`;
 
         // Format konten dengan list untuk ingredients dan instructions
         chatContent.innerHTML = `
-            <div class="bg-white p-6 rounded-lg shadow space-y-4">
+            <div class="bg-white p-6 rounded-lg shadow space-y-6">
                 <div>
-                    <p class="font-semibold mb-2">Ingredients :</p>
-                    <ul class="list-disc list-inside space-y-1">
+                    <h2 class="font-bold text-lg mb-2">Ingredients :</h2>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
                         ${ingredients
                             .split('-')
-                            .map(ingredient => ingredient.trim()) // Trim spasi ekstra
-                            .filter(ingredient => ingredient) // Hilangkan item kosong
+                            .map(ingredient => ingredient.trim())
+                            .filter(ingredient => ingredient)
                             .map(ingredient => `<li>${ingredient}</li>`)
                             .join('')}
                     </ul>
                 </div>
 
                 <div>
-                    <p class="font-semibold mb-2">Instructions:</p>
-                    <ol class="list-decimal list-inside space-y-1">
+                    <h2 class="font-bold text-lg mb-2">Instructions :</h2>
+                    <ol class="list-decimal list-inside space-y-1 text-gray-700">
                         ${instructions
                             .split('-')
-                            .map(instruction => instruction.trim()) // Trim spasi ekstra
-                            .filter(instruction => instruction) // Hilangkan item kosong
+                            .map(instruction => instruction.trim())
+                            .filter(instruction => instruction)
                             .map(instruction => `<li>${instruction}</li>`)
                             .join('')}
                     </ol>
                 </div>
-                <p><strong>Servings :</strong> ${servings}</p>
+                
+                <p><strong>Servings :</strong> ${servings} portion</p>
                 <p><strong>Cooking Time :</strong> ${cookingTime} minutes</p>
-                <p class="text-sm text-gray-500">Created by : ${creator}</p>
+
+                <div class="text-gray-600">
+                    <p class="text-sm text-gray-500">Created by : ${creator}</p>
+                </div>
             </div>
         `;
     }
+
+    const chatContent = document.querySelector('.chat-content');
+    const inputMessage = document.getElementById('message-input');  // Pastikan ID ini benar
+    const sendButton = document.getElementById('send-button');
+
+    // Fungsi untuk merender pesan baru
+    function renderMessage(html) {
+        chatContent.innerHTML += html;
+        chatContent.scrollTop = chatContent.scrollHeight;
+    }
+
+    // Fungsi untuk mengambil pesan dari grup tertentu
+    function fetchMessages(groupId) {
+        fetch(`/ask_recipe/messages/${groupId}/`)
+            .then(response => response.text())
+            .then(html => {
+                chatContent.innerHTML = html;
+            })
+            .catch(error => console.error('Error fetching messages:', error));
+    }
+
+    // Event Listener untuk mengirim pesan baru
+    sendButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        
+        const content = inputMessage.value;
+        const groupId = chatContent.getAttribute('data-group-id');  // Ambil group_id dari atribut data
+
+        // Validasi input
+        if (!content.trim()) {
+            alert("Message content cannot be empty.");
+            return;
+        }
+        if (!groupId) {
+            alert("Group ID is missing or undefined.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('group_id', groupId);
+        formData.append('content', content);
+
+        // Fetch untuk mengirim pesan
+        fetch('/ask_recipe/send_message/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+        .then(response => response.text())
+        .then(html => {
+            renderMessage(html);  // Tambahkan pesan baru ke chat
+            inputMessage.value = '';  // Reset input field
+        })
+        .catch(error => console.error('Error sending message:', error));
+    }); 
     </script>    
 
 {% endblock content %}

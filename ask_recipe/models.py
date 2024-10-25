@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User
-from django.db import models
 import uuid
+from django.db import models
+from django.contrib.auth.models import User
 
 class RecipeGroup(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # UUID untuk ID unik
@@ -14,7 +14,7 @@ class RecipeGroup(models.Model):
 
 class Recipe(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # UUID untuk ID unik
-    group = models.OneToOneField(RecipeGroup, on_delete=models.CASCADE)  # Relasi One-to-One dengan RecipeGroup
+    group = models.ForeignKey(RecipeGroup, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     ingredients = models.TextField()
     instructions = models.TextField()
@@ -27,8 +27,8 @@ class Recipe(models.Model):
         return self.title
     
 class ChatMessage(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Tambahkan UUID
-    group = models.OneToOneField(RecipeGroup, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # Tetap pakai UUID jika perlu
+    group = models.ForeignKey(RecipeGroup, on_delete=models.CASCADE)  # Many-to-One
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)

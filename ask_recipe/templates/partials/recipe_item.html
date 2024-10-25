@@ -1,13 +1,11 @@
-<div class="recipe-item flex justify-between items-center bg-white text-gray-700 p-4 rounded-lg"
-     data-title="{{ recipe.title }}"
-     data-ingredients="{{ recipe.ingredients }}"
-     data-instructions="{{ recipe.instructions }}"
-     data-servings="{{ recipe.servings }}"
-     data-cooking-time="{{ recipe.cooking_time }}"
-     data-creator="{{ recipe.added_by.username }}"
+<div class="recipe-item flex justify-between items-center bg-white text-gray-700 p-4 rounded-lg cursor-pointer"
+     data-id="{{ recipe.id }}" data-title="{{ recipe.title }}" data-ingredients="{{ recipe.ingredients }}"
+     data-instructions="{{ recipe.instructions }}" data-creator="{{ recipe.added_by.username }}"
+     data-servings="{{ recipe.servings }}" data-cooking-time="{{ recipe.cooking_time }}" 
+     data-group-id="{{ recipe.group.id }}"
      onclick="openChat(this)">
     <div>
         <p class="font-bold">Recipe for {{ recipe.title }}</p>
-        <p class="text-sm text-gray-500">Created by : {{ recipe.added_by.username }}</p>
+        <p class="text-sm text-gray-500">Created by: {{ recipe.added_by.username }}</p>
     </div>
 </div>
