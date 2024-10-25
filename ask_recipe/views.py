@@ -76,7 +76,12 @@ def send_message(request):
         )
 
     return HttpResponse("Invalid request method.", status=405)
-    
+
+def delete_group(request, group_id):
+    group = get_object_or_404(RecipeGroup, id=group_id)
+    group.delete()
+    return redirect('ask_recipe:ask_recipe')
+
 def show_xml(request):
     data = Recipe.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
