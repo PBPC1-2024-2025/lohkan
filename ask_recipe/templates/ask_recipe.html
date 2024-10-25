@@ -211,6 +211,7 @@
         .catch(error => console.error('Error:', error));
     });
 
+    // Fungsi untuk membuka obrolan dan memuat pesan
     function openChat(element) {
         const title = element.getAttribute('data-title');
         const ingredients = element.getAttribute('data-ingredients');
@@ -220,16 +221,13 @@
         const groupId = element.getAttribute('data-group-id');
         const creator = element.getAttribute('data-creator');
 
-        console.log("Servings:", servings);
-        console.log("Cooking Time:", cookingTime);
-
         // Temukan elemen chat dan header
         const chatArea = document.getElementById('chat-area');
         const chatPlaceholder = document.getElementById('chat-placeholder');
         const chatHeader = document.getElementById('chat-header');
         const chatContent = document.querySelector('.chat-content');
 
-        // Tampilkan chat area dan sembunyikan placeholder
+        // Tampilkan area chat dan sembunyikan placeholder
         chatPlaceholder.classList.add('hidden');
         chatArea.classList.remove('hidden');
 
@@ -239,7 +237,7 @@
         // Update header dengan judul resep
         chatHeader.textContent = `Recipe for ${title}`;
 
-        // Format konten dengan list untuk ingredients dan instructions
+        // Format konten resep dengan list untuk ingredients dan instructions
         chatContent.innerHTML = `
             <div class="bg-white p-6 rounded-lg shadow space-y-6">
                 <div>
@@ -265,46 +263,57 @@
                             .join('')}
                     </ol>
                 </div>
-                
+
                 <p><strong>Servings :</strong> ${servings} portion</p>
                 <p><strong>Cooking Time :</strong> ${cookingTime} minutes</p>
 
                 <div class="text-gray-600">
-                    <p class="text-sm text-gray-500">Created by : ${creator}</p>
+                    <p class="text-sm text-gray-500">Created by: ${creator}</p>
                 </div>
             </div>
         `;
+
+        // Muat pesan dari server untuk grup ini
+        fetchMessages(groupId);
     }
 
     const chatContent = document.querySelector('.chat-content');
-    const inputMessage = document.getElementById('message-input');  // Pastikan ID ini benar
+    const inputMessage = document.getElementById('message-input');
     const sendButton = document.getElementById('send-button');
 
-    // Fungsi untuk merender pesan baru
-    function renderMessage(html) {
-        chatContent.innerHTML += html;
-        chatContent.scrollTop = chatContent.scrollHeight;
-    }
-
-    // Fungsi untuk mengambil pesan dari grup tertentu
+    // Fungsi untuk mengambil pesan dari server
     function fetchMessages(groupId) {
         fetch(`/ask_recipe/messages/${groupId}/`)
             .then(response => response.text())
             .then(html => {
-                chatContent.innerHTML = html;
+                const chatContent = document.querySelector('.chat-content');
+                chatContent.innerHTML += html;  // Tambahkan pesan ke dalam konten chat
+                scrollToBottom();  // Scroll otomatis ke pesan terakhir
             })
             .catch(error => console.error('Error fetching messages:', error));
+    }
+
+    // Fungsi untuk menambahkan pesan baru ke chat
+    function renderMessage(html) {
+        chatContent.innerHTML += html;
+        scrollToBottom();  // Scroll ke bawah setelah pesan baru ditambahkan
+    }
+
+    // Fungsi untuk scroll otomatis ke pesan terbaru
+    function scrollToBottom() {
+        const chatContent = document.querySelector('.chat-content');
+        chatContent.scrollTop = chatContent.scrollHeight;
     }
 
     // Event Listener untuk mengirim pesan baru
     sendButton.addEventListener('click', function (event) {
         event.preventDefault();
         
-        const content = inputMessage.value;
-        const groupId = chatContent.getAttribute('data-group-id');  // Ambil group_id dari atribut data
+        const content = inputMessage.value.trim();
+        const groupId = chatContent.getAttribute('data-group-id');
 
         // Validasi input
-        if (!content.trim()) {
+        if (!content) {
             alert("Message content cannot be empty.");
             return;
         }
@@ -317,7 +326,7 @@
         formData.append('group_id', groupId);
         formData.append('content', content);
 
-        // Fetch untuk mengirim pesan
+        // Kirim pesan melalui fetch POST
         fetch('/ask_recipe/send_message/', {
             method: 'POST',
             body: formData,
@@ -331,7 +340,7 @@
             inputMessage.value = '';  // Reset input field
         })
         .catch(error => console.error('Error sending message:', error));
-    }); 
+    });
     </script>    
 
 {% endblock content %}

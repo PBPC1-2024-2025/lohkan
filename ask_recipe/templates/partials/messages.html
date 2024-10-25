@@ -1,0 +1,27 @@
+{% for message in messages %}
+    <div class="flex mb-4 {% if message.user == user %}justify-end{% else %}justify-start{% endif %}">
+        <div class="
+            {% if message.user == user %}
+                bg-red-800 text-white
+            {% else %}
+                bg-gray-100 text-black
+            {% endif %} 
+            p-4 rounded-xl shadow-md max-w-md">
+            
+            <!-- Nama User Pengirim -->
+            <p class="text-xs font-semibold mb-1 
+                {% if message.user == user %}text-gray-300{% else %}text-gray-500{% endif %}">
+                {{ message.user.username }}
+            </p>
+
+            <!-- Isi Pesan -->
+            <p class="text-sm leading-relaxed break-words">{{ message.message }}</p>
+
+            <!-- Timestamp -->
+            <div class="text-xs mt-2 
+                {% if message.user == user %}text-gray-300{% else %}text-gray-500{% endif %}">
+                {{ message.timestamp|date:"Y-m-d H:i:s" }}
+            </div>
+        </div>
+    </div>
+{% endfor %}

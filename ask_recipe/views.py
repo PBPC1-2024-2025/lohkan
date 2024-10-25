@@ -3,12 +3,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from .models import RecipeGroup, ChatMessage, Recipe
 from .forms import RecipeGroupForm, ChatMessageForm
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.core import serializers
 
 def ask_recipe(request):
-    groups = RecipeGroup.objects.all()  # Ambil semua grup
-    return render(request, 'ask_recipe.html', {'groups': groups})
+    recipes = Recipe.objects.all()  # Ambil semua resep dari database
+    return render(request, 'ask_recipe.html', {'recipes': recipes})
 
 #untuk ngebuat grup resep baru
 @csrf_exempt
