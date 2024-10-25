@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.contrib.auth.models import User
+from explore.models import Food
 
 # Create your models here.
 class ReviewEntry(models.Model):
@@ -17,3 +18,4 @@ class ReviewEntry(models.Model):
     food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES)
     rating = models.IntegerField()
     comments = models.TextField()
+    food_id = models.ForeignKey(Food, on_delete=models.CASCADE)
