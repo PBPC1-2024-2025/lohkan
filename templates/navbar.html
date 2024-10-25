@@ -12,7 +12,7 @@
                 {% if user.is_authenticated %}
                     <!-- Additional Menu Item -->
                     <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Explore</a>
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Food Review</a>
+                    <a href="{% url 'food_review:page_review' %}" class="text-gray-300 hover:text-white mr-4 -mr-2">Food Review</a>
                     <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Bucket List</a>
                     <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Ask Recipe</a>
                     <a href="#" class="text-gray-300 hover:text-white mr-4 ">Article</a>

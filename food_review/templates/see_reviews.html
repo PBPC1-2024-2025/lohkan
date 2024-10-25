@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Assuming your custom styles are here -->
+    <title>Food Reviews for {{ food_name }} - {{ food_type }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .review-card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .review-card:hover {
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+
+        .rating {
+            font-size: 16px;
+            color: #DDAC17; /* gold color for stars */
+        }
+
+        .back-button {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin: 20px auto;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container" style="padding-top: 100px;">
+        <h1>Reviews for {{ food_name }} (Type: {{ food_type }})</h1>
+        <a href="{% url 'food_review:page_review' %}" class="back-button">Back to Main Reviews</a>
+        {% for review in reviews %}
+        <div class="review-card">
+            <p class="reviewer-name"><strong>Reviewed by:</strong> {{ review.user.username }}</p>
+            <p class="rating"><strong>Rating:</strong> {{ review.rating }}/5 <span>&#9733;</span></p>
+            <p><strong>Comments:</strong> {{ review.comments }}</p>
+        </div>
+        {% empty %}
+        <p>No reviews yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}

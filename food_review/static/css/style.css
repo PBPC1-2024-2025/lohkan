@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.categories button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #f2f2f2;
+    border: none;
+    cursor: pointer;
+}
+
+.categories button:hover {
+    background-color: #ddd;
+}
+
+.food-item {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.food-item h2 {
+    margin-bottom: 10px;
+}
+
+.food-item button {
+    padding: 10px 20px;
+    background-color: orange;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.food-item button:hover {
+    background-color: darkorange;
+}
+.container {
+    padding-top: 1000px; /* Adjust the value based on the height of your navbar */
+    /* Other styles */
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.review-card {
+    width: 300px; /* Adjust based on your layout needs */
+    margin: 10px;
+    background-color: #f0f0f0; /* Light grey background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow for depth */
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden; /* Ensures no content spills out */
+}
+
+.card-header {
+    background-color: #ffee93; /* Light yellow background */
+    color: #333; /* Dark text for better readability */
+    padding: 20px;
+    text-align: center;
+}
+
+.food-name {
+    margin: 0;
+}
+
+.card-footer {
+    padding: 10px;
+    text-align: center;
+    background-color: #ffffff; /* White background for the footer */
+}
+
+.see-reviews-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.see-reviews-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}

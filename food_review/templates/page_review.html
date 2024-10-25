@@ -1,31 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review Food</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="padding-top: 100px;">
         <h1>See How Others Rate the Food</h1>
         <div class="search-bar">
             <input type="text" placeholder="Find reviews by food name...">
+            <button id="reviewButton" class="review-button">Review Your Food</button>
         </div>
         <div class="categories">
             <button>All</button>
             <button>Main Course</button>
             <button>Dessert</button>
             <button>Drinks</button>
+            <button>Snacks</button>
         </div>
         <div class="food-item">
-            <h2>Mie Koba</h2>
-            <button onclick="location.href='reviews.html';">See Reviews</button>
-        </div>
-        <div class="food-item">
-            <h2>Lepet</h2>
-            <button onclick="location.href='reviews.html';">See Reviews</button>
+            {% for review in reviews %}
+            <div class="review-card" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h2 class="food-name">{{ review.name }}</h2>
+                <div class="food-type" style="background-color: #f0f0f0; padding: 5px; margin-bottom: 10px;">
+                    Type: {{ review.food_type }}
+                </div>
+                <button onclick="window.location.href='{% url 'food_review:see_reviews' review.name review.food_type %}'">See Reviews</button>
+            </div>
+            {% empty %}
+            <p>No reviews yet.</p>
+            {% endfor %}
         </div>
     </div>
+
+    <!-- Modal for Submitting New Review -->
+    <div id="reviewModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="reviewForm">
+                <h2>Submit Your Review</h2>
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Food Name" required>
+                <select name="food_type">
+                    <option value="Main Course">Main Course</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Drinks">Drinks</option>
+                    <option value="Snacks">Snacks</option>
+                </select>
+                <input type="number" name="rating" placeholder="Rating (1-5)" required min="1" max="5">
+                <textarea name="comments" placeholder="Comments"></textarea>
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+    var modal = $('#reviewModal'); // Ensure this is the correct ID
+    var btn = $('#reviewButton'); // Button that triggers the modal
+    var span = $('.close'); // Close button in the modal
+
+    // Show the modal when the "Review Your Food" button is clicked
+    btn.click(function() {
+        modal.show();
+    });
+
+    // Hide the modal when the "close" span is clicked
+    span.click(function() {
+        modal.hide();
+    });
+
+    // Also hide the modal when clicking outside of it
+    $(window).click(function(event) {
+        if (event.target == modal[0]) {
+            modal.hide();
+        }
+    });
+
+    // Handle the form submission with AJAX
+    $('#reviewForm').submit(function(event){
+        event.preventDefault();
+        $.ajax({
+            url: '{% url "food_review:add_review_ajax" %}',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                'name': $('input[name="name"]').val(),
+                'food_type': $('select[name="food_type"]').val(),
+                'rating': $('input[name="rating"]').val(),
+                'comments': $('textarea[name="comments"]').val()
+            },
+            success: function(response) {
+                modal.hide();
+                location.reload(); // Optionally reload the page to update the list of reviews
+            },
+            error: function() {
+                alert('Error adding review.');
+            }
+        });
+    });
+});
+</script>
+
 </html>
+{% endblock content %}

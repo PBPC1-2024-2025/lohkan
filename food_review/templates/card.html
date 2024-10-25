@@ -1,0 +1,9 @@
+<!-- card.html -->
+<div class="review-card">
+    <div class="card-header">
+        <h2 class="food-name">{{ food.name }}</h2>  <!-- Assuming 'food' is the context variable -->
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'see_reviews' food_id=food.id %}">See Reviews</a>
+    </div>
+</div>

@@ -4,16 +4,19 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class ReviewEntry(models.Model):
+    # Updated choices to use full names directly
     FOOD_TYPE_CHOICES = [
-        ('MC', 'Main Course'),
-        ('DS', 'Dessert'),
-        ('DR', 'Drinks'),
-        ('SN', 'Snacks'),
-        # Tambahkan pilihan lain sesuai kebutuhan
+        ('Main Course', 'Main Course'),
+        ('Dessert', 'Dessert'),
+        ('Drinks', 'Drinks'),
+        ('Snacks', 'Snacks')
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES)
+    # Updated field to store the full name directly
+    food_type = models.CharField(max_length=50, choices=FOOD_TYPE_CHOICES)
     rating = models.IntegerField()
     comments = models.TextField()
+    
