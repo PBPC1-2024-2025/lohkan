@@ -76,7 +76,7 @@ class TddTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('Artikel tidak ditemukan.' in message.message for message in messages))
+        self.assertTrue(any('Article not found.' in message.message for message in messages))
 
         self.assertRedirects(response, reverse('article:full_article'))
 
@@ -91,7 +91,7 @@ class TddTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('Silakan isi semua field terlebih dahulu.' in message.message for message in messages))
+        self.assertTrue(any('Please fill in all fields first.' in message.message for message in messages))
 
         article = Article.objects.get(pk=article_id)
         self.assertEqual(article.title, 'Test Article')
