@@ -19,6 +19,7 @@ def add_bucket_list(request):
     
     return HttpResponse(b"CREATED", status=201)
 
+@csrf_exempt
 def edit_bucket_list(request, id):
     bucket_list = BucketList.objects.get(pk=id)
     form = BucketListForm(request.POST or None, instance=bucket_list)
@@ -27,8 +28,8 @@ def edit_bucket_list(request, id):
         form.save()
         return JsonResponse({'status': 'success'})
 
-    context = {'form': form}
-    return render(request, "edit_bucket_list.html", context)
+    # context = {'form': form}
+    return JsonResponse({'status': 'false'})
 
 def delete_bucket_list(request, id):
     bucket_list = BucketList.objects.get(pk=id)

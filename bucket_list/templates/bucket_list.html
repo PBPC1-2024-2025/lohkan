@@ -38,12 +38,7 @@
     </div>
 </div>
 
-<div id="editBucketListModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-4 rounded-md w-96">
-        <div id="modalContent"></div>
-        <button onclick="closeEdit()" class="btn btn-secondary">Cancel</button>
-    </div>
-</div>
+
 
 <script>
 
@@ -133,6 +128,37 @@
                 ` ;
             
             });
+
+            bucketListEntries.forEach((item) => {
+                htmlString += `
+                    <div id="editBucketListModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto">
+                        <div class="relative bg-white p-6 rounded-2xl shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/4 mx-4 sm:mx-0 transform">
+                            <div onclick="closeEdit()" id="closeModal" class="absolute p-1 right-4 top-4 cursor-pointer hover:bg-gray-300 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold mt-2">Edit bucket list</h2>
+                            </div>
+                            <div id="modalContent">
+                                <form id="editBucketListForm" method="post" action="edit-bucket-list/${item.pk}">
+                                    <div>
+                                        <input type="text" name="name" class="border-2 border-[#CCC7BA] px-2 py-1 mt-4 w-full rounded-lg font-bold placeholder-[#CCC7BA]" placeholder="List name" required>
+                                    </div>
+                                </form>
+
+                                <div class="flex justify-end mt-0.5">
+                                    <p class="text-[#CCC7BA] font-bold text-sm">0/20</p>
+                                </div>
+
+                                <button type="submit" form="editBucketListForm" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold">
+                                    Save changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            })
+
             htmlString += `
                         
                 </div>
@@ -173,9 +199,9 @@
     }
     refreshBucketListEntries();
 
+    // ADDING BUCKET LIST BLOCK
     const modal = document.getElementById('addBucketListModal');
     const modalContent = document.getElementById('addBucketListModalContent');
-
     function showModal() {
         modal.classList.remove('hidden'); 
         setTimeout(() => {}, 50); 
@@ -214,9 +240,10 @@
         addBucketListEntry();
         hideModal();
     })
+    // ADDING BUCKET LIST BLOCK END
 
 
-    // choose bar handler
+    // CHOOSE BAR HANDLE BLOCK
     var previousId = "";
     function showLeft(id) {
         if (previousId) {
@@ -229,7 +256,6 @@
         setTimeout(() => {}, 50);
     }
 
-
     // settings function
     function toggleSettings(id) {
         document.getElementById(`listSettings-${id}`).classList.toggle('hidden');
@@ -238,7 +264,10 @@
     function editList(id) {
         window.location.href = `edit-bucket-list/${id}`;
     }
+    // CHOOSE BAR HANDLE BLOCK END
 
+
+    // EDIT BUCKET LIST BLOCK
     // Function to open the modal and load form content via AJAX
     function openEditModal(id) {
         const editModal = document.getElementById("editBucketListModal");
@@ -247,9 +276,6 @@
         // Fetch form content and populate modal
         fetch(`edit-bucket-list/${id}`)
             .then(response => response.text())
-            .then(html => {
-                document.getElementById("modalContent").innerHTML = html;
-            });
     }
 
     // Submit the form via AJAX when submitted in the modal
@@ -257,6 +283,7 @@
         e.preventDefault();
         const form = e.target;
 
+        console.log(form.action)
         fetch(form.action, {
             method: "POST",
             body: new FormData(form)
@@ -274,6 +301,7 @@
     function closeEdit() {
         document.getElementById("editBucketListModal").classList.add("hidden");
     }
+    // EDIT BLOCK LIST BLOCK END
 
     function deleteList(id) {
         window.location.href = `delete-bucket-list/${id}`;
@@ -285,6 +313,7 @@
             settingsOpen = false;
         }
     }
+    // REST OF SETTINGS BLOCK
 
 
     {% comment %} document.getElementById("listSettings").addEventListener('click', function (event) {
@@ -300,6 +329,8 @@
     {% comment %} const foodDesc = document.getElementById('foodDesc'); {% endcomment %}
     {% comment %} const foodPrice = document.getElementById('foodPrice'); {% endcomment %}
 
+    
+    // FOOD AJAX HANDLER BLOCK
     function showFood() {
         document.getElementById('goodFood').classList.add('hidden');
         document.getElementById('foodAjax').classList.remove('hidden');
@@ -311,6 +342,7 @@
         document.getElementById('foodAjax').classList.add('hidden');
         setTimeout(() => {}, 50);
     }
+    // FOOD AJAX HANDLER BLOCK END
 
 
 </script>
