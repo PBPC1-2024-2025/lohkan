@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, reverse
 from django.core import serializers
 from explore.forms import FoodForm
@@ -7,6 +7,23 @@ from explore.models import Food
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
+import json
+
+def search_food(request):
+    if request.method == 'POST':
+        search_str = json.loads(request.body).get('searchText')
+        foods = Food.objects.filter(
+            name__icontains=search_str
+        )
+        data = foods.values()
+        return JsonResponse(list(data), safe=False)
+
+# def filter_food(request):
+#     if request.method == 'POST':
+#         selected_type = json.loads(request.body).get('selectedType')
+#         foods = Food.objects.filter(
+#             type__iexact=selected_type
+#         )
 
 @login_required(login_url='auth/login')
 def show_explore(request):
