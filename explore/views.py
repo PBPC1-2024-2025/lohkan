@@ -9,6 +9,12 @@ from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 import json
 
+def all_to_json(request):
+    if request.method == 'POST':
+        foods = Food.objects.all()
+        data = foods.values()
+        return JsonResponse(list(data), safe=False)
+
 def search_food(request):
     if request.method == 'POST':
         search_str = json.loads(request.body).get('searchText')
@@ -18,12 +24,14 @@ def search_food(request):
         data = foods.values()
         return JsonResponse(list(data), safe=False)
 
-# def filter_food(request):
-#     if request.method == 'POST':
-#         selected_type = json.loads(request.body).get('selectedType')
-#         foods = Food.objects.filter(
-#             type__iexact=selected_type
-#         )
+def filter_food(request):
+    if request.method == 'POST':
+        selected_type = json.loads(request.body).get('selectedType')
+        foods = Food.objects.filter(
+            type__iexact=selected_type
+        )
+        data = foods.values()
+        return JsonResponse(list(data), safe=False)
 
 @login_required(login_url='auth/login')
 def show_explore(request):
