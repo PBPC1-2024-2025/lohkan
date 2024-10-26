@@ -73,7 +73,7 @@
             bucketListEntries.forEach((item) => {
                 const name = DOMPurify.sanitize(item.fields.name);
                 htmlString += `
-                        <div class="flex items-center px-3 py-1 bg-[#C9C9C9] rounded-3xl cursor-pointer hover:bg-gray-600" onClick="showLeft('${item.pk}');">     {% comment %} hover properties perlu diganti nanti {% endcomment %}
+                        <div id="chooseButton-${item.pk}" class="flex items-center px-3 py-1 bg-[#C9C9C9] rounded-3xl cursor-pointer hover:bg-gray-600" onClick="showLeft('${item.pk}');">     {% comment %} hover properties perlu diganti nanti {% endcomment %}
                             <p class="font-bold">${name}</p>
                         </div>
                 `;
@@ -208,18 +208,22 @@
         hideModal();
     })
 
+
+    // choose bar handler
     var previousId = "";
-
-
     function showLeft(id) {
         if (previousId) {
-            document.getElementById(`leftAjax-${previousId}`).classList.add('hidden')
+            document.getElementById(`chooseButton-${previousId}`).classList.remove('bg-black', 'text-white');
+            document.getElementById(`leftAjax-${previousId}`).classList.add('hidden');
         }
+        document.getElementById(`chooseButton-${id}`).classList.add('bg-black', 'text-white');
         document.getElementById(`leftAjax-${id}`).classList.remove('hidden');
         previousId = id
         setTimeout(() => {}, 50);
     }
 
+
+    // settings function
     function toggleSettings(id) {
         document.getElementById(`listSettings-${id}`).classList.toggle('hidden');
     }
