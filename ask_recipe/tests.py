@@ -70,3 +70,23 @@ class RecipeViewsTest(TestCase):
         response = self.client.get(reverse('ask_recipe:search_recipe'), {'q': 'Test Recipe'})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Test Recipe')
+
+    def test_show_xml(self):
+        response = self.client.get(reverse('ask_recipe:show_xml'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'application/xml')
+
+    def test_show_json(self):
+        response = self.client.get(reverse('ask_recipe:show_json'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'application/json')
+
+    def test_show_xml_by_id(self):
+        response = self.client.get(reverse('ask_recipe:show_xml_by_id', kwargs={'id': self.recipe.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'application/xml')
+
+    def test_show_json_by_id(self):
+        response = self.client.get(reverse('ask_recipe:show_json_by_id', kwargs={'id': self.recipe.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'application/json')

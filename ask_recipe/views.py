@@ -99,12 +99,12 @@ def search_recipe(request):
 
 # ngambil resep berdasarkan pengguna saat ini dengan xml
 def show_xml(request):
-    data = Recipe.objects.filter(user=request.user)
+    data = Recipe.objects.filter(added_by=request.user)  # Ubah user menjadi added_by
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 # ngambil resep berdasarkan pengguna saat ini dengan json
 def show_json(request):
-    data = Recipe.objects.filter(user=request.user)
+    data = Recipe.objects.filter(added_by=request.user)  # Ubah user menjadi added_by
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 # ngambil resep berdasarkan id dengan xml
