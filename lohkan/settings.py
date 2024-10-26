@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "authentication",
     "article",
     "food_review",
+    "ask_recipe",
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,12 @@
+{% load static %}  <!-- Memuat tag statis untuk menggunakan file statis seperti gambar dan CSS -->
+
+{% if recipes %}  <!-- Mengecek apakah ada resep yang tersedia -->
+    {% for recipe in recipes %}  <!-- Jika ada, lakukan iterasi untuk setiap resep -->
+        {% include 'partials/recipe_item.html' with recipe=recipe %}  <!-- Sertakan template item resep -->
+    {% endfor %}
+{% else %}  <!-- Jika tidak ada resep -->
+    <div class="empty-message flex flex-col items-center justify-center min-h-[24rem] p-6 mt-20">  <!-- Pesan ketika tidak ada resep -->
+        <img src="{% static 'images/kosong.png' %}" alt="kosong" class="w-20 h-20 mb-4"/>  <!-- Gambar yang menunjukkan tidak ada resep -->
+        <p class="text-center text-white mb-6">No recipes found!</p>  <!-- Pesan teks -->
+    </div>
+{% endif %}
