@@ -1,15 +1,17 @@
 {% if is_self %}
-<div class="flex justify-end mb-2">
-    <div class="bg-blue-500 text-white p-2 rounded-lg max-w-xs">
-        <p>{{ message.message }}</p>
-        <p class="text-xs text-gray-200 mt-1">{{ message.timestamp|date:"Y-m-d H:i:s" }}</p>
+    <!-- Jika pesan dikirim oleh pengguna sendiri -->
+    <div class="flex justify-end mb-2">
+        <div class="bg-blue-500 text-white p-2 rounded-lg max-w-xs">
+            <p>{{ message.message }}</p>  <!-- Menampilkan isi pesan -->
+            <p class="text-xs text-gray-200 mt-1">{{ message.timestamp|date:"Y-m-d H:i:s" }}</p>  <!-- Menampilkan waktu pesan -->
+        </div>
     </div>
-</div>
 {% else %}
-<div class="flex justify-start mb-2">
-    <div class="bg-gray-300 text-black p-2 rounded-lg max-w-xs">
-        <p>{{ message.message }}</p>
-        <p class="text-xs text-gray-600 mt-1">{{ message.timestamp|date:"Y-m-d H:i:s" }}</p>
+    <!-- Jika pesan dikirim oleh pengguna lain -->
+    <div class="flex justify-start mb-2">
+        <div class="bg-gray-300 text-black p-2 rounded-lg max-w-xs">
+            <p>{{ message.message }}</p>  <!-- Menampilkan isi pesan -->
+            <p class="text-xs text-gray-600 mt-1">{{ message.timestamp|date:"Y-m-d H:i:s" }}</p>  <!-- Menampilkan waktu pesan -->
+        </div>
     </div>
-</div>
 {% endif %}

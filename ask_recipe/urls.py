@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'ask_recipe'
 
+# kumpulan URL untuk nampilin page atau views yang sesuai
 urlpatterns = [
     path('', views.ask_recipe, name='ask_recipe'), 
     path('create_recipe/', views.create_recipe, name='create_recipe'),
