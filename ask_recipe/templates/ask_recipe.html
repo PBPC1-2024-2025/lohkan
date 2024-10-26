@@ -184,6 +184,30 @@
             event.preventDefault();
             showModal();
         });
+        
+        // Event listener for search input
+        document.getElementById('recipe-search').addEventListener('input', function(event) {
+            const query = event.target.value;
+
+            fetch(`/ask_recipe/search/?q=${query}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.querySelector('.recipe-list').innerHTML = html;
+                })
+                .catch(error => console.error('Error fetching search results:', error));
+        });
+
+        // Event listener for clear search button
+        document.getElementById('clear-search').addEventListener('click', function() {
+            document.getElementById('recipe-search').value = '';
+            // Optionally, you can reset the recipe list to show all recipes
+            fetch('/ask_recipe/search/?q=') // This can be a call to fetch all recipes
+                .then(response => response.text())
+                .then(html => {
+                    document.querySelector('.recipe-list').innerHTML = html;
+                })
+                .catch(error => console.error('Error fetching all recipes:', error));
+        });
 
         // Event listener untuk menutup modal dengan tombol close atau cancel
         document.getElementById("cancelButton").addEventListener("click", hideModal);

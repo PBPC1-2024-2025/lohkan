@@ -1,0 +1,12 @@
+{% load static %}
+
+{% if recipes %}
+    {% for recipe in recipes %}
+        {% include 'partials/recipe_item.html' with recipe=recipe %}
+    {% endfor %}
+{% else %}
+    <div class="empty-message flex flex-col items-center justify-center min-h-[24rem] p-6 mt-20">
+        <img src="{% static 'images/kosong.png' %}" alt="kosong" class="w-20 h-20 mb-4"/>
+        <p class="text-center text-white mb-6">No recipes found!</p>
+    </div>
+{% endif %}

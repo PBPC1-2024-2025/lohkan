@@ -90,6 +90,14 @@ def delete_message(request, message_id):
     message.delete()
     return redirect('ask_recipe:ask_recipe')
 
+@csrf_exempt
+def search_recipe(request):
+    query = request.GET.get('q', '')  # Get the search query from the request
+    recipes = Recipe.objects.filter(title__icontains=query)  # Filter recipes by title (case-insensitive)
+    return render(request, 'partials/recipe_list.html', {'recipes': recipes})  # Render the recipe list
+
+    return render(request, 'partials/recipe_list.html', {'recipes': recipes})  # Render the recipe list
+
 def show_xml(request):
     data = Recipe.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
