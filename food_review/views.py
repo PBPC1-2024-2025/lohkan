@@ -6,8 +6,7 @@ from food_review.models import ReviewEntry
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Avg
-# from article.forms import ArticleForm
-# from django.contrib import messages
+
 
 # menampilkan semua review
 def page_review(request):
@@ -45,7 +44,6 @@ def page_review(request):
     })
 
 # membuat review baru
-
 @login_required  # If using user authentication
 @csrf_exempt
 @require_POST
@@ -100,9 +98,7 @@ def show_json_by_id(request, id):
 def index(request):
     return render(request, 'page_review.html')
 
-
-def see_reviews(request, food_name, food_type):
-   # Fetch all reviews for the given food name and type
+def see_reviews(request, food_name, food_type='unknown'):
     reviews = ReviewEntry.objects.filter(name=food_name, food_type=food_type).select_related('user')
     if reviews.exists():
         average_rating = reviews.aggregate(Avg('rating'))['rating__avg']

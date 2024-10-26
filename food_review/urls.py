@@ -11,7 +11,6 @@ from food_review.views import add_review_ajax
 app_name = 'food_review'
 
 urlpatterns = [
-    # path('food-review', index, name='food_review'),
     path('', views.page_review, name='page_review'),
     path('add-review', add_review_ajax, name='add_review_ajax'),
     path('xml/', show_xml, name='show_xml'),

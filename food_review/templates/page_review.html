@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Review Food</title>
+    <title>LohKan</title>
 </head>
 <body>
     <div class="container" style="padding-top: 90px;">
@@ -100,9 +100,12 @@
                 <h2 class="food-name">
                     {{ review.name }}
                 </h2>
-                <button onclick="window.location.href='{% url 'food_review:see_reviews' review.name review.food_type %}'" class="see-reviews-button">
-                    See Reviews ({{ review.review_count }})
-                </button>
+                <a href="{% url 'food_review:see_reviews' review.name review.food_type %}">
+                    <button class="see-reviews-button">
+                        See Reviews ({{ review.review_count }})
+                    </button>
+                </a>
+                
             </div>
             {% empty %}
             <p>Looks like there's no food data here yet 😔</p>
@@ -115,8 +118,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background-color: #FFF9E9; /* Offwhite */
-            color: #000000; /* Black */
+            background-color: #fff; 
+            color: #000000;
         }
 
         .container {

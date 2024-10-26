@@ -38,7 +38,7 @@ def delete_article(request, id):
 def edit_article(request, id):
     article = Article.objects.filter(pk=id).first() 
     if not article:
-        messages.error(request, 'Artikel tidak ditemukan.')
+        messages.error(request, 'Article not found.')
         return redirect('article:full_article')
     
     if request.method == 'POST':
@@ -47,7 +47,7 @@ def edit_article(request, id):
         image = request.FILES.get('image')  
 
         if not title or not description:
-            messages.error(request, 'Silakan isi semua field terlebih dahulu.')
+            messages.error(request, 'Please fill in all fields first.')
 
         else:
             article.title = title
@@ -57,7 +57,7 @@ def edit_article(request, id):
                 article.image = image
 
             article.save()
-            messages.success(request, 'Artikel berhasil diperbarui.')
+            messages.success(request, 'Article successfully updated.')
             return redirect('article:full_article')
         
     context = {
@@ -78,7 +78,7 @@ def add_comment(request, id):
         content = request.POST.get('content')
         if content:
             Comment.objects.create(article=article, content=content, user=request.user)
-            return redirect('article:article_detail', id=id)  # Redirect to article detail after adding a comment
+            return redirect('article:article_detail', id=id)  
     return redirect('article:article_detail', id=id)
 
 
