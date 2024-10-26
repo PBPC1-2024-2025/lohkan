@@ -11,13 +11,13 @@
 {% include 'navbar.html' %}
 
 <!-- Article content -->
-<div class="container mx-auto py-16 px-4" style="margin-top: 50px;">
-    <div class="back-button mt-8">
+<div class="container mx-auto py-16 px-4">
+    <div class="back-button">
         <a href="{% url 'article:full_article' %}" class="inline-block bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 transition duration-200">
             &#8592; Back to Full Articles
         </a>
     </div>
-    <div class="article-header" style="margin-top: 10px;">
+    <div class="article-header">
         <h1 style="font-size: 3.5rem; font-weight: 800; text-align: center; margin-bottom: 1rem;">
             {{ article.title }}
         </h1>        
