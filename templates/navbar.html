@@ -1,23 +1,30 @@
 {% load static %}
-<nav class="bg-[#550000] shadow-lg fixed top-0 left-0 z-40 w-screen">
+<nav class="bg-[#550000] shadow-lg sticky top-0 left-0 z-40 w-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
                 <div class="text-center">
-                    <img src="{% static 'images/logo.png' %}" alt="Lohkan Logo" class="w-64 h-auto mx-auto" />
+                    <a href="{% url 'main:show_main' %}">
+                        <img src="{% static 'images/logo.png' %}" alt="Lohkan Logo" class="w-64 h-auto mx-auto" />
+                    </a>
                 </div>
             </div>
             <!-- Desktop Menu (hidden on mobile) -->
-            <div class="hidden md:flex items-center">
+            <div class="hidden md:flex items-center ml-0">
                 {% if user.is_authenticated %}
-                    <!-- Additional Menu Item -->
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Explore</a>
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Food Review</a>
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Bucket List</a>
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Ask Recipe</a>
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 ">Article</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4 mr-5">Explore</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4 mr-5">Food Review</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4 mr-5">Bucket List</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4 mr-5">Ask Recipe</a>
+                    <a href="{% url 'article:full_article' %}" class="text-gray-300 hover:text-white mx-4 mr-10">Article</a>
 
-                    <a href="{% url 'authentication:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    <!-- User Icon and Name -->
+                    <div class="flex items-center ml-20">
+                        <img src="{% static 'images/user.png' %}" alt="User Icon" class="user-icon" />
+                        <span class="username ml-2 text-gray-300">Welcome, {{ user.username }}</span>
+                    </div>
+
+                    <a href="{% url 'authentication:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ml-4">
                         Logout
                     </a>
                 {% else %}
@@ -44,10 +51,19 @@
     <div class="mobile-menu hidden md:hidden px-4 w-full">
         <div class="pt-2 pb-3 space-y-1">
             {% if user.is_authenticated %}
-                <span class="block text-gray-300 px-3 py-2">Welcome, {{ user.username }}</span>
-                <a href="{% url 'authentication:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            <!-- Menu Section -->
+            <div class="flex flex-col">
+                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Explore</a>
+                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Food Review</a>
+                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Bucket List</a>
+                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Ask Recipe</a>
+                <a href="{% url 'article:full_article' %}" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Article</a>
+                
+                <a href="{% url 'authentication:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 mt-4">
                     Logout
                 </a>
+            </div>
+
             {% else %}
                 <a href="{% url 'authentication:login' %}" class="block text-center bg-[#550000] hover:bg-[#440000] text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
                     Login
@@ -61,18 +77,22 @@
 
     <!-- Toggle mobile menu visibility -->
     <script>
+    document.addEventListener('DOMContentLoaded', function () {
         const btn = document.querySelector("button.mobile-menu-button");
         const menu = document.querySelector(".mobile-menu");
-      
+
         btn.addEventListener("click", () => {
-          // Toggle hidden class
-          if (menu.classList.contains("hidden")) {
-            menu.classList.remove("hidden");
-            menu.classList.add("block"); // Make sure it stays visible
-          } else {
-            menu.classList.add("hidden");
-            menu.classList.remove("block");
-          }
+            menu.classList.toggle("hidden");
         });
-      </script>
+    });
+    </script>
+
+    <style>
+        .user-icon {
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+        }
+    </style>
 </nav>

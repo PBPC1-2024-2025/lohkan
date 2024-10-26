@@ -1,0 +1,356 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Lohkan</title>
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5U8/pdu5ZL3tLiOaXlA1zJ1L6pup1T2RO9g59" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+
+{% endblock meta %}
+{% block content %}
+{% include 'navbar.html' %}
+
+<!-- Main Content -->
+<div class="container mx-auto py-16 px-4 md:flex"> 
+  <section class="md:w-2/3">
+    <div class="flex justify-between items-center">
+      <h2 class="text-2xl font-bold">Browse Articles</h2>
+    <!-- Check if user is admin -->
+    {% if user.is_authenticated and user.username == 'admin' %}
+      <button button data-modal-target="crudModal" data-modal-toggle="crudModal" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" onclick="showModal();">
+        Add Article
+      </button>
+    {% endif %}
+    </div>
+    <!-- Articles Grid -->
+  <div class="container mx-auto py-16 px-4">
+    <div id="article_cards" class="grid grid-cols-1 gap-6">
+      {% for article in page_obj %}
+      <article class="bg-white p-4 rounded-lg shadow-lg flex flex-col justify-between mb-6">
+          <a href="{% url 'article:article_detail' article.id %}">
+              <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded-md">
+              <h3 class="text-xl font-semibold mt-4">{{ article.title }}</h3>
+              <p class="text-gray-600 mt-2">{{ article.description }}</p>
+          </a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+
+    <!-- CRUD Modal -->
+    <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+      <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 border-b rounded-t">
+          <h3 class="text-xl font-semibold text-gray-900">
+            Add Article
+          </h3>
+          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="px-6 py-4 space-y-6 form-style">
+          <form id="ArticleForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-4">
+              <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+              <input type="text" id="title" name="title" class="mt-1 block w-full" placeholder="Enter the title" required>
+
+            </div>
+            <div class="mb-4">
+              <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+              <textarea id="description" name="description" rows="3" 
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                placeholder="Describe the article" required></textarea>
+            </div>            
+            <div class="mb-4">
+              <label for="image" class="block text-sm font-medium text-gray-700">Article Image</label>
+              <input type="file" id="image" name="image" accept="image/*" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" required>
+          </div>
+          </form>
+        </div>
+        <!-- Modal footer -->
+        <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+          <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+          <button type="submit" id="submitArticle" form="ArticleForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sidebar -->
+  <aside class="md:w-1/3 md:pl-8 mt-10 md:mt-0">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h3 class="text-xl font-bold text-red-700 mb-4">Other Article</h3>
+      <hr class="border-t-2 border-maroon-500 mb-4"> 
+      <ul class="space-y-4">
+        <li class="flex items-start space-x-3">
+          <span class="font-bold text-red-700 text-lg">01</span>
+          <a href="https://belitung.tribunnews.com/2024/10/04/food-court-mampau-belitung-tempat-nongkrong-enak-di-tanjungpandan-3-hari-lagi-buka-cek-jamnya" class="text-black font-semibold hover:underline">
+            Food Court Mampau Belitung Tempat Nongkrong Enak di Tanjungpandan
+          </a>
+        </li>
+        <li class="flex items-start space-x-3">
+          <span class="font-bold text-red-700 text-lg">02</span>
+          <a href="https://www.liputan6.com/regional/read/5601796/bong-li-piang-kue-kering-khas-bangka-yang-terlahir-dari-akulturasi-budaya" class="text-black font-semibold hover:underline">
+            Bong Li Piang, Kue Kering Khas Bangka yang Terlahir dari Akulturasi Budaya
+          </a>
+        </li>
+        <li class="flex items-start space-x-3">
+          <span class="font-bold text-red-700 text-lg">03</span>
+          <a href="https://www.idntimes.com/food/dining-guide/ika-larasati-1/tempat-belanja-oleh-oleh-khas-bangka-di-pangkalpinang-c1c2" class="text-black font-semibold hover:underline">      	
+            5 Tempat Belanja Oleh-oleh khas Bangka di Pangkalpinang, Lengkap!  
+        </li>
+        <li class="flex items-start space-x-3">
+          <span class="font-bold text-red-700 text-lg">04</span>
+          <a href="https://www.idntimes.com/food/dining-guide/fasrinisyah-suryaningtyas-1/apakah-martabak-bangka-berasal-dari-bangka-ini-faktanya" class="text-black font-semibold hover:underline">
+            Apakah Martabak Bangka Berasal dari Bangka? Ini Faktanya!
+          </a>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Coming Soon Section moved inside the aside -->
+    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+      <div class="text-center md:text-left">
+          <div class="logo mb-8">
+              <div class="flex justify-center items-center h-full"></div>
+              <img src="https://i.pinimg.com/564x/b6/e0/bc/b6e0bcb68d4afad0e229d45cd877043c.jpg" alt="Logo" class="block mx-auto" style="max-width: 250px; height: auto;">
+          </div>
+          <p class="text-2xl font-semibold mb-4 text-center">LohKan in App Store</p>
+
+          <!-- Countdown Timer -->
+          <div id="countdown" style="display: flex; justify-content: center; gap: 20px; font-size: 48px; font-weight: bold;">
+            <div style="text-align: center;">
+                <div id="days" style="padding: 10px; border: 2px solid red; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); color: red;"></div>
+                <span style="font-size: 16px; margin-top: 2px;">DAYS</span>
+            </div>
+            <div style="text-align: center;">
+                <div id="hours" style="padding: 10px; border: 2px solid red; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); color: red;"></div>
+                <span style="font-size: 16px; margin-top: 2px;">HOURS</span>
+            </div>
+            <div style="text-align: center;">
+                <div id="minutes" style="padding: 10px; border: 2px solid red; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); color: red;"></div>
+                <span style="font-size: 16px; margin-top: 2px;">MINUTES</span>
+            </div>
+          </div>
+          
+        <p class="text-gray-600 mb-6 text-justify">Get ready to enjoy the authentic taste of Pangkalpinang with LohKan, your favorite app to explore local cuisine that will be launched soon!</p>
+      </div>
+    </div>
+  </aside>  
+</div>
+
+<!--Newsletter -->
+<section class="combined-section py-16 bg-gray-100">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
+    <div class="w-full p-4 mb-8 md:mb-0 shadow-lg rounded-lg border-t-4 border-gray-600 flex flex-col justify-center items-center text-center" style="min-height: 450px;">
+      <h2 class="text-3xl font-bold mb-4">Don't miss our daily updates</h2>
+      <p class="text-gray-600 mt-4 mb-6">
+        Subscribe to stay updated on the latest news and offers.
+      </p>
+      <form class="newsletter-form flex flex-col md:flex-row justify-center items-center w-full" id="newsletterForm">
+        <input 
+            type="email" 
+            placeholder="Enter your email" 
+            class="email-input rounded-full py-3 px-6 text-gray-800 border border-gray-300 md:w-3/5 w-full mb-4 md:mb-0"
+            id="emailInput"
+            required>
+        
+        <button 
+            type="submit" 
+            class="subscribe-button text-white font-bold rounded-full py-3 px-8 w-auto ml-2" 
+            style="background-color: #550000;">
+            Subscribe
+        </button>
+      </form>
+    
+    <!-- The message will appear here -->
+    <p id="successMessage" class="text-green-600 mt-4 hidden">Subscription successfull! You can get more information about us soon.</p>
+      <p class="text-gray-500 mt-4">
+        *Your data security will be guaranteed by us
+      </p>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}
+<script>
+// Create Article
+function createArticle() {
+  fetch("{% url 'article:create_article' %}", {
+      method: "POST",
+      body: new FormData(document.querySelector('#ArticleForm')),
+  })
+  .then(response => refreshArticles())
+
+  document.getElementById("ArticleForm").reset(); 
+  document.querySelector("[data-modal-toggle='crudModal']").click();
+
+  return false;
+}
+
+document.getElementById("ArticleForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  createArticle();
+})
+
+// Fetch Articles
+async function getArticles(){
+  return fetch("{% url 'article:show_json' %}").then((res) => res.json())
+}
+
+// CRUD Modal
+const modal = document.getElementById('crudModal');
+const modalContent = document.getElementById('crudModalContent');
+
+function showModal() {
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    modal.classList.remove('hidden'); 
+    setTimeout(() => {
+      modalContent.classList.remove('opacity-0', 'scale-95');
+      modalContent.classList.add('opacity-100', 'scale-100');
+    }, 50); 
+}
+
+function hideModal() {
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    modalContent.classList.remove('opacity-100', 'scale-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 150); 
+}
+
+document.getElementById("cancelButton").addEventListener("click", hideModal);
+document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+
+// Refresh Articles
+async function refreshArticles() {
+  document.getElementById("article_cards").innerHTML = "";
+  document.getElementById("article_cards").className = "";
+  const articles = await getArticles();
+  let htmlString = "";
+  let classNameString = "";
+
+  if (articles.length === 0) {
+      classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
+      htmlString = `
+          <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+              <p class="text-center text-gray-600 mt-4">Belum ada data</p>
+          </div>
+      `;
+  }
+  else {
+    const classNameString = "grid grid-cols-1 gap-6 max-h-[calc(100vh-16rem)] overflow-y-scroll";
+
+    function truncateDescription(text, maxWords) {
+      const words = text.split(' '); 
+      if (words.length > maxWords) {
+        return words.slice(0, maxWords).join(' ') + '...'; 
+      }
+      return text; 
+    }
+    articles.forEach((item) => {
+      const title = DOMPurify.sanitize(item.fields.title);
+      const description = DOMPurify.sanitize(item.fields.description);
+      const truncatedDescription = truncateDescription(description, 35);
+      const image = DOMPurify.sanitize(item.fields.image);
+      const id = item.pk;
+
+      htmlString += `
+      <article class="bg-white p-4 rounded-lg shadow-lg flex flex-col justify-between w-full mb-6">
+        <a href="/article/article/${id}">
+          <div>
+            <img src="/article/media/${image}" alt="${title}" class="w-full h-48 object-cover rounded-md">
+            <h3 class="text-xl font-semibold mt-4">${title}</h3>
+            <p class="text-gray-600 mt-2">${truncatedDescription}</p>
+          </div>
+          <div class="flex justify-end mt-6">
+            {% if user.is_authenticated and user.username == 'admin' %}
+              <a href="/article/edit-article/${item.pk}" >
+              <button type="submit" class="bg-white text-yellow-500 border border-yellow-500 px-3 py-1 rounded-lg hover:bg-yellow-500 hover:text-white transition flex items-center mr-2">
+                  Edit
+                </button>
+                </svg>
+              </a>
+              <a href="/article/delete/${item.pk}">
+                <button type="submit" class="bg-white text-red-500 border border-red-500 px-3 py-1 rounded-lg hover:bg-red-500 hover:text-white transition flex items-center">
+                  Delete
+                </button>
+              </a>
+              {% else %}
+              <a href="/article/article/${item.pk}">
+                  <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition flex items-center">
+                      View More  &rarr;
+                  </button>
+              </a>
+            {% endif %}
+          </div>
+        </a>
+      </article>
+      `;
+    });
+
+  }
+  document.getElementById("article_cards").className = classNameString;
+  document.getElementById("article_cards").innerHTML = htmlString;
+}
+refreshArticles();
+
+// Article Card Click Event
+document.addEventListener("DOMContentLoaded", function() {
+  const articleCards = document.querySelectorAll('.article-card'); // Pastikan class 'article-card' ada pada card HTML
+
+  articleCards.forEach(card => {
+    card.addEventListener('click', function() {
+      const articleId = this.dataset.id;  // Mengambil ID artikel
+      window.location.href = `/article/${articleId}/`;  // Mengarahkan ke URL detail artikel
+    });
+  });
+});
+
+// Countdown Timer
+const launchDate = new Date("2024-12-31T00:00:00").getTime();
+const countdownFunction = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = launchDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+
+    if (distance < 0) {
+        clearInterval(countdownFunction);
+        document.getElementById("countdown").innerHTML = "Launched!";
+    }
+}, 1000);
+
+// Subscribe
+const form = document.getElementById('newsletterForm');
+  const successMessage = document.getElementById('successMessage'); 
+  form.addEventListener('submit', function(event) {
+      event.preventDefault();      
+      const emailInput = document.getElementById('emailInput').value;     
+      if (emailInput) {
+          successMessage.classList.remove('hidden'); 
+      }
+  });
+</script>
+{% endblock content %}

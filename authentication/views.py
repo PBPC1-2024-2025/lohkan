@@ -12,9 +12,9 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()  # Simpan user baru ke database
+            form.save() 
             messages.success(request, 'Your account has been successfully created!')
-            return redirect('authentication:login')  # Redirect ke halaman login setelah sukses
+            return redirect('authentication:login')  
     context = {'form': form}
     return render(request, 'register.html', context)
 
@@ -28,6 +28,8 @@ def login_user(request):
         response = HttpResponseRedirect(reverse("main:show_main"))
         response.set_cookie('last_login', str(datetime.datetime.now()))
         return response
+      else:
+        messages.error(request, "Invalid username or password. Please try again.")
 
    else:
       form = AuthenticationForm(request)
@@ -39,4 +41,5 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('authentication:login'))
     response.delete_cookie('last_login')
     return response
+
 

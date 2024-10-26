@@ -9,12 +9,13 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -23,6 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-2^9w1+(st*)vot+ag^ecm0*i8%ui^65+hv7421mv1+aj&n8e=$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
+#PRODUCTION = os.getenv("PRODUCTION", False)
+#DEBUG = not PRODUCTION
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id" , "http://marla-marlena-koalove1.pbp.cs.ui.ac.id", "https://marla-marlena-koalove1.pbp.cs.ui.ac.id"]
@@ -39,10 +42,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "main",
     "authentication",
+    "article",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware', 
     "django.middleware.common.CommonMiddleware",
@@ -130,3 +135,4 @@ else:
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
