@@ -482,37 +482,36 @@
   }
 
   async function searchAndFilterFoods(searchVal, filter) {
-    var searchData = null;
-    var filterData = null;
+    let searchData;
+    let filterData;
     fetch("{% url 'explore:filter_food' %}", {
       body: JSON.stringify({ selectedType: filter }),
       method: "POST",
     })
       .then((res) => res.json())
       .then((data) => {
-        window.filterData = data;
+        filterData = JSON.parse(JSON.stringify(data));
+        fetch("{% url 'explore:search_food' %}", {
+          body: JSON.stringify({ searchText: searchVal }),
+          method: "POST",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            searchData = JSON.parse(JSON.stringify(data));
+            // console.log(filterData);
+            // console.log(searchData);
+            let comboData = [];
+            for (let i = 0; i < filterData.length; i++) {
+              for (let j = 0; j < searchData.length; j++) {
+                if (filterData[i]["id"] === searchData[j]["id"]) {
+                  comboData.push(filterData[i]);
+                }
+              }
+            }
+            // console.log(comboData);
+            displayFood(comboData);
+          });
       });
-    fetch("{% url 'explore:search_food' %}", {
-      body: JSON.stringify({ searchText: searchVal }),
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        window.searchData = data;
-      });
-    filterData = window.filterData;
-    console.log(filterData);
-    searchData = window.searchData;
-    console.log(searchData);
-    let comboData = [];
-    for (let i = 0; i < filterData.length; i++) {
-      for (let j = 0; j < searchData.length; j++) {
-        if (filterData[i]["id"] === searchData[j]["id"]) {
-          comboData.push(filterData[i]);
-        }
-      }
-    }
-    displayFood(comboData);
   }
 
   async function displayFood(data) {
@@ -806,6 +805,7 @@
   wrapper.addEventListener("click", (e) => {
     const isButton = e.target.nodeName === "BUTTON";
     // console.log(e.target.id);
+    console.log(prevButton);
     if (!isButton) {
       return;
     }
@@ -818,7 +818,6 @@
         "type-btn-on"
       );
       e.target.classList.add("text-gray-500", "hover:bg-[rgb(150,0,0)]");
-      prevButton = null;
       if (searchField.value.trim() != "") {
         fetch("{% url 'explore:search_food' %}", {
           body: JSON.stringify({ searchText: searchField.value.trim() }),
@@ -831,6 +830,7 @@
       } else {
         refreshFoods();
       }
+      prevButton = null;
     } else {
       e.target.classList.add(
         "bg-[rgb(85,0,0)]",
