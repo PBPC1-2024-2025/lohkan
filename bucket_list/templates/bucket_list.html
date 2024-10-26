@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+<title>Bucket list</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div id="bucket_list_entry"></div>
+{% comment %} add bucket list {% endcomment %}
+<div id="addBucketListModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto">
+    <div id="addBucketListModalContent" class="relative bg-white p-6 rounded-2xl shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/4 mx-4 sm:mx-0 transform">
+
+        <div id="closeModal" class="absolute p-1 right-4 top-4 cursor-pointer hover:bg-gray-300 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </div>
+
+        <div>
+            <h2 class="text-xl font-bold mt-2">Add new bucket list</h2>
+        </div>
+
+        <form id="bucketListForm">
+            <div>
+                <input type="text" name="name" class="border-2 border-[#CCC7BA] px-2 py-1 mt-4 w-full rounded-lg font-bold placeholder-[#CCC7BA]" placeholder="List name" required>
+            </div>
+        </form>
+
+        <div class="flex justify-end mt-0.5">
+            <p class="text-[#CCC7BA] font-bold text-sm">0/20</p>
+        </div>
+
+        <button type="submit" form="bucketListForm" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold">
+            Add new collection
+        </button>
+    </div>
+</div>
+
+
+
+<script>
+
+    async function getBucketListEntries() {
+        return fetch("{% url 'bucket_list:show_json' %}").then((res) => res.json())
+    }
+
+    async function refreshBucketListEntries() {
+        document.getElementById("bucket_list_entry").innerHTML = "";
+        document.getElementById("bucket_list_entry").className = "";
+        const bucketListEntries = await getBucketListEntries();
+        let htmlString = "";
+        let classNameString = "";
+
+        console.log(bucketListEntries.length)
+        if (bucketListEntries.length === 0) {
+            classNameString = "flex flex-col gap-2 w-full h-[90vh] border-2 justify-center items-center";
+            htmlString = `
+                <h2 class="text-lg font-bold">Yuk, mulai isi bucket list kamu!</h2>
+                <button data-model-target="addBucketListModal" data-modal-toggle="addBucketListModal" class="flex items-center btn bg-black cursor-pointer rounded-2xl px-6 py-2 transform" onclick="showModal();">
+                    <p class="text-white font-bold">Add new list</p>
+                </button>
+            `;
+        }
+        else {
+            classNameString = "flex flex-row mx-auto mt-16 w-[92%] gap-16";     // main container
+            htmlString = `
+                {% comment %} left container {% endcomment %}
+                <div class="flex flex-col gap-8 w-[55%]">
+                    {% comment %} choose bar {% endcomment %}
+                    <div id="chooseBar" class="flex flex-row gap-4">       {% comment %} mungkin harus fixed dengan background color {% endcomment %}
+            `;
+
+            bucketListEntries.forEach((item) => {
+                const name = DOMPurify.sanitize(item.fields.name);
+                htmlString += `
+                        <div id="chooseButton-${item.pk}" class="flex items-center px-3 py-1 bg-[#C9C9C9] rounded-3xl cursor-pointer hover:bg-gray-600" onClick="showLeft('${item.pk}');">     {% comment %} hover properties perlu diganti nanti {% endcomment %}
+                            <p class="font-bold">${name}</p>
+                        </div>
+                `;
+            });
+            htmlString += `
+                        <button data-model-target="addBucketListModal" data-modal-toggle="addBucketListModal" class="btn flex items-center px-3 py-1 border-2 border-[#CCC7BA] rounded-3xl hover:bg-gray-700" onclick="showModal();">
+                            <p class="font-bold text-[#CCC7BA]">+ Add new list...</p>
+                        </button>
+                    </div>
+            `;
+            
+            bucketListEntries.forEach((item) => {
+                htmlString += `
+                    {% comment %} left ajax {% endcomment %}
+                    <div id="leftAjax-${item.pk}" tabindex="-1" class="hidden flex flex-col gap-4 -mt-4">
+                        <div class="relative flex flex-row gap-2">
+                            <div data-model-target="listSettings-${item.pk}" data-model-toggle="listSettings-${item.pk}" class="p-1 cursor-pointer hover:bg-gray-100 rounded-full" onClick="toggleSettings('${item.pk}');">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#CCC7BA"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"/></svg>
+                            </div>
+                            <div tabindex="-1" id="listSettings-${item.pk}" class="hidden absolute flex flex-col bg-white shadow-lg rounded-md px-2 py-1 left-8 -top-1">
+                                <div onclick="openEditModal('${item.pk}')" class="hover:bg-gray-100 cursor-pointer">
+                                    <p>Edit list</p>
+                                </div>
+                                <div onclick="deleteList('${item.pk}')" class="hover:bg-gray-100 cursor-pointer">
+                                    <p>Delete list</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% comment %} list of bucket list {% endcomment %}
+                        <div data-model-target="foodAjax" data-modal-toggle="foodAjax" class="food-item relative flex flex-row gap-6 border-b-2 py-2 rounded-t-sm border-[#CCC7BA] h-[15vh] w-full hover:bg-gray-100" onclick="showFood();">    {% comment %} .food-item buat fetch data di ajax nanti {% endcomment %}
+                            <div class="h-full aspect-square overflow-hidden rounded-md">
+                                <img src="blabla.jpg" class="object-cover w-full h-full">
+                            </div>
+                            <div class="flex flex-col w-1/2">
+                                <h2 class="font-[700] text-2xl">Lempah Kuning</h2>
+                                <p>deskripsi lempah kuning begini</p>
+                            </div>
+                            {% comment %} buttons {% endcomment %}
+                            <div class="absolute flex flex-row justify-center items-center gap-2 right-1 top-1/2 transform -translate-y-1/2">
+                                <div class="flex flex-row gap-1 bg-gray-500 rounded-lg px-2 py-1 h-fit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+                                    <p class="text-white font-semibold tracking-wider">Tried</p>
+                                </div>
+                                <div class="bg-gray-500 rounded-lg p-1 h-fit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ` ;
+            
+            });
+
+            bucketListEntries.forEach((item) => {
+                htmlString += `
+                    <div id="editBucketListModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto">
+                        <div class="relative bg-white p-6 rounded-2xl shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/4 mx-4 sm:mx-0 transform">
+                            <div onclick="closeEdit()" id="closeModal" class="absolute p-1 right-4 top-4 cursor-pointer hover:bg-gray-300 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold mt-2">Edit bucket list</h2>
+                            </div>
+                            <div id="modalContent">
+                                <form id="editBucketListForm" method="post" action="edit-bucket-list/${item.pk}">
+                                    <div>
+                                        <input type="text" name="name" class="border-2 border-[#CCC7BA] px-2 py-1 mt-4 w-full rounded-lg font-bold placeholder-[#CCC7BA]" placeholder="List name" required>
+                                    </div>
+                                </form>
+
+                                <div class="flex justify-end mt-0.5">
+                                    <p class="text-[#CCC7BA] font-bold text-sm">0/20</p>
+                                </div>
+
+                                <button type="submit" form="editBucketListForm" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold">
+                                    Save changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            })
+
+            htmlString += `
+                        
+                </div>
+                
+                {% comment %} right container{% endcomment %}
+                <div class="sticky flex flex-col gap-4 items-end w-2/5">
+                    {% comment %} history button {% endcomment %}
+                    <a href="{% url 'bucket_list:show_bucket_list_history' %}" class="flex flex-row justify-center items-center gap-1 px-3 py-1 bg-[#C9C9C9] rounded-xl cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z"/></svg>
+                        <p class="font-bold">History</p>
+                    </a>
+                    {% comment %} ajax placeholder {% endcomment %}
+                    <div id="goodFood" class="flex justify-center items-center h-[65vh] w-full border-[3px] border-[#CCC7BA] rounded-2xl">
+                        <h3 class="font-bold text-[#CCC7BA]">Good food shows up here!</h3>
+                    </div>
+                    {% comment %} real ajax {% endcomment %}
+                    <div tabindex="-1" id="foodAjax" class="hidden flex flex-col gap-4 p-4 h-[65vh] w-full border-[3px] border-[#CCC7BA] rounded-2xl">
+                        <button id="closeFood" class="absolute p-1 right-4 cursor-pointer hover:bg-gray-300 rounded-full" onclick="hideFood();">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                        </button>
+                        <div class="w-3/5 mt-4 mx-auto aspect-square overflow-hidden rounded-md">
+                            <img src="chingchong.jpg" class="object-cover w-full h-full">
+                        </div>
+                        <div class="flex flex-row justify-between items-center">
+                            <h1 id="foodName" class="font-bold text-3xl">Lempah Kuning</h1>
+                            <div id="foodType" class="flex items-center px-3 py-1 bg-gray-500 rounded-3xl">
+                                <p class="font-bold text-white">Dessert</p>
+                            </div>
+                        </div>
+                        <p id="foodDesc">Sop ikan kuning-kuningan lah pokoknya</p>
+                        <h1 id="foodPrice" class="font-thick text-3xl mt-4">Rp60.000 - Rp90.000</h1>
+                    </div>
+                </div>
+            `;
+        }
+        document.getElementById("bucket_list_entry").className = classNameString;
+        document.getElementById("bucket_list_entry").innerHTML = htmlString;
+    }
+    refreshBucketListEntries();
+
+    // ADDING BUCKET LIST BLOCK
+    const modal = document.getElementById('addBucketListModal');
+    const modalContent = document.getElementById('addBucketListModalContent');
+    function showModal() {
+        modal.classList.remove('hidden'); 
+        setTimeout(() => {}, 50); 
+    }
+
+    function hideModal() {
+        modal.classList.add('hidden');
+        setTimeout(() => {}, 50); 
+    }
+
+    document.getElementById("closeModal").addEventListener("click", () => {
+        hideModal();
+    });
+
+    modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            hideModal();
+        }
+    });
+
+    function addBucketListEntry() {
+        fetch("{% url 'bucket_list:add_bucket_list' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#bucketListForm')),
+        })
+        .then(response => refreshBucketListEntries());
+    
+        document.getElementById("bucketListForm").reset(); 
+        document.querySelector("[data-modal-toggle='addBucketListModal']").click();
+    
+        return false;
+    }
+    
+    document.getElementById("bucketListForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        addBucketListEntry();
+        hideModal();
+    })
+    // ADDING BUCKET LIST BLOCK END
+
+
+    // CHOOSE BAR HANDLE BLOCK
+    var previousId = "";
+    function showLeft(id) {
+        if (previousId) {
+            document.getElementById(`chooseButton-${previousId}`).classList.remove('bg-black', 'text-white');
+            document.getElementById(`leftAjax-${previousId}`).classList.add('hidden');
+        }
+        document.getElementById(`chooseButton-${id}`).classList.add('bg-black', 'text-white');
+        document.getElementById(`leftAjax-${id}`).classList.remove('hidden');
+        previousId = id
+        setTimeout(() => {}, 50);
+    }
+
+    // settings function
+    function toggleSettings(id) {
+        document.getElementById(`listSettings-${id}`).classList.toggle('hidden');
+    }
+
+    function editList(id) {
+        window.location.href = `edit-bucket-list/${id}`;
+    }
+    // CHOOSE BAR HANDLE BLOCK END
+
+
+    // EDIT BUCKET LIST BLOCK
+    // Function to open the modal and load form content via AJAX
+    function openEditModal(id) {
+        const editModal = document.getElementById("editBucketListModal");
+        editModal.classList.remove("hidden");
+
+        // Fetch form content and populate modal
+        fetch(`edit-bucket-list/${id}`)
+            .then(response => response.text())
+    }
+
+    // Submit the form via AJAX when submitted in the modal
+    document.getElementById("modalContent").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const form = e.target;
+
+        console.log(form.action)
+        fetch(form.action, {
+            method: "POST",
+            body: new FormData(form)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Close modal and refresh list, or update entry in UI
+                editModal.classList.add("hidden");
+                refreshBucketListEntries(); // Assuming you have this function
+            }
+        });
+    });
+
+    function closeEdit() {
+        document.getElementById("editBucketListModal").classList.add("hidden");
+    }
+    // EDIT BLOCK LIST BLOCK END
+
+    function deleteList(id) {
+        window.location.href = `delete-bucket-list/${id}`;
+    }
+
+    function closeSettings(event) {
+        if (settingsOpen && !document.getElementById("listSettings").contains(event.target)) {
+            document.getElementById("listSettings").classList.add('hidden');
+            settingsOpen = false;
+        }
+    }
+    // REST OF SETTINGS BLOCK
+
+
+    {% comment %} document.getElementById("listSettings").addEventListener('click', function (event) {
+        if (event.target === document.getElementById("listSettings")) {
+            hideSettings();
+        }
+    }); {% endcomment %}
+
+
+
+    {% comment %} const foodItems = document.querySelectorAll('.food-item'); {% endcomment %}
+    {% comment %} const foodName = document.getElementById('foodName'); {% endcomment %}
+    {% comment %} const foodDesc = document.getElementById('foodDesc'); {% endcomment %}
+    {% comment %} const foodPrice = document.getElementById('foodPrice'); {% endcomment %}
+
+    
+    // FOOD AJAX HANDLER BLOCK
+    function showFood() {
+        document.getElementById('goodFood').classList.add('hidden');
+        document.getElementById('foodAjax').classList.remove('hidden');
+        setTimeout(() => {}, 50);
+    }
+
+    function hideFood() {
+        document.getElementById('goodFood').classList.remove('hidden');
+        document.getElementById('foodAjax').classList.add('hidden');
+        setTimeout(() => {}, 50);
+    }
+    // FOOD AJAX HANDLER BLOCK END
+
+
+</script>
+
+{% endblock content %}
