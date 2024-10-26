@@ -40,3 +40,17 @@ class RecipeViewsTest(TestCase):
         response = self.client.post(reverse('ask_recipe:create_recipe'), data)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'New Recipe')  # Pastikan resep baru ada di response
+
+    def test_get_messages(self):
+        response = self.client.get(reverse('ask_recipe:get_messages', kwargs={'group_id': self.recipe_group.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'partials/messages.html')
+
+    def test_send_message(self):
+        data = {
+            'group_id': self.recipe_group.id,
+            'content': 'Hello, this is a test message.'
+        }
+        response = self.client.post(reverse('ask_recipe:send_message'), data)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Hello, this is a test message.')
