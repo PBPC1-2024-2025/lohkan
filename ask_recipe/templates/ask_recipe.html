@@ -11,7 +11,7 @@
 {% block content %}
     <!-- Navbar -->
     {% include 'navbar.html' %}
-
+<div>
     <div class="flex flex-col lg:flex-row h-screen">
         <!-- Sidebar -->
         <div class="w-full lg:w-1/3 bg-[#500] p-6 text-white flex flex-col h-auto lg:h-full">  <!-- Sidebar untuk daftar resep -->
@@ -52,9 +52,9 @@
         </div>
 
         <!-- Chat Area -->
-        <div class="w-full lg:w-2/3 bg-[#EDE7F6] p-6 flex flex-col h-full">
+        <div class="w-full lg:w-2/3 bg-[#fff] p-6 flex flex-col h-full">
             <!-- Placeholder: Ditampilkan jika belum ada resep yang dipilih -->
-            <div id="chat-placeholder" class="flex flex-col items-center justify-center h-full">
+            <div id="chat-placeholder" class="flex flex-col items-center justify-center h-full" style="background-color: #fff;">
                 <img src="{% static 'images/chat.png' %}" alt="chat" class="w-20 h-20 mb-4"/>
                 <p class="text-center text-black">Select a recipe to start chatting!</p>
             </div>
@@ -147,256 +147,256 @@
             </div>
         </div>
     </div>
+</div>
+{% include 'footer.html' %} 
+<script>
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
 
-    <script>
+    // Inisialisasi modal
+    modal.removeAttribute('aria-hidden');  // Hapus atribut untuk aksesibilitas
+    modal.removeAttribute('inert');  // Aktifkan interaksi dengan modal
+
+
+    // Fungsi untuk membuka modal
+    function showModal() {
         const modal = document.getElementById('crudModal');
         const modalContent = document.getElementById('crudModalContent');
 
-        // Inisialisasi modal
-        modal.removeAttribute('aria-hidden');  // Hapus atribut untuk aksesibilitas
-        modal.removeAttribute('inert');  // Aktifkan interaksi dengan modal
-
-
-        // Fungsi untuk membuka modal
-        function showModal() {
-            const modal = document.getElementById('crudModal');
-            const modalContent = document.getElementById('crudModalContent');
-
-            modal.classList.remove('hidden'); // Tampilkan modal
-            setTimeout(() => {
-                modalContent.classList.remove('opacity-0', 'scale-95'); // Efek transisi saat modal terbuka
-                modalContent.classList.add('opacity-100', 'scale-100');
-            }, 50); 
-        }
-        
-        // Fungsi untuk menutup modal
-        function hideModal() {
-            const modal = document.getElementById('crudModal');
-            const modalContent = document.getElementById('crudModalContent');
-
-            modalContent.classList.remove('opacity-100', 'scale-100'); // Efek transisi saat modal ditutup
-            modalContent.classList.add('opacity-0', 'scale-95');
-
-            setTimeout(() => {
-                modal.classList.add('hidden'); // Sembunyikan modal setelah transisi
-            }, 150);
-        }
-
-        // Event listener untuk membuka modal
-        document.getElementById('create-recipe-btn').addEventListener('click', function(event) {
-            event.preventDefault();  // Cegah perilaku default
-            showModal();  // Panggil fungsi untuk membuka modal
-        });
-        
-        // Event listener untuk input pencarian resep
-        document.getElementById('recipe-search').addEventListener('input', function(event) {
-            const query = event.target.value;  // Ambil nilai pencarian
-
-            fetch(`/ask_recipe/search/?q=${query}`) // Kirim permintaan pencarian
-                .then(response => response.text())
-                .then(html => {
-                    document.querySelector('.recipe-list').innerHTML = html; // Update daftar resep dengan hasil pencarian
-                })
-                .catch(error => console.error('Error fetching search results:', error));
-        });
-
-        // Event listener untuk tombol bersihkan pencarian
-        document.getElementById('clear-search').addEventListener('click', function() {
-            document.getElementById('recipe-search').value = '';  // Reset input pencaria
-            fetch('/ask_recipe/search/?q=') // Ambil semua resep
-                .then(response => response.text())
-                .then(html => {
-                    document.querySelector('.recipe-list').innerHTML = html; // Tampilkan semua resep
-                })
-                .catch(error => console.error('Error fetching all recipes:', error));
-        });
-
-        // Event listener untuk menutup modal dengan tombol close atau cancel
-        document.getElementById("cancelButton").addEventListener("click", hideModal);
-        document.getElementById("closeModalBtn").addEventListener("click", hideModal);
-        
-        document.getElementById('recipeEntryForm').addEventListener('submit', function(event) {
-        event.preventDefault();  // Cegah reload halaman
-
-        const formData = new FormData(this);  // Ambil data dari form
-
-        fetch("{% url 'ask_recipe:create_recipe' %}", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',  // Tambahkan token CSRF
-            },
-        })
-        .then(response => {
-            if (response.ok) return response.text();  // Baca respon sebagai teks (HTML)
-            throw new Error('Gagal membuat resep');
-        })
-        .then(html => {
-            const recipeList = document.querySelector('.recipe-list');  // Sidebar daftar resep
-
-             // Cek dan hapus 'empty-message' jika ada
-             const emptyMessage = recipeList.querySelector('.empty-message');
-            if (emptyMessage) emptyMessage.remove();  // Hapus pesan kosong jika ada
-
-            // Tambahkan item baru di bagian atas (prepend)
-            recipeList.insertAdjacentHTML('afterbegin', html);
-
-            // Reset form dan tutup modal
-            document.getElementById('recipeEntryForm').reset();
-            hideModal();
-        })
-        .catch(error => console.error('Error:', error));
-    });
-
-    // Fungsi untuk membuka obrolan dan memuat pesan
-    function openChat(element) {
-        const title = element.getAttribute('data-title');
-        const ingredients = element.getAttribute('data-ingredients');
-        const instructions = element.getAttribute('data-instructions');
-        const servings = element.getAttribute('data-servings');
-        const cookingTime = element.getAttribute('data-cooking-time');
-        const groupId = element.getAttribute('data-group-id');
-        const creator = element.getAttribute('data-creator');
-
-        // Temukan elemen chat dan header
-        const chatArea = document.getElementById('chat-area');
-        const chatPlaceholder = document.getElementById('chat-placeholder');
-        const chatHeader = document.getElementById('chat-header');
-        const chatContent = document.querySelector('.chat-content');
-        const creatorElement = document.getElementById('data-creator');
-
-        // Tampilkan area chat dan sembunyikan placeholder
-        chatPlaceholder.classList.add('hidden');
-        chatArea.classList.remove('hidden');
-
-        // Simpan group_id di elemen chat-content untuk referensi selanjutnya
-        chatContent.setAttribute('data-group-id', groupId);
-
-        // Update header dengan judul resep
-        chatHeader.textContent = `Recipe for ${title}`;
-        creatorElement.textContent = `Created by : ${creator}`;
-
-        // Format konten resep dengan list untuk ingredients dan instructions
-        chatContent.innerHTML = `
-            <div class="bg-white p-6 rounded-lg shadow space-y-6">
-                <div>
-                    <h2 class="font-bold text-lg mb-2">Ingredients :</h2>
-                    <ul class="list-disc list-inside space-y-1 text-gray-700">
-                        ${ingredients
-                            .split('-')
-                            .map(ingredient => ingredient.trim())
-                            .filter(ingredient => ingredient)
-                            .map(ingredient => `<li>${ingredient}</li>`)
-                            .join('')}
-                    </ul>
-                </div>
-
-                <div>
-                    <h2 class="font-bold text-lg mb-2">Instructions :</h2>
-                    <ol class="list-decimal list-inside space-y-1 text-gray-700">
-                        ${instructions
-                            .split('-')
-                            .map(instruction => instruction.trim())
-                            .filter(instruction => instruction)
-                            .map(instruction => `<li>${instruction}</li>`)
-                            .join('')}
-                    </ol>
-                </div>
-
-                <p><strong>Servings :</strong> ${servings} portion</p>
-                <p><strong>Cooking Time :</strong> ${cookingTime} minutes</p>
-
-                <div class="text-gray-600">
-                    <p class="text-sm text-gray-500">Created by : ${creator}</p>
-                </div>
-            </div>
-        `;
-
-        // Muat pesan dari server untuk grup ini
-        fetchMessages(groupId);
+        modal.classList.remove('hidden'); // Tampilkan modal
         setTimeout(() => {
-            scrollToBottom();
-        }, 100);   // Scroll otomatis ke pesan terakhir
+            modalContent.classList.remove('opacity-0', 'scale-95'); // Efek transisi saat modal terbuka
+            modalContent.classList.add('opacity-100', 'scale-100');
+        }, 50); 
+    }
+    
+    // Fungsi untuk menutup modal
+    function hideModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+
+        modalContent.classList.remove('opacity-100', 'scale-100'); // Efek transisi saat modal ditutup
+        modalContent.classList.add('opacity-0', 'scale-95');
+
+        setTimeout(() => {
+            modal.classList.add('hidden'); // Sembunyikan modal setelah transisi
+        }, 150);
     }
 
-    const chatContent = document.querySelector('.chat-content');
-    const inputMessage = document.getElementById('message-input');
-    const sendButton = document.getElementById('send-button');
-
-    // Fungsi untuk mengambil pesan dari server
-    function fetchMessages(groupId) {
-        fetch(`/ask_recipe/messages/${groupId}/`)
-            .then(response => response.text())
-            .then(html => {
-                const chatContent = document.querySelector('.chat-content');
-                chatContent.innerHTML += html;  // Tambahkan pesan ke dalam konten chat
-                setTimeout(() => {
-                    scrollToBottom();
-                }, 100);   // Scroll otomatis ke pesan terakhir
-            })
-            .catch(error => console.error('Error fetching messages:', error));
-    }
-
-    // Fungsi untuk menambahkan pesan baru ke chat
-    function renderMessage(html) {
-        chatContent.innerHTML += html;
-        scrollToBottom();  // Scroll ke bawah setelah pesan baru ditambahkan
-    }
-
-    // Fungsi untuk scroll otomatis ke pesan terbaru
-    function scrollToBottom() {
-        const chatContent = document.querySelector('.chat-content');
-        chatContent.scrollTop = chatContent.scrollHeight;
-    }
-
-    // Event Listener untuk mengirim pesan baru
-    sendButton.addEventListener('click', function (event) {
-        event.preventDefault(); // Mencegah reload halaman
-        sendMessage(); // Panggil fungsi untuk mengirim pesan
+    // Event listener untuk membuka modal
+    document.getElementById('create-recipe-btn').addEventListener('click', function(event) {
+        event.preventDefault();  // Cegah perilaku default
+        showModal();  // Panggil fungsi untuk membuka modal
     });
     
-    // Event Listener untuk mengirim pesan baru ketika tombol Enter ditekan
-    inputMessage.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault(); // Cegah perilaku default Enter (misalnya, membuat baris baru)
-            sendMessage(); // Panggil fungsi untuk mengirim pesan
-        }
+    // Event listener untuk input pencarian resep
+    document.getElementById('recipe-search').addEventListener('input', function(event) {
+        const query = event.target.value;  // Ambil nilai pencarian
+
+        fetch(`/ask_recipe/search/?q=${query}`) // Kirim permintaan pencarian
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.recipe-list').innerHTML = html; // Update daftar resep dengan hasil pencarian
+            })
+            .catch(error => console.error('Error fetching search results:', error));
     });
 
-    // Fungsi untuk mengirim pesan
-    function sendMessage() {
-        const content = inputMessage.value.trim();  // Ambil konten pesan
-        const groupId = chatContent.getAttribute('data-group-id');  // Ambil ID grup
+    // Event listener untuk tombol bersihkan pencarian
+    document.getElementById('clear-search').addEventListener('click', function() {
+        document.getElementById('recipe-search').value = '';  // Reset input pencaria
+        fetch('/ask_recipe/search/?q=') // Ambil semua resep
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.recipe-list').innerHTML = html; // Tampilkan semua resep
+            })
+            .catch(error => console.error('Error fetching all recipes:', error));
+    });
 
-        // Validasi input
-        if (!content) {
-            alert("Message content cannot be empty.");
-            return;
-        }
-        if (!groupId) {
-            alert("Group ID is missing or undefined.");
-            return;
-        }
+    // Event listener untuk menutup modal dengan tombol close atau cancel
+    document.getElementById("cancelButton").addEventListener("click", hideModal);
+    document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+    
+    document.getElementById('recipeEntryForm').addEventListener('submit', function(event) {
+    event.preventDefault();  // Cegah reload halaman
 
-        const formData = new FormData();
-        formData.append('group_id', groupId);
-        formData.append('content', content);
+    const formData = new FormData(this);  // Ambil data dari form
 
-        // Kirim pesan melalui fetch POST
-        fetch('/ask_recipe/send_message/', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}', // Token CSRF untuk keamanan
-            },
-        })
+    fetch("{% url 'ask_recipe:create_recipe' %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',  // Tambahkan token CSRF
+        },
+    })
+    .then(response => {
+        if (response.ok) return response.text();  // Baca respon sebagai teks (HTML)
+        throw new Error('Gagal membuat resep');
+    })
+    .then(html => {
+        const recipeList = document.querySelector('.recipe-list');  // Sidebar daftar resep
+
+            // Cek dan hapus 'empty-message' jika ada
+            const emptyMessage = recipeList.querySelector('.empty-message');
+        if (emptyMessage) emptyMessage.remove();  // Hapus pesan kosong jika ada
+
+        // Tambahkan item baru di bagian atas (prepend)
+        recipeList.insertAdjacentHTML('afterbegin', html);
+
+        // Reset form dan tutup modal
+        document.getElementById('recipeEntryForm').reset();
+        hideModal();
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+// Fungsi untuk membuka obrolan dan memuat pesan
+function openChat(element) {
+    const title = element.getAttribute('data-title');
+    const ingredients = element.getAttribute('data-ingredients');
+    const instructions = element.getAttribute('data-instructions');
+    const servings = element.getAttribute('data-servings');
+    const cookingTime = element.getAttribute('data-cooking-time');
+    const groupId = element.getAttribute('data-group-id');
+    const creator = element.getAttribute('data-creator');
+
+    // Temukan elemen chat dan header
+    const chatArea = document.getElementById('chat-area');
+    const chatPlaceholder = document.getElementById('chat-placeholder');
+    const chatHeader = document.getElementById('chat-header');
+    const chatContent = document.querySelector('.chat-content');
+    const creatorElement = document.getElementById('data-creator');
+
+    // Tampilkan area chat dan sembunyikan placeholder
+    chatPlaceholder.classList.add('hidden');
+    chatArea.classList.remove('hidden');
+
+    // Simpan group_id di elemen chat-content untuk referensi selanjutnya
+    chatContent.setAttribute('data-group-id', groupId);
+
+    // Update header dengan judul resep
+    chatHeader.textContent = `Recipe for ${title}`;
+    creatorElement.textContent = `Created by : ${creator}`;
+
+    // Format konten resep dengan list untuk ingredients dan instructions
+    chatContent.innerHTML = `
+        <div class="bg-white p-6 rounded-lg shadow space-y-6">
+            <div>
+                <h2 class="font-bold text-lg mb-2">Ingredients :</h2>
+                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                    ${ingredients
+                        .split('-')
+                        .map(ingredient => ingredient.trim())
+                        .filter(ingredient => ingredient)
+                        .map(ingredient => `<li>${ingredient}</li>`)
+                        .join('')}
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="font-bold text-lg mb-2">Instructions :</h2>
+                <ol class="list-decimal list-inside space-y-1 text-gray-700">
+                    ${instructions
+                        .split('-')
+                        .map(instruction => instruction.trim())
+                        .filter(instruction => instruction)
+                        .map(instruction => `<li>${instruction}</li>`)
+                        .join('')}
+                </ol>
+            </div>
+
+            <p><strong>Servings :</strong> ${servings} portion</p>
+            <p><strong>Cooking Time :</strong> ${cookingTime} minutes</p>
+
+            <div class="text-gray-600">
+                <p class="text-sm text-gray-500">Created by : ${creator}</p>
+            </div>
+        </div>
+    `;
+
+    // Muat pesan dari server untuk grup ini
+    fetchMessages(groupId);
+    setTimeout(() => {
+        scrollToBottom();
+    }, 100);   // Scroll otomatis ke pesan terakhir
+}
+
+const chatContent = document.querySelector('.chat-content');
+const inputMessage = document.getElementById('message-input');
+const sendButton = document.getElementById('send-button');
+
+// Fungsi untuk mengambil pesan dari server
+function fetchMessages(groupId) {
+    fetch(`/ask_recipe/messages/${groupId}/`)
         .then(response => response.text())
         .then(html => {
-            renderMessage(html);  // Tambahkan pesan baru ke chat
-            inputMessage.value = '';  // Reset input field
+            const chatContent = document.querySelector('.chat-content');
+            chatContent.innerHTML += html;  // Tambahkan pesan ke dalam konten chat
+            setTimeout(() => {
+                scrollToBottom();
+            }, 100);   // Scroll otomatis ke pesan terakhir
         })
-        .catch(error => console.error('Error sending message:', error));
-    }
-    </script>    
+        .catch(error => console.error('Error fetching messages:', error));
+}
 
+// Fungsi untuk menambahkan pesan baru ke chat
+function renderMessage(html) {
+    chatContent.innerHTML += html;
+    scrollToBottom();  // Scroll ke bawah setelah pesan baru ditambahkan
+}
+
+// Fungsi untuk scroll otomatis ke pesan terbaru
+function scrollToBottom() {
+    const chatContent = document.querySelector('.chat-content');
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+// Event Listener untuk mengirim pesan baru
+sendButton.addEventListener('click', function (event) {
+    event.preventDefault(); // Mencegah reload halaman
+    sendMessage(); // Panggil fungsi untuk mengirim pesan
+});
+
+// Event Listener untuk mengirim pesan baru ketika tombol Enter ditekan
+inputMessage.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Cegah perilaku default Enter (misalnya, membuat baris baru)
+        sendMessage(); // Panggil fungsi untuk mengirim pesan
+    }
+});
+
+// Fungsi untuk mengirim pesan
+function sendMessage() {
+    const content = inputMessage.value.trim();  // Ambil konten pesan
+    const groupId = chatContent.getAttribute('data-group-id');  // Ambil ID grup
+
+    // Validasi input
+    if (!content) {
+        alert("Message content cannot be empty.");
+        return;
+    }
+    if (!groupId) {
+        alert("Group ID is missing or undefined.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('group_id', groupId);
+    formData.append('content', content);
+
+    // Kirim pesan melalui fetch POST
+    fetch('/ask_recipe/send_message/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}', // Token CSRF untuk keamanan
+        },
+    })
+    .then(response => response.text())
+    .then(html => {
+        renderMessage(html);  // Tambahkan pesan baru ke chat
+        inputMessage.value = '';  // Reset input field
+    })
+    .catch(error => console.error('Error sending message:', error));
+}
+</script>    
 {% endblock content %}
