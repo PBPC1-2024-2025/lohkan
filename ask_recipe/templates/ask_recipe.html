@@ -39,7 +39,6 @@
             <!-- Recipe List -->
             <div class="recipe-list flex-1 overflow-y-auto overflow-x-auto space-y-4">
                 {% if recipes %}
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {% for recipe in recipes %}
                         {% include 'partials/recipe_item.html' with recipe=recipe %}
                     {% endfor %}
