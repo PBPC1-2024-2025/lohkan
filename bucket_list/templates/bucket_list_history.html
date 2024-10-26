@@ -38,17 +38,16 @@
     {% comment %} right container{% endcomment %}
     <div class="sticky flex flex-col gap-4 items-end w-2/5">
         {% comment %} history button {% endcomment %}
-        <div class="flex flex-row justify-center items-center gap-1 px-3 py-1 bg-[#C9C9C9] rounded-xl cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z"/></svg>
-            <p class="font-bold">History</p>
-        </div>
+        <a href="{% url 'bucket_list:show_bucket_list' %}" class="flex flex-row justify-center items-center gap-1 px-3 py-1 bg-[#C9C9C9] rounded-xl cursor-pointer">
+            <p class="font-bold">Return</p>
+        </a>
         {% comment %} ajax placeholder {% endcomment %}
         <div id="goodFood" class="flex justify-center items-center h-[65vh] w-full border-[3px] border-[#CCC7BA] rounded-2xl">
             <h3 class="font-bold text-[#CCC7BA]">Good food shows up here!</h3>
         </div>
         {% comment %} real ajax {% endcomment %}
         <div tabindex="-1" aria-hidden="true" id="foodAjax" class="hidden flex flex-col gap-4 p-4 h-[65vh] w-full border-[3px] border-[#CCC7BA] rounded-2xl">
-            <div id="closeFood" class="absolute p-1 right-4 cursor-pointer hover:bg-gray-300 rounded-full">
+            <div onClick="hideFood()" class="absolute p-1 right-4 cursor-pointer hover:bg-gray-300 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
             </div>
             <div class="w-3/5 mt-4 mx-auto aspect-square overflow-hidden rounded-md">
@@ -65,5 +64,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    function showFood() {
+        document.getElementById('goodFood').classList.add('hidden');
+        document.getElementById('foodAjax').classList.remove('hidden');
+        setTimeout(() => {}, 50);
+    }
+
+    function hideFood() {
+        document.getElementById('goodFood').classList.remove('hidden');
+        document.getElementById('foodAjax').classList.add('hidden');
+        setTimeout(() => {}, 50);
+    }
+</script>
 
 {% endblock content %}
