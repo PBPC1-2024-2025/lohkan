@@ -54,3 +54,19 @@ class RecipeViewsTest(TestCase):
         response = self.client.post(reverse('ask_recipe:send_message'), data)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Hello, this is a test message.')
+    
+    def test_delete_group(self):
+        response = self.client.post(reverse('ask_recipe:delete_group', kwargs={'group_id': self.recipe_group.id}))
+        self.assertEqual(response.status_code, 302)  # Redirect after deletion
+        self.assertFalse(RecipeGroup.objects.filter(id=self.recipe_group.id).exists())
+
+    def test_delete_message(self):
+        message = ChatMessage.objects.create(group=self.recipe_group, user=self.user, message='Test message')
+        response = self.client.post(reverse('ask_recipe:delete_message', kwargs={'message_id': message.id}))
+        self.assertEqual(response.status_code, 302)  # Redirect after deletion
+        self.assertFalse(ChatMessage.objects.filter(id=message.id).exists())
+
+    def test_search_recipe(self):
+        response = self.client.get(reverse('ask_recipe:search_recipe'), {'q': 'Test Recipe'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test Recipe')
