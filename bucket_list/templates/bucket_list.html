@@ -228,8 +228,8 @@
         document.getElementById(`listSettings-${id}`).classList.toggle('hidden');
     }
 
-    function editList() {
-        window.location.href = `/edit-bucket-list/${document.getElementById('listSettings').getAttribute('data-current-id')}`;
+    function editList(id) {
+        window.location.href = `edit-bucket-list/${id}`;
     }
 
     function deleteList(id) {
