@@ -27,7 +27,9 @@
             {% if message.user == user or user.is_staff %}
                 <form action="{% url 'ask_recipe:delete_message' message.id %}" method="post" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" class="text-white">Delete</button>
+                    <button type="submit" class="mt-2 px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition duration-300 text-xs">
+                        <i class="fas fa-trash-alt text-xs"></i> Delete
+                    </button>
                 </form>
             {% endif %}
         </div>

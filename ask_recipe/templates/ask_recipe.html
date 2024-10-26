@@ -26,7 +26,7 @@
 
             <!-- Search Bar -->
             <div class="relative mb-6">
-                <input type="text" id="recipe-search" placeholder="Search Recipe"
+                <input type="text" id="recipe-search" placeholder="Search Recipe For .."
                     class="w-full px-4 py-2 rounded-full bg-white text-gray-700 focus:outline-none">
                 <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-700" id="clear-search">
                     <i class="fas fa-times-circle"></i>
@@ -62,7 +62,7 @@
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center space-x-4">
                         <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                            <img src="{% static 'images/user_icon.png' %}" alt="User Icon" class="rounded-full w-full h-full object-cover">
+                            <img src="{% static 'images/user.png' %}" alt="User Icon" class="rounded-full w-full h-full object-cover">
                         </div>
                         <div class="flex flex-col">
                             <p id="chat-header" class="text-xl font-bold"></p>
@@ -312,6 +312,8 @@
 
         // Muat pesan dari server untuk grup ini
         fetchMessages(groupId);
+
+        scrollToBottom(); 
     }
 
     const chatContent = document.querySelector('.chat-content');
@@ -390,8 +392,6 @@
         })
         .catch(error => console.error('Error sending message:', error));
     }
-
-    
     </script>    
 
 {% endblock content %}

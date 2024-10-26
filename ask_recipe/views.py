@@ -62,20 +62,8 @@ def send_message(request):
         group = get_object_or_404(RecipeGroup, id=group_id)
         message = ChatMessage.objects.create(group=group, user=request.user, message=content)
 
-        return HttpResponse(
-             f"""
-            <div class="flex justify-end mb-4">
-                <div class="bg-red-800 text-white p-4 rounded-xl shadow-md max-w-md">
-                    <p class="text-xs font-semibold mb-1 text-gray-300">{message.user.username}</p>
-                    <p class="text-sm leading-relaxed break-words">{message.message}</p>
-                    <p class="text-xs text-gray-300 mt-2">
-                        {message.timestamp.strftime('%Y-%m-%d %H:%M:%S')}
-                    </p>
-                </div>
-            </div>
-            """, content_type="text/html"
-        )
-
+        # Now we can return the rendered message in the context
+        return render(request, 'partials/messages.html', {'messages': [message], 'user': request.user})
     return HttpResponse("Invalid request method.", status=405)
 
 def delete_group(request, group_id):
@@ -94,8 +82,6 @@ def delete_message(request, message_id):
 def search_recipe(request):
     query = request.GET.get('q', '')  # Get the search query from the request
     recipes = Recipe.objects.filter(title__icontains=query)  # Filter recipes by title (case-insensitive)
-    return render(request, 'partials/recipe_list.html', {'recipes': recipes})  # Render the recipe list
-
     return render(request, 'partials/recipe_list.html', {'recipes': recipes})  # Render the recipe list
 
 def show_xml(request):
