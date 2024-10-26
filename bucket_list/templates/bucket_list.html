@@ -71,17 +71,24 @@
                         <div class="flex items-center px-3 py-1 bg-[#C9C9C9] rounded-3xl cursor-pointer hover:bg-gray-600">     {% comment %} hover properties perlu diganti nanti {% endcomment %}
                             <p class="font-bold">All</p>
                         </div>
-                    </div>
             `;
 
-            let chooseBarHTML = "";
             bucketListEntries.forEach((item) => {
                 const name = DOMPurify.sanitize(item.fields.name);
-                chooseBarHTML +=`
-                        <div class="flex items-center px-3 py-1 bg-[#C9C9C9] rounded-3xl cursor-pointer hover:bg-gray-600">     {% comment %} hover properties perlu diganti nanti {% endcomment %}
+                htmlString += `
+                        <div class="flex items-center px-3 py-1 bg-[#C9C9C9] rounded-3xl cursor-pointer hover:bg-gray-600" oncClick="showLeft();">     {% comment %} hover properties perlu diganti nanti {% endcomment %}
                             <p class="font-bold">${name}</p>
                         </div>
-                `
+                `;
+            });
+            htmlString += `
+                        <button data-model-target="addBucketListModal" data-modal-toggle="addBucketListModal" class="btn flex items-center px-3 py-1 border-2 border-[#CCC7BA] rounded-3xl hover:bg-gray-700" onclick="showModal();">
+                            <p class="font-bold text-[#CCC7BA]">+ Add new list...</p>
+                        </button>
+                    </div>
+            `;
+            
+            bucketListEntries.forEach((item) => {
                 htmlString += `
                     {% comment %} left ajax {% endcomment %}
                     <div id="leftAjax" tabindex="-1" class="hidden flex flex-col gap-4 -mt-4">
@@ -119,15 +126,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                `
-            })
-            chooseBarHTML += `
-                        <button data-model-target="addBucketListModal" data-modal-toggle="addBucketListModal" class="btn flex items-center px-3 py-1 border-2 border-[#CCC7BA] rounded-3xl hover:bg-gray-700" onclick="showModal();">
-                            <p class="font-bold text-[#CCC7BA]">+ Add new list...</p>
-                        </button>
-            `;
+                ` ;
+            
+                function editList() {
+                    window.location.href = `/edit-bucket-list/${document.getElementById('listSettings').getAttribute('data-current-id')}`;
+                }
+                
+                function deleteList() {
+                    window.location.href = `/delete-bucket-list/${id}`;
+                }
+            
+            });
             htmlString += `
+                        
                 </div>
                 
                 {% comment %} right container{% endcomment %}
@@ -160,7 +171,6 @@
                     </div>
                 </div>
             `;
-            htmlString += chooseBarHTML + `</div></div>`;
         }
         document.getElementById("bucket_list_entry").className = classNameString;
         document.getElementById("bucket_list_entry").innerHTML = htmlString;
@@ -216,12 +226,7 @@
         setTimeout(() => {}, 50);
     }
 
-
-
-
-
     let settingsOpen = false;
-
     function toggleSettings() {
         settingsOpen = !settingsOpen;
         document.getElementById("listSettings").classList.toggle('hidden', !settingsOpen);
@@ -233,34 +238,6 @@
             settingsOpen = false;
         }
     }
-
-    document.querySelectorAll('.flex.items-center[data-entry-id]').forEach((entry) => {
-        entry.addEventListener('click', function () {
-            // Remove the 'active-entry' class from all entries
-            document.querySelectorAll('.flex.items-center[data-entry-id]').forEach((el) => {
-                el.classList.remove('bg-gray-600');
-            });
-
-            this.classList.add('bg-gray-600');
-
-            document.getElementById('listSettings').setAttribute('data-current-id', this.getAttribute('data-entry-id'));
-        });
-    });
-
-    function editList() {
-        window.location.href = `/edit-bucket-list/${document.getElementById('listSettings').getAttribute('data-current-id')}`;
-    }
-    
-    function deleteList() {
-        window.location.href = `/delete-bucket-list/${id}`;
-    }
-
-    document.getElementById("listSettings").addEventListener('click', function(event) {
-        event.stopPropagation();  // Prevent this click from triggering the document click event
-        toggleSettings();
-    });
-
-    document.addEventListener('click', closeSettings);
 
 
     {% comment %} document.getElementById("listSettings").addEventListener('click', function (event) {
@@ -288,9 +265,6 @@
         setTimeout(() => {}, 50);
     }
 
-    document.getElementById("closeFood").addEventListener("click", () => {
-        hideFood();
-    });
 
 </script>
 
