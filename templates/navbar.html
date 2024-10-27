@@ -14,7 +14,7 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'explore:show_explore' %}" class="text-gray-300 hover:text-white mx-4 mr-5">Explore</a>
                     <a href="{% url 'food_review:page_review' %}" class="text-gray-300 hover:text-white mr-4 mx-4 mr-5">Food Review</a>
-                    <a href="{% url '#' %}" class="text-gray-300 hover:text-white mr-4 mx-4 mr-5">Bucket List</a>
+                    <a href="#" class="text-gray-300 hover:text-white mr-4 mx-4 mr-5">Bucket List</a>
                     <a href="{% url 'ask_recipe:ask_recipe' %}" class="text-gray-300 hover:text-white mr-4 mx-4 mr-5">Ask Recipe</a>
                     <a href="{% url 'article:full_article' %}" class="text-gray-300 hover:text-white mr-4 mx-4 mr-5">Article</a>
 
@@ -53,16 +53,17 @@
             {% if user.is_authenticated %}
             <!-- Menu Section -->
             <div class="flex flex-col">
-                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Explore</a>
-                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Food Review</a>
+                <a href="{% url 'explore:show_explore' %}" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Explore</a>
+                <a href="{% url 'food_review:page_review' %}" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Food Review</a>
                 <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Bucket List</a>
-                <a href="#" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Ask Recipe</a>
+                <a href="{% url 'ask_recipe:ask_recipe' %}" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Ask Recipe</a>
                 <a href="{% url 'article:full_article' %}" style="background-color: #440000;" class="text-gray-300 hover:text-white py-4 text-center w-full">Article</a>
                 
                 <a href="{% url 'authentication:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 mt-4">
                     Logout
                 </a>
             </div>
+
 
             {% else %}
                 <a href="{% url 'authentication:login' %}" class="block text-center bg-[#550000] hover:bg-[#440000] text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">

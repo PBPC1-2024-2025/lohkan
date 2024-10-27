@@ -1,48 +1,51 @@
-{% extends 'base.html' %} {% load static %} {% block meta %}
-<title>Edit Food</title>
-{% endblock meta %} {% block content %} {% include 'navbar.html' %}
-<div class="flex flex-col min-h-screen bg-gray-100">
-  <div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
-    <h1 class="text-3xl font-bold text-center mb-8 text-black">Add CSV</h1>
-
-    <div class="bg-white rounded-lg p-6 form-style">
-      <form
-        action=""
-        method="POST"
-        enctype="multipart/form-data"
-        class="space-y-6"
-      >
-        {% csrf_token %} {% for field in form %}
-        <div class="flex flex-col">
-          <label
-            for="{{ field.id_for_label }}"
-            class="mb-2 font-semibold text-gray-700"
-          >
-            {{ field.label }}
-          </label>
-          <div
-            class="flex flex-col w-full border border-2 border-gray-400 rounded-lg px-0.5 py-0.5"
-          >
-            {{ field }}
-          </div>
-          {% if field.help_text %}
-          <p class="mt-1 text-sm text-gray-500">{{ field.help_text }}</p>
-          {% endif %} {% for error in field.errors %}
-          <p class="mt-1 text-sm text-red-600">{{ error }}</p>
-          {% endfor %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% block meta %}
+<title>LohKan</title>
+{% endblock meta %} 
+{% block content %} 
+{% include 'navbar.html' %} 
+<div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
+  <div style="margin-bottom: 20px;">
+    <div class="back-button">
+      <a href="{% url 'explore:show_explore' %}" class="inline-block bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 transition duration-200">
+          &#8592; Back to Explore Menu
+      </a>
+    </div> 
+  </div>
+  <h1 class="text-3xl font-bold text-center text-black">Upload Database (in CSV Format)</h1>
+  <div class="bg-white rounded-lg p-6 form-style">
+    <form action="" method="POST" enctype="multipart/form-data" class="space-y-6">
+      {% csrf_token %} {% for field in form %}
+      <div class="flex flex-col">
+        <label
+          for="{{ field.id_for_label }}"
+          class="mb-2 font-semibold text-gray-700"
+        >
+          {{ field.label }}
+        </label>
+        <div
+          class="flex flex-col w-full border border-2 border-gray-400 rounded-lg px-0.5 py-0.5"
+        >
+          {{ field }}
         </div>
+        {% if field.help_text %}
+        <p class="mt-1 text-sm text-gray-500">{{ field.help_text }}</p>
+        {% endif %} {% for error in field.errors %}
+        <p class="mt-1 text-sm text-red-600">{{ error }}</p>
         {% endfor %}
-        <div class="flex justify-center mt-6">
-          <button
-            type="submit"
-            class="bg-[#550000] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[rgb(60,0,0)] transition duration-300 ease-in-out w-full"
-            href="{% url 'explore:show_explore' %}"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+      {% endfor %}
+      <div class="flex justify-center mt-6">
+        <button
+          type="submit"
+          class="bg-[#550000] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[rgb(60,0,0)] transition duration-300 ease-in-out w-full"
+          href="{% url 'explore:show_explore' %}"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 {% endblock %}
