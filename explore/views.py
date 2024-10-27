@@ -95,7 +95,25 @@ def show_json(request):
 
 # bismillah
 def add_to_bucket_list(request, food_id, bucket_id):
-    bucket = get_object_or_404(BucketList, id=bucket_id, user=request.user)
-    food = get_object_or_404(Food, id=food_id)
-    bucket.foods.add(food)
-    return redirect("explore:show_explore")
+    try:
+        # Try to get the bucket list
+        try:
+            bucket = BucketList.objects.get(id=bucket_id, user=request.user)
+        except BucketList.DoesNotExist:
+            return JsonResponse(
+                {'success': False, 'error': 'Bucket list not found'}, 
+                status=404
+            )
+
+        # Try to get the food item
+        try:
+            food = Food.objects.get(id=food_id)
+        except Food.DoesNotExist:
+            return JsonResponse(
+                {'success': False, 'error': 'Food item not found'}, 
+                status=404
+            )
+        bucket.foods.add(food)
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)

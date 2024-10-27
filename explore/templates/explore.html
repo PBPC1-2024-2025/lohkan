@@ -325,6 +325,7 @@
             <h2 class="text-xl font-bold mt-2">Add to bucket list</h2>
         </div>
         <form id="bookmarkBucketForm">
+            {% csrf_token %}
             <div class="mb-2">
                 <select id="bucketListDropdown">
                     <option value="" disabled selected>Select a bucket list</option>
@@ -334,7 +335,7 @@
                 </select>
             </div>
         </form>
-        <button form="bookmarkBucketForm" type="submit" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
+        <button form="bookmarkBucketForm" type="button" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
                 Save changes
         </button>
     </div>
@@ -355,16 +356,50 @@
     }
 
     function bookmarkFoodEntry(foodId) {
-        fetch(`/explore/add-to-bucket-list/${foodId}/${document.getElementById('bucketListDropdown').value}/`, {
+        // BANYAK DEBUGGING DAN LOG THANKS TO CLAUDE
+        console.log('Function called with foodId:', foodId);
+        event.preventDefault();
+
+        if (!document.getElementById('bucketListDropdown').value) {
+            alert("Please select a bucket list");
+            return;
+        }
+
+        // SEMPET ADA PAGE NOT FOUND JADI DIILANGIN ROOT/EXPLORE/ ????? GAJELAS PADAHAL SAMA AJA
+        fetch(`add-to-bucket-list/${foodId}/${document.getElementById('bucketListDropdown').value}/`, {
             method: "POST",
-            body: new FormData(document.querySelector('#bookmarkBucketForm')),
+            headers: {
+                'X-CSRFToken': getCsrfToken(),
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
-        .then(response => refreshFoods());
-    
-        document.getElementById("bookmarkBucketForm").reset(); 
-        document.querySelector(`[data-modal-toggle='bookmarkModal-${foodId}']`).click();
+        .then(async response => {
+            // Log the full response for debugging
+            console.log('Response status:', response.status);
+            const data = await response.text();
+            console.log('Response body:', data);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}, body: ${data}`);
+            }
+            return JSON.parse(data);
+        })
+        .then(data => {
+            console.log('Success:', data);
+            refreshFoods();
+        })
+        .catch(error => {
+            console.error('Detailed error:', error);
+            alert('Failed to add food to bucket list: ' + error.message);
+        });
     
         return false;
+    }
+
+    function getCsrfToken() {
+        console.log('CSRF Token:', document.querySelector('[name=csrfmiddlewaretoken]').value);
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
     }
 
 
