@@ -59,7 +59,6 @@
         let htmlString = "";
         let classNameString = "";
 
-        console.log(bucketListEntries.length)
         if (bucketListEntries.length === 0) {
             classNameString = "flex flex-col gap-2 w-full h-[90vh] border-2 justify-center items-center";
             htmlString = `
@@ -112,17 +111,21 @@
                         </div>
                         <div class="flex flex-col w-full gap-1">
                 `;
-                if (exploreBucketEntries) {
-                    exploreBucketEntries.forEach((entry) => {
-                        htmlString += `
+                if (item.fields.foods) {
+                    item.fields.foods.forEach(foodId => {
+                        fetch(`get-food/${foodId}/`)
+                            .then(response => response.json())
+                            .then(food => {
+                                console.log(food)
+                                htmlString += `
                             {% comment %} list of bucket list {% endcomment %}
-                            <div id="foodEntry-${entry.pk}" class="food-item relative flex flex-row gap-6 border-b-2 py-2 rounded-t-sm border-[#CCC7BA] h-[15vh] w-full hover:bg-gray-100" onclick="showFood('${entry.pk}');">    {% comment %} .food-item buat fetch data di ajax nanti {% endcomment %}
+                            <div id="foodEntry-${food.id}" class="food-item relative flex flex-row gap-6 border-b-2 py-2 rounded-t-sm border-[#CCC7BA] h-[15vh] w-full hover:bg-gray-100" onclick="showFood('${food.id}');">    {% comment %} .food-item buat fetch data di ajax nanti {% endcomment %}
                                 <div class="h-full aspect-square overflow-hidden rounded-md">
-                                    <img src="${entry.fields.image_link}" class="object-cover w-full h-full">
+                                    <img src="${food.image_link}" class="object-cover w-full h-full">
                                 </div>
                                 <div class="flex flex-col w-1/2">
-                                    <h2 class="font-[700] text-2xl">${entry.fields.name}</h2>
-                                    <p>${entry.fields.description}</p>
+                                    <h2 class="font-[700] text-2xl">${food.name}</h2>
+                                    <p>${food.description}</p>
                                 </div>
                                 {% comment %} buttons {% endcomment %}
                                 <div class="absolute flex flex-row justify-center items-center gap-2 right-1 top-1/2 transform -translate-y-1/2">
@@ -137,6 +140,8 @@
                             </div>
                         `;
                     })
+                })
+                
                 } else {
                     htmlString += `
                             <h1 class="text-black">nt cuks</h1>

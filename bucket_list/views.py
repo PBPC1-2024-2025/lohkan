@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from bucket_list.forms import BucketListForm
 from bucket_list.models import BucketList
+from explore.models import Food
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -47,3 +48,16 @@ def show_bucket_list_history(request):
 def show_json(request):
     data = BucketList.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def get_food(request, food_id):
+    food = get_object_or_404(Food, id=food_id)
+    food_data = {
+        'id': str(food.id),
+        'name': food.name,
+        'description': food.description,
+        'min_price': food.min_price,
+        'max_price': food.max_price,
+        'image_link': food.image_link,
+        'type': food.type,
+    }
+    return JsonResponse(food_data)
