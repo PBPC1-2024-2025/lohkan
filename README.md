@@ -21,13 +21,13 @@ Penasaran bagaimana mengkreasi hidangan lokal favorit Anda? Fitur Tanya Resep ka
 </p>
 Manfaat dari website ini adalah </br>
 1. Penemuan Kuliner Lokal yang Autentik 
-Dengan LohKan, temukan keunikan kuliner Kota Pangkalpinang yang mungkin belum pernah Anda dengar sebelumnya. Situs ini menawarkan informasi yang kaya untuk membantu Anda mengeksplorasi keanekaragaman kuliner lokal, membuka cakrawala Anda pada rasa autentik yang luar biasa.
+Dengan LohKan, temukan keunikan kuliner Bangka Belitung yang mungkin belum pernah Anda dengar sebelumnya. Situs ini menawarkan informasi yang kaya untuk membantu Anda mengeksplorasi keanekaragaman kuliner lokal, membuka cakrawala Anda pada rasa autentik yang luar biasa.
 </br></br>
 2. Belajar Mengenal Masakan Lokal
-Melalui fitur Tanya Resep, LohKan membuka kesempatan bagi Anda untuk bertanya dan belajar cara membuat hidangan khas Kota Pangkalpinang langsung dari rumah Anda. Dapatkan akses ke resep-resep tradisional dan tingkatkan kemampuan kuliner Anda dengan membawa cita rasa lokal ke dapur Anda.
+Melalui fitur Tanya Resep, LohKan membuka kesempatan bagi Anda untuk bertanya dan belajar cara membuat hidangan khas Bangka Belitung langsung dari rumah Anda. Dapatkan akses ke resep-resep tradisional dan tingkatkan kemampuan kuliner Anda dengan membawa cita rasa lokal ke dapur Anda.
 </br></br>
 3. Mendukung Promosi Kuliner Lokal
-LohKan tidak hanya sebagai platform informasi, tetapi juga sebagai sarana penting dalam melestarikan dan mempromosikan warisan kuliner Kota Pangkalpinang. Situs ini mendukung pelaku usaha kuliner di daerah, memperkenalkan hidangan khas mereka ke audiens yang lebih luas, dan membantu mereka tumbuh dan berkembang.
+LohKan tidak hanya sebagai platform informasi, tetapi juga sebagai sarana penting dalam melestarikan dan mempromosikan warisan kuliner Bangka Belitung. Situs ini mendukung pelaku usaha kuliner di daerah, memperkenalkan hidangan khas mereka ke audiens yang lebih luas, dan membantu mereka tumbuh dan berkembang.
 </details>
 </br>
 

@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LohKan - Food Review</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+    .review-card {
+        margin: 10px 0;
+        width: 18%;
+        box-sizing: border-box;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        height: 150px; 
+    }
+    </style>
+</head>
+<body style="background-color: #FFF;">
+    <div class="container">
+        <div class="podium full-width" style="width:100%"> 
+            <h2 class="podium-heading">🏆 Discover Top-Rated Dishes in LohKan 🤩</h2>
+            <div class="podium-container">
+                {% for dish in top_rated_dishes %}
+                {% if forloop.counter0 == 0 %}
+                    <div class="podium-item first-place">
+                        <div class="podium-rank">1</div>
+                        <div class="podium-dish-name">{{ dish.name }}</div>
+                        <div class="podium-dish-type">{{ dish.food_type }}</div>
+                        <div class="podium-dish-rating">{{ dish.avg_rating|floatformat:2 }} </div>
+                        <div class="podium-dish-reviews">{{ dish.review_count }} Reviews</div>
+                    </div>
+                {% elif forloop.counter0 == 1 %}
+                    <div class="podium-item second-place">
+                        <div class="podium-rank">2</div>
+                        <div class="podium-dish-name">{{ dish.name }}</div>
+                        <div class="podium-dish-type">{{ dish.food_type }}</div>
+                        <div class="podium-dish-rating">{{ dish.avg_rating|floatformat:2 }} </div>
+                        <div class="podium-dish-reviews">{{ dish.review_count }} Reviews</div>
+                    </div>
+                {% elif forloop.counter0 == 2 %}
+                    <div class="podium-item third-place">
+                        <div class="podium-rank">3</div>
+                        <div class="podium-dish-name">{{ dish.name }}</div>
+                        <div class="podium-dish-type">{{ dish.food_type }}</div>
+                        <div class="podium-dish-rating">{{ dish.avg_rating|floatformat:2 }}</div>
+                        <div class="podium-dish-reviews">{{ dish.review_count }} Reviews</div>
+                    </div>
+                {% endif %}
+                {% empty %}
+                    <p>No top-rated dishes found 😔.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>    
+    <div class="container" style="padding-top: 10px;">
+        <h1 style=" font-size: 4rem; color: #900000; font-family: 'Helvetica', sans-serif; font-weight: bold; text-align: center; margin-bottom: 10px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
+        See How Others Rate the Food 😍
+        </h1>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <form id="searchForm" method="GET" action="{% url 'food_review:page_review' %}">
+                <input type="text" name="search" placeholder="Find reviews by food name...">
+                <button type="submit" id="searchButton" class="search-button">
+                    Search
+                </button>
+                <button type="button" id="resetButton" class="reset-button" onclick="resetFilter()">
+                    Reset
+                </button>
+            </form>
+        </div>
+
+        <!-- Tombol Review -->
+        <div class="button-container">
+            <button id="reviewButton" class="review-button">
+                Rate Your Food 🍽️
+            </button>
+        </div>
+
+        <!-- Kategori -->
+        <div class="categories">
+            <a href="{% url 'food_review:page_review' %}?type=All">All</a>
+            <a href="{% url 'food_review:page_review' %}?type=Main Course">Main Course</a>
+            <a href="{% url 'food_review:page_review' %}?type=Dessert">Dessert</a>
+            <a href="{% url 'food_review:page_review' %}?type=Drinks">Drinks</a>
+            <a href="{% url 'food_review:page_review' %}?type=Snacks">Snacks</a>
+        </div>
+
+        <!-- Item Makanan -->
+        <div class="food-item">
+            {% for review in reviews %}
+            <div class="review-card" style="background-color: #FFF9E9;">
+                <div class="food-type">
+                    {{ review.food_type }}
+                </div>
+                <h2 class="food-name">
+                    {{ review.name }}
+                </h2>
+                <a href="{% url 'food_review:see_reviews' review.name review.food_type %}">
+                    <button class="see-reviews-button">
+                        See Reviews ({{ review.review_count }}) 
+                    </button>
+                </a>         
+            </div>
+            {% empty %}
+            <p>Looks like there's no food data here yet 😔</p>
+            {% endfor %}
+        </div>        
+    </div>
+
+    <!-- Modal for Submitting New Review -->
+    <div id="reviewModal" class="modal" style="display:none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.6);">
+        <div class="modal-content" style="background-color: #e7e2d8; margin: 10% auto; padding: 30px; border: none; border-radius: 15px; width: 40%; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); font-family: 'Arial', sans-serif;">
+            <span class="close" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+            <form id="reviewForm">
+                <h2 style="font-size: 2rem; color: #333; margin-bottom: 20px; text-align: center; font-family: Arial; font-weight: bold;">📝 Write a Review</h2>
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Food Name" required style="width: 100%; padding: 12px 15px; margin-bottom: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); outline: none;">
+                <select name="food_type" style="width: 100%; padding: 12px 15px; margin-bottom: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); outline: none;">
+                    <option value="" disabled selected>Select food type</option>
+                    <option value="Main Course">Main Course</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Drinks">Drinks</option>
+                    <option value="Snacks">Snacks</option>
+                </select>
+                <input type="number" name="rating" placeholder="Rating (1-5)" required min="1" max="5" style="width: 100%; padding: 12px 15px; margin-bottom: 15px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); outline: none;">
+                <textarea name="comments" placeholder="Comments" style="width: 100%; padding: 15px; margin-bottom: 20px; font-size: 1rem; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1); resize: vertical; outline: none;"></textarea>
+                <button type="submit" style="width: 100%; padding: 15px; background-color: #812828; color: #ffffff; font-size: 1.2rem; font-family: 'Arial', sans-serif; border: none; border-radius: 25px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);">🚀 Publish!</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+
+{% include 'footer.html' %}
+
+<script>
+    // Handle the reset functionality
+    function resetFilter() {
+        sessionStorage.setItem('scrollPosition', window.scrollY);
+        window.location.href = '{% url "food_review:page_review" %}?type=All';
+    }
+
+    $(document).ready(function() {
+        var modal = $('#reviewModal'); 
+        var btn = $('#reviewButton'); 
+        var span = $('.close'); 
+        // Tampilkan modal saat tombol "Review Your Food" diklik
+        btn.click(function() {
+            modal.show();
+        });
+    
+        // Sembunyikan modal saat span tutup diklik
+        span.click(function() {
+            modal.hide();
+        });
+    
+        // Juga sembunyikan modal saat mengklik di luar modal
+        $(window).click(function(event) {
+            if (event.target == modal[0]) {
+                modal.hide();
+            }
+        });
+    
+        // Tangani pengiriman form dengan AJAX
+        $('#reviewForm').submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '{% url "food_review:add_review_ajax" %}',
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                    'name': $('input[name="name"]').val(),
+                    'food_type': $('select[name="food_type"]').val(),
+                    'rating': $('input[name="rating"]').val(),
+                    'comments': $('textarea[name="comments"]').val()
+                },
+                success: function(response) {
+                    modal.hide();
+                    location.reload(); 
+                },
+                error: function() {
+                    alert('Error adding review.');
+                }
+            });
+        });
+    
+        // Tangani scroll position saat halaman dimuat
+        $(window).on('load', function() {
+            var scrollPosition = sessionStorage.getItem('scrollPosition');
+            if (scrollPosition) {
+                setTimeout(function() {
+                    window.scrollTo(0, scrollPosition); 
+                    sessionStorage.removeItem('scrollPosition'); 
+                }, 100); // Jeda 100 ms
+            }
+        });
+    });
+    </script>
+</html>
+{% endblock content %}

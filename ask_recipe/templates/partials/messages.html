@@ -1,0 +1,44 @@
+{% for message in messages %}
+    <!-- Mulai div untuk setiap pesan -->
+    <div class="flex mb-4 {% if message.user == user %}justify-end{% else %}justify-start{% endif %}">
+        
+        <!-- Container pesan dengan penyesuaian warna berdasarkan pengguna -->
+        <!-- Pesan dari pengguna yang pertama, pesan dari orang lain yang kedua-->
+        <div class="
+            {% if message.user == user %}
+                bg-red-800 text-white
+            {% else %}
+                bg-gray-100 text-black
+            {% endif %} 
+            p-4 rounded-xl shadow-md max-w-md">
+            
+            <!-- Nama User Pengirim -->
+            <p class="text-xs font-semibold mb-1 
+                {% if message.user == user %}text-gray-300{% else %}text-gray-500{% endif %}">
+                {{ message.user.username }}  <!-- Menampilkan nama pengguna -->
+            </p>
+
+            <!-- Isi Pesan -->
+            <p class="text-sm leading-relaxed break-words">{{ message.message }}</p>  <!-- Menampilkan isi pesan -->
+
+            <!-- Timestamp -->
+            <div class="text-xs mt-2 
+                {% if message.user == user %}text-gray-300{% else %}text-gray-500{% endif %}">
+                {{ message.timestamp|date:"Y-m-d H:i:s" }}  <!-- Menampilkan waktu pesan -->
+            </div>
+
+            <!-- Form Hapus Pesan -->
+            {% if message.user == user or user.is_staff %}
+                <!-- Menampilkan tombol hapus jika pengguna adalah pengirim atau admin -->
+                <form action="{% url 'ask_recipe:delete_message' message.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="mt-2 px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition duration-300 text-xs">
+                        <i class="fas fa-trash-alt text-xs"></i> Delete  <!-- Ikon dan teks untuk tombol hapus -->
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+
+

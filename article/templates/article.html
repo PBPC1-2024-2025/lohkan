@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<title>LohKan - Article</title>
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM5U8/pdu5ZL3tLiOaXlA1zJ1L6pup1T2RO9g59" crossorigin="anonymous">
+
+{% include 'navbar.html' %}
+
+<!-- Article content -->
+<div class="container mx-auto py-16 px-4">
+    <div class="back-button">
+        <a href="{% url 'article:full_article' %}" class="inline-block bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400 transition duration-200">
+            &#8592; Back to Full Articles
+        </a>
+    </div>
+    <div class="article-header">
+        <h1 style="font-size: 3.5rem; font-weight: 800; text-align: center; margin-bottom: 1rem;">
+            {{ article.title }}
+        </h1>        
+        <p style="text-align: right; color: gray; font-size: 0.875rem; margin-bottom: 2rem;">
+            by Admin
+        </p>        
+    </div>
+    <div class="article-image mb-8">
+        <div style="width: 70%; margin: 0 auto; text-align: center;">
+            <img src="/article{{ article.image.url }}" alt="{{ article.title }}" style="width: 100%; height: auto;" class="rounded-lg shadow-lg">
+        </div>
+        
+
+    </div>
+    <blockquote class="text-xl font-semibold italic text-gray-800 my-8 px-6 py-4 border-l-4 border-red-600 bg-gray-100">
+        {{ article.description }}
+    </blockquote>
+
+    <!-- Article Comment -->
+    {% if user.is_authenticated %}
+    <div class="comment-form my-8">
+        <h3 class="font-semibold mb-2" style="font-size: 1.5rem;">Leave a comment</h3>
+        <form action="{% url 'article:add_comment' article.id %}" method="POST">
+            {% csrf_token %}
+            <textarea name="content" required 
+                style="width: 100%; border: 1px solid #ccc; padding: 10px; box-sizing: border-box; resize: vertical;"></textarea>
+            <button type="submit" 
+                style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer; float: right; margin-top: 10px;">Add Comment</button>
+        </form>
+    </div>
+
+    <!-- Display comments -->
+    <div class="comments-section mt-8">
+        <b><h3>Comments</h3></b>
+        {% for comment in comments %}
+            <div class="comment-item my-4 p-4 border border-gray-200 rounded-lg">
+                <p>{{ comment.content }}</p>
+                <small>Posted by {{ comment.user.username }} on {{ comment.created_at }}</small>
+            </div>
+        {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-red-500">You must be <a href="{% url 'authentication:login' %}" class="underline">logged in</a> to leave a comment.</p>
+    {% endif %}
+
+</div>
+{% include 'footer.html' %}
+{% endblock content %}
+

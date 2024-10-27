@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LohKan - Food Review</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+</head>
+<body>
+    <div class="container" style="padding-top: 100px;">
+        <h1>Reviews for {{ food_name }} (Type: {{ food_type }})</h1>
+        <div class="average-rating-container">
+            <div class="average-rating-card">
+                <p class="average-rating-value">{{ average_rating|floatformat:1 }}</p>
+                <p class="average-rating-label">{{ rating_label }}</p>
+            </div>
+        </div>
+
+        <a href="{% url 'food_review:page_review' %}" class="back-button">Back to Main Reviews</a>
+        <div class="reviews-container">
+            {% for review in reviews %}
+            <div class="review-card">
+                <p class="reviewer-name">Reviewed by: {{ review.user.username }}</p>
+                <p class="rating">Rating: {{ review.rating }}/5 &#9733;</p>
+                <p class="comments">Comments: {{ review.comments }}</p>
+            </div>
+            {% empty %}
+            <p>No reviews yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+{% include 'footer.html' %}
+</html>
+{% endblock %}

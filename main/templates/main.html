@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block meta %}
-<title>LohKan - Home</title>
-{% endblock meta %}
-
 {% block content %}
+
+<title>LohKan - Home</title>
+
 <!-- Navbar -->
 {% include 'navbar.html' %}
 
@@ -24,7 +22,7 @@
           Welcome to LohKan <span class="blinking-exclamation">!</span>
         {% endif %}</span>
       </h1>
-      <p class="mt-4 text-lg text-gray-300">Experience the vibrant culture in Bangka Belitung with LohKan</p>
+      <p class="mt-4 text-lg text-gray-300">Experience the vibrant culture Bangka Belitung Food in Pangkalpinang with LohKan</p>
       <div class="mt-6">
         <a href="#section1" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">Check More</a>
       </div>
@@ -75,14 +73,11 @@
     
   </div>
 
-
-
-  <!-- Donut Selection -->
   <div class="py-16 bg-gray-50 text-center">
     <h2 class="text-3xl font-bold mb-6">Choose Your Favorite Restaurant</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-4 md:px-16">
       <div class="p-6 rounded-lg bg-white shadow-lg">
-        <img src="{% static 'images/food1.jpg' %}" alt="Otak-Otak Ase" class="w-full h-32 mb-4">
+        <img src="{% static 'images/food1.JPG' %}" alt="Otak-Otak Ase" class="w-full h-32 mb-4">
         <h3 class="text-xl font-semibold mb-2">Otak-Otak Ase</h3>
         <p class="mb-4">Savor authentic Bangka flavors with Otak-Otak Ase!</p>
         <div class="text-right">
@@ -129,6 +124,7 @@
   </div>
 
 </div>
+
 
 <!-- Footer Section -->
 <footer class="bg-marron-800 py-10" style="background-color: #800000;">
@@ -184,6 +180,27 @@
   </div>
 </footer>
 
+<!-- Tombol Chatbot -->
+<button id="chatbot-toggle" class="fixed bottom-5 right-5 bg-white-500 text-white p-2 rounded-full shadow-lg">
+  <img src="{% static 'images/chatbot.png' %}" alt="Chatbot" class="w-14 h-14">
+</button>
+
+<!-- Kotak Chatbot -->
+<div id="chatbot" class="chatbot hidden fixed bottom-16 right-5 bg-white shadow-lg rounded-lg p-4 w-80">
+  <!-- Tombol Tanda Silang -->
+  <span id="chatbot-close" class="cursor-pointer absolute top-0 right-0 text-2xl text-[#800000] z-10">&times;</span>
+  
+  <div id="chatbot-messages" class="chatbot-messages overflow-y-auto h-96 mb-2">
+    <!-- Iframe Dialogflow -->
+    <iframe
+        allow="microphone;"
+        width="100%"
+        height="430"
+        src="https://console.dialogflow.com/api-client/demo/embedded/aed8634c-d1ff-4d4a-886b-e6d1cd321ac3">
+    </iframe>
+  </div>
+</div>
+
 <script>
   document.querySelector('a[href="#section1"]').addEventListener('click', function(e) {
     e.preventDefault();
@@ -207,7 +224,21 @@
 
   typeWriter();
 });
+
+  // Mendapatkan elemen tombol dan kotak chatbot
+  const chatbotToggle = document.getElementById('chatbot-toggle');
+  const chatbot = document.getElementById('chatbot');
+  const chatbotClose = document.getElementById('chatbot-close');
+
+  // Event listener untuk membuka chatbot
+  chatbotToggle.addEventListener('click', function() {
+    chatbot.classList.toggle('hidden');
+  });
+
+  // Event listener untuk menutup chatbot
+  chatbotClose.addEventListener('click', function() {
+    chatbot.classList.add('hidden');
+  });
+  
 </script>
-
-
 {% endblock content %}
