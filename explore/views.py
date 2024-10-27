@@ -1,13 +1,40 @@
+from pydoc import describe
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, reverse
 from django.core import serializers
-from explore.forms import FoodForm
-from explore.models import Food
+from explore.forms import FoodForm, CsvForm
+from explore.models import Food, Csv
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
-import json
+import json, csv
+
+def upload_file(request):
+    form = CsvForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        obj = Csv.objects.get(activated=False)
+        with open(obj.file_name.path, 'r') as f:
+            reader = csv.reader(f, delimiter=';')
+            for i, row in enumerate(reader):
+                if i==0:
+                    pass
+                else:
+                    name = row[0]
+                    description = row[1]
+                    min_price = row[2]
+                    max_price = row[3]
+                    type = row[4]
+                    image_link = row[5]
+                    Food.objects.create(name=name, description=description, min_price=min_price, max_price=max_price, image_link=image_link, type=type)
+                    print(row)
+        obj.activated = True
+        obj.save()
+        form = CsvForm()
+        return HttpResponseRedirect(reverse('explore:show_explore'))
+    return render(request, 'upload_file.html', {'form': form})
 
 def all_to_json(request):
     if request.method == 'POST':
