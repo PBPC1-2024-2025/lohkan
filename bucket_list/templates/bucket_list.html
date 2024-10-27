@@ -42,6 +42,11 @@
 
 <script>
 
+    async function getExploreBucket() {
+        return fetch("{% url 'explore:show_json' %}").then((res) => res.json())
+    }
+
+    // TYPE SHI
     async function getBucketListEntries() {
         return fetch("{% url 'bucket_list:show_json' %}").then((res) => res.json())
     }
@@ -50,6 +55,7 @@
         document.getElementById("bucket_list_entry").innerHTML = "";
         document.getElementById("bucket_list_entry").className = "";
         const bucketListEntries = await getBucketListEntries();
+        const exploreBucketEntries = await getExploreBucket();
         let htmlString = "";
         let classNameString = "";
 
@@ -69,7 +75,7 @@
                 {% comment %} left container {% endcomment %}
                 <div class="flex flex-col gap-8 w-[55%]">
                     {% comment %} choose bar {% endcomment %}
-                    <div id="chooseBar" class="flex flex-row gap-4">       {% comment %} mungkin harus fixed dengan background color {% endcomment %}
+                    <div id="chooseBar" class="flex flex-row gap-4">
             `;
 
             bucketListEntries.forEach((item) => {
@@ -104,29 +110,42 @@
                                 </div>
                             </div>
                         </div>
-                        {% comment %} list of bucket list {% endcomment %}
-                        <div data-model-target="foodAjax" data-modal-toggle="foodAjax" class="food-item relative flex flex-row gap-6 border-b-2 py-2 rounded-t-sm border-[#CCC7BA] h-[15vh] w-full hover:bg-gray-100" onclick="showFood();">    {% comment %} .food-item buat fetch data di ajax nanti {% endcomment %}
-                            <div class="h-full aspect-square overflow-hidden rounded-md">
-                                <img src="blabla.jpg" class="object-cover w-full h-full">
-                            </div>
-                            <div class="flex flex-col w-1/2">
-                                <h2 class="font-[700] text-2xl">Lempah Kuning</h2>
-                                <p>deskripsi lempah kuning begini</p>
-                            </div>
-                            {% comment %} buttons {% endcomment %}
-                            <div class="absolute flex flex-row justify-center items-center gap-2 right-1 top-1/2 transform -translate-y-1/2">
-                                <div class="flex flex-row gap-1 bg-gray-500 rounded-lg px-2 py-1 h-fit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-                                    <p class="text-white font-semibold tracking-wider">Tried</p>
+                        <div class="flex flex-col w-full gap-1">
+                `;
+                if (exploreBucketEntries) {
+                    exploreBucketEntries.forEach((entry) => {
+                        htmlString += `
+                            {% comment %} list of bucket list {% endcomment %}
+                            <div id="foodEntry-${entry.pk}" class="food-item relative flex flex-row gap-6 border-b-2 py-2 rounded-t-sm border-[#CCC7BA] h-[15vh] w-full hover:bg-gray-100" onclick="showFood('${entry.pk}');">    {% comment %} .food-item buat fetch data di ajax nanti {% endcomment %}
+                                <div class="h-full aspect-square overflow-hidden rounded-md">
+                                    <img src="${entry.fields.image_link}" class="object-cover w-full h-full">
                                 </div>
-                                <div class="bg-gray-500 rounded-lg p-1 h-fit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                                <div class="flex flex-col w-1/2">
+                                    <h2 class="font-[700] text-2xl">${entry.fields.name}</h2>
+                                    <p>${entry.fields.description}</p>
+                                </div>
+                                {% comment %} buttons {% endcomment %}
+                                <div class="absolute flex flex-row justify-center items-center gap-2 right-1 top-1/2 transform -translate-y-1/2">
+                                    <div class="flex flex-row gap-1 bg-gray-500 rounded-lg px-2 py-1 h-fit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+                                        <p class="text-white font-semibold tracking-wider">Tried</p>
+                                    </div>
+                                    <div class="bg-gray-500 rounded-lg p-1 h-fit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                                    </div>
                                 </div>
                             </div>
+                        `;
+                    })
+                } else {
+                    htmlString += `
+                            <h1 class="text-black">nt cuks</h1>
+                    `
+                }
+                htmlString += `
                         </div>
                     </div>
-                ` ;
-            
+                `;
             });
 
             bucketListEntries.forEach((item) => {
@@ -160,7 +179,6 @@
             })
 
             htmlString += `
-                        
                 </div>
                 
                 {% comment %} right container{% endcomment %}
@@ -174,25 +192,33 @@
                     <div id="goodFood" class="flex justify-center items-center h-[65vh] w-full border-[3px] border-[#CCC7BA] rounded-2xl">
                         <h3 class="font-bold text-[#CCC7BA]">Good food shows up here!</h3>
                     </div>
+            `
+            bucketListEntries.forEach((item) => {
+                exploreBucketEntries.forEach((entry) => {
+                    htmlString += `
                     {% comment %} real ajax {% endcomment %}
-                    <div tabindex="-1" id="foodAjax" class="hidden flex flex-col gap-4 p-4 h-[65vh] w-full border-[3px] border-[#CCC7BA] rounded-2xl">
-                        <button id="closeFood" class="absolute p-1 right-4 cursor-pointer hover:bg-gray-300 rounded-full" onclick="hideFood();">
+                    <div tabindex="-1" id="foodAjax-${entry.pk}" class="hidden flex flex-col gap-4 p-4 h-[65vh] w-full border-[3px] border-[#CCC7BA] rounded-2xl">
+                        <button id="closeFood" class="absolute p-1 right-4 cursor-pointer hover:bg-gray-300 rounded-full" onclick="hideFood('${entry.pk}');">
                             <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                         </button>
                         <div class="w-3/5 mt-4 mx-auto aspect-square overflow-hidden rounded-md">
-                            <img src="chingchong.jpg" class="object-cover w-full h-full">
+                            <img src="${entry.fields.image_link}" class="object-cover w-full h-full">
                         </div>
                         <div class="flex flex-row justify-between items-center">
-                            <h1 id="foodName" class="font-bold text-3xl">Lempah Kuning</h1>
+                            <h1 id="foodName" class="font-bold text-3xl">${entry.fields.name}</h1>
                             <div id="foodType" class="flex items-center px-3 py-1 bg-gray-500 rounded-3xl">
-                                <p class="font-bold text-white">Dessert</p>
+                                <p class="font-bold text-white">${entry.fields.type}</p>
                             </div>
                         </div>
-                        <p id="foodDesc">Sop ikan kuning-kuningan lah pokoknya</p>
-                        <h1 id="foodPrice" class="font-thick text-3xl mt-4">Rp60.000 - Rp90.000</h1>
+                        <p id="foodDesc">${entry.fields.description}</p>
+                        <h1 id="foodPrice" class="font-thick text-3xl mt-4">Rp${entry.fields.min_price} - Rp${entry.fields.max_price}</h1>
                     </div>
+                `;
+                });
+            });
+            htmlString += `
                 </div>
-            `;
+            `
         }
         document.getElementById("bucket_list_entry").className = classNameString;
         document.getElementById("bucket_list_entry").innerHTML = htmlString;
@@ -315,35 +341,30 @@
     }
     // REST OF SETTINGS BLOCK
 
-
-    {% comment %} document.getElementById("listSettings").addEventListener('click', function (event) {
-        if (event.target === document.getElementById("listSettings")) {
-            hideSettings();
-        }
-    }); {% endcomment %}
-
-
-
-    {% comment %} const foodItems = document.querySelectorAll('.food-item'); {% endcomment %}
-    {% comment %} const foodName = document.getElementById('foodName'); {% endcomment %}
-    {% comment %} const foodDesc = document.getElementById('foodDesc'); {% endcomment %}
-    {% comment %} const foodPrice = document.getElementById('foodPrice'); {% endcomment %}
-
     
     // FOOD AJAX HANDLER BLOCK
-    function showFood() {
+    var previousFoodId= ""
+    function showFood(id) {
         document.getElementById('goodFood').classList.add('hidden');
-        document.getElementById('foodAjax').classList.remove('hidden');
-        setTimeout(() => {}, 50);
+        if (previousFoodId) {
+            document.getElementById(`foodAjax-${previousFoodId}`).classList.add('hidden');
+        }
+        document.getElementById(`foodAjax-${id}`).classList.remove('hidden');
+        previousFoodId = id
     }
 
-    function hideFood() {
+    function hideFood(id) {
         document.getElementById('goodFood').classList.remove('hidden');
-        document.getElementById('foodAjax').classList.add('hidden');
+        document.getElementById(`foodAjax-${id}`).classList.add('hidden');
         setTimeout(() => {}, 50);
     }
     // FOOD AJAX HANDLER BLOCK END
 
+
+    // ADD TO HISTORY BLOCK
+    // function triedFood(id) {
+    // }
+    // ADD TO HISTORY BLOCK END
 
 </script>
 

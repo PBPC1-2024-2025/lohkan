@@ -11,7 +11,7 @@
             <div class="hidden md:flex items-center">
                 {% if user.is_authenticated %}
                     <!-- Additional Menu Item -->
-                    <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Explore</a>
+                    <a href="{% url 'explore:show_explore' %}" class="text-gray-300 hover:text-white mr-4 -mr-2">Explore</a>
                     <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Food Review</a>
                     <a href="{% url 'bucket_list:show_bucket_list' %}" class="text-gray-300 hover:text-white mr-4 -mr-2">Bucket List</a>
                     <a href="#" class="text-gray-300 hover:text-white mr-4 -mr-2">Ask Recipe</a>
