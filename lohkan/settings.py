@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "food_review",
     "ask_recipe",
     "explore",
-    "bucket_list"
 ]
 
 MIDDLEWARE = [
@@ -67,7 +66,7 @@ ROOT_URLCONF = "lohkan.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        'DIRS': [BASE_DIR / 'templates'],  
+        'DIRS': [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -135,6 +134,10 @@ if DEBUG:
     ]
 else:
     STATIC_ROOT = BASE_DIR / 'static'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -37,15 +37,24 @@
             <span class="font-black text-3xl pb-1.5 pl-2">+</span>
             <span class="pl-1 pr-4">Add Food</span>
         </a> -->
-  <button
-    data-modal-target="crudModal"
-    data-modal-toggle="crudModal"
-    class="btn font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300"
-    onclick="showModal();"
-  >
-    <span class="font-black text-3xl pb-1.5 pl-2">+</span>
-    <span class="pl-1 pr-4">Add Food</span>
-  </button>
+  <div class="flex gap-2">
+    <button
+      data-modal-target="crudModal"
+      data-modal-toggle="crudModal"
+      class="btn font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300"
+      onclick="showModal();"
+    >
+      <span class="font-black text-3xl pb-1.5 pl-2">+</span>
+      <span class="pl-1 pr-4">Add Food</span>
+    </button>
+    <a
+      href="{% url 'explore:upload_file' %}"
+      class="btn font-bold border-2 mb-4 border-black rounded-full inline-flex items-center hover:bg-green-900 hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300"
+    >
+      <span class="font-black text-3xl pb-1.5 pl-2">+</span>
+      <span class="pl-1 pr-4">Add CSV</span>
+    </a>
+  </div>
   {% endif %}
   <!-- search bar -->
   <form class="w-[50%]">
@@ -277,6 +286,7 @@
       </div>
     </div>
   </div>
+
   <!-- Food Modal -->
   <div
     id="foodModal"
@@ -877,5 +887,10 @@
       prevButton = e.target;
     }
   });
+  // dropZone.addEventListener("input", (e) => {
+  //   console.log(e.target);
+  //   var csvForm = document.getElementById("csvForm");
+  //   csvForm.innerHTML += "<p>File uploaded</p>";
+  // });
 </script>
 {% endblock content %}

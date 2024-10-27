@@ -6,6 +6,14 @@ from django.db.models import Avg
 from django.template.defaultfilters import default
 
 
+class Csv(models.Model):
+    file_name = models.FileField(upload_to="csvs")
+    upload_date = models.DateTimeField(auto_now_add=True)
+    activated = models.BooleanField(default=False)
+    def __str__(self):
+        return f"File id: {self.id}"
+
+
 # Create your models here.
 class Food(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
