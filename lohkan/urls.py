@@ -11,6 +11,7 @@ urlpatterns = [
     path('article/', include('article.urls')),
     path('food-review/', include('food_review.urls')),
     path('ask_recipe/', include('ask_recipe.urls')),
+    path('bucket-list/', include('bucket_list.urls')),
     path('', include('explore.urls')),
 ]
 

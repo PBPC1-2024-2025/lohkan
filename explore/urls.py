@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 
-from explore.views import show_explore, add_food, edit_food, delete_food, show_xml, add_food_ajax, show_json, search_food, all_to_json, filter_food, upload_file
+from explore.views import show_explore, add_food, edit_food, delete_food, show_xml, add_food_ajax, show_json, search_food, all_to_json, filter_food, upload_file, add_to_bucket_list
 
 app_name = 'explore'
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path('all-to-json/', csrf_exempt(all_to_json), name='all_to_json'),
     path('filter-food/', csrf_exempt(filter_food), name='filter_food'),
     path('upload-file/', upload_file, name='upload_file'),
+    path('add-to-bucket-list/<uuid:food_id>/<uuid:bucket_id>/', add_to_bucket_list, name='add_to_bucket_list'),
 ]

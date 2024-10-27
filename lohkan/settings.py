@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "article",
     "food_review",
     "ask_recipe",
+    "bucket_list",
     "explore",
 ]
 

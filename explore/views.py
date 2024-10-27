@@ -2,13 +2,15 @@ from pydoc import describe
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core import serializers
 from explore.forms import FoodForm, CsvForm
 from explore.models import Food, Csv
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
+import json
+from bucket_list.models import BucketList
 import json, csv
 
 def upload_file(request):
@@ -62,11 +64,13 @@ def filter_food(request):
 
 @login_required(login_url='auth/login')
 def show_explore(request):
-    # foods = Food.objects.all()
+    foods = Food.objects.all()
+    bucket_lists = BucketList.objects.filter(user=request.user)    # buat dropdown
     user = request.user
     context = {
-        # 'foods': foods,
-        'user': user
+        'foods': foods,
+        'bucket_lists': bucket_lists,    # context
+        'user': user,
     }
     return render(request, "explore.html", context)
 
@@ -116,3 +120,28 @@ def show_xml(request):
 def show_json(request):
     data = Food.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+# bismillah
+def add_to_bucket_list(request, food_id, bucket_id):
+    try:
+        # Try to get the bucket list
+        try:
+            bucket = BucketList.objects.get(id=bucket_id, user=request.user)
+        except BucketList.DoesNotExist:
+            return JsonResponse(
+                {'success': False, 'error': 'Bucket list not found'}, 
+                status=404
+            )
+
+        # Try to get the food item
+        try:
+            food = Food.objects.get(id=food_id)
+        except Food.DoesNotExist:
+            return JsonResponse(
+                {'success': False, 'error': 'Food item not found'}, 
+                status=404
+            )
+        bucket.foods.add(food)
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
