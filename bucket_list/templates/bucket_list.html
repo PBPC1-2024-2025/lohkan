@@ -109,16 +109,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col w-full gap-1">
+                        <div id="cobaSih" class="flex flex-col w-full gap-1">
                 `;
-                if (item.fields.foods) {
-                    item.fields.foods.forEach(foodId => {
-                        fetch(`get-food/${foodId}/`)
-                            .then(response => response.json())
-                            .then(food => {
-                                console.log(food)
+                if (item.fields.foods.length !== 0) {
+                    const foodPromises = item.fields.foods.map(foodId => 
+                    fetch(`get-food/${foodId}/`)
+                        .then(response => response.json())
+                    );
+
+                    Promise.all(foodPromises)
+                        .then(foods => {
+                            foods.forEach(food => {
                                 htmlString += `
-                            {% comment %} list of bucket list {% endcomment %}
                             <div id="foodEntry-${food.id}" class="food-item relative flex flex-row gap-6 border-b-2 py-2 rounded-t-sm border-[#CCC7BA] h-[15vh] w-full hover:bg-gray-100" onclick="showFood('${food.id}');">    {% comment %} .food-item buat fetch data di ajax nanti {% endcomment %}
                                 <div class="h-full aspect-square overflow-hidden rounded-md">
                                     <img src="${food.image_link}" class="object-cover w-full h-full">
@@ -138,9 +140,9 @@
                                     </div>
                                 </div>
                             </div>
-                        `;
-                    })
-                })
+                                `;
+                            })
+                        })
                 
                 } else {
                     htmlString += `
