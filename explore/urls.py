@@ -16,4 +16,5 @@ urlpatterns = [
     path('search-food/', csrf_exempt(search_food), name='search_food'),
     path('all-to-json/', csrf_exempt(all_to_json), name='all_to_json'),
     path('filter-food/', csrf_exempt(filter_food), name='filter_food'),
+    path('upload-csv/', upload_csv, name='upload_csv'),
 ]

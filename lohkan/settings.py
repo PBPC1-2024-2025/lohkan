@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "main",
     "authentication",
     "explore",
-    "bucket_list"
 ]
 
 MIDDLEWARE = [
