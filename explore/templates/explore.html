@@ -327,7 +327,7 @@
         <form id="bookmarkBucketForm">
             {% csrf_token %}
             <div class="mb-2">
-                <select id="bucketListDropdown">
+                <select id="bucketListDropdown-${item.id}">
                     <option value="" disabled selected>Select a bucket list</option>
                     {% for bucket in bucket_lists %}
                         <option value="{{ bucket.id }}">{{ bucket.name }}</option>
@@ -360,13 +360,13 @@
         console.log('Function called with foodId:', foodId);
         event.preventDefault();
 
-        if (!document.getElementById('bucketListDropdown').value) {
+        if (!document.getElementById(`bucketListDropdown-${foodId}`).value) {
             alert("Please select a bucket list");
             return;
         }
 
         // SEMPET ADA PAGE NOT FOUND JADI DIILANGIN ROOT/EXPLORE/ ????? GAJELAS PADAHAL SAMA AJA
-        fetch(`add-to-bucket-list/${foodId}/${document.getElementById('bucketListDropdown').value}/`, {
+        fetch(`add-to-bucket-list/${foodId}/${document.getElementById(`bucketListDropdown-${foodId}`).value}/`, {
             method: "POST",
             headers: {
                 'X-CSRFToken': getCsrfToken(),

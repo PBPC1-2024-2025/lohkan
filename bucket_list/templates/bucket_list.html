@@ -27,11 +27,6 @@
                 <input type="text" name="name" class="border-2 border-[#CCC7BA] px-2 py-1 mt-4 w-full rounded-lg font-bold placeholder-[#CCC7BA]" placeholder="List name" required>
             </div>
         </form>
-
-        <div class="flex justify-end mt-0.5">
-            <p class="text-[#CCC7BA] font-bold text-sm">0/20</p>
-        </div>
-
         <button type="submit" form="bucketListForm" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold">
             Add new collection
         </button>
@@ -109,8 +104,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="cobaSih" class="flex flex-col w-full gap-1">
+                    </div>
                 `;
+                document.getElementById("bucket_list_entry").innerHTML = htmlString;
+
                 if (item.fields.foods.length !== 0) {
                     const foodPromises = item.fields.foods.map(foodId => 
                     fetch(`get-food/${foodId}/`)
@@ -119,8 +116,12 @@
 
                     Promise.all(foodPromises)
                         .then(foods => {
+                            const containerDiv = document.createElement('div');
+                            containerDiv.id = 'cobaSih';
+                            containerDiv.className = 'flex flex-col w-full gap-1';
+
                             foods.forEach(food => {
-                                htmlString += `
+                                containerDiv.innerHTML += `
                             <div id="foodEntry-${food.id}" class="food-item relative flex flex-row gap-6 border-b-2 py-2 rounded-t-sm border-[#CCC7BA] h-[15vh] w-full hover:bg-gray-100" onclick="showFood('${food.id}');">    {% comment %} .food-item buat fetch data di ajax nanti {% endcomment %}
                                 <div class="h-full aspect-square overflow-hidden rounded-md">
                                     <img src="${food.image_link}" class="object-cover w-full h-full">
@@ -131,28 +132,30 @@
                                 </div>
                                 {% comment %} buttons {% endcomment %}
                                 <div class="absolute flex flex-row justify-center items-center gap-2 right-1 top-1/2 transform -translate-y-1/2">
-                                    <div class="flex flex-row gap-1 bg-gray-500 rounded-lg px-2 py-1 h-fit">
+                                    <div id="triedButton-${food.id}" class="flex flex-row gap-1 bg-gray-500 rounded-lg px-2 py-1 h-fit z-50 cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
                                         <p class="text-white font-semibold tracking-wider">Tried</p>
                                     </div>
-                                    <div class="bg-gray-500 rounded-lg p-1 h-fit">
+                                    <div id="deleteButton-${food.id}" class="bg-gray-500 rounded-lg p-1 h-fit z-50 cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                                     </div>
                                 </div>
                             </div>
                                 `;
                             })
+                            document.getElementById(`leftAjax-${item.pk}`).appendChild(containerDiv);
                         })
                 
                 } else {
-                    htmlString += `
+                    const containerDiv = document.createElement('div');
+                    containerDiv.id = 'cobaSih';
+                    containerDiv.className = 'flex flex-col w-full gap-1';
+                    containerDiv.innerHTML = `
                             <h1 class="text-black">nt cuks</h1>
-                    `
+                    `;
+                    console.log(`leftAjax-${item.pk}`)
+                    document.getElementById(`leftAjax-${item.pk}`).appendChild(containerDiv);
                 }
-                htmlString += `
-                        </div>
-                    </div>
-                `;
             });
 
             bucketListEntries.forEach((item) => {
@@ -171,11 +174,6 @@
                                         <input type="text" name="name" class="border-2 border-[#CCC7BA] px-2 py-1 mt-4 w-full rounded-lg font-bold placeholder-[#CCC7BA]" placeholder="List name" required>
                                     </div>
                                 </form>
-
-                                <div class="flex justify-end mt-0.5">
-                                    <p class="text-[#CCC7BA] font-bold text-sm">0/20</p>
-                                </div>
-
                                 <button type="submit" form="editBucketListForm" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold">
                                     Save changes
                                 </button>
@@ -199,7 +197,8 @@
                     <div id="goodFood" class="flex justify-center items-center h-[65vh] w-full border-[3px] border-[#CCC7BA] rounded-2xl">
                         <h3 class="font-bold text-[#CCC7BA]">Good food shows up here!</h3>
                     </div>
-            `
+            `;
+                    
             bucketListEntries.forEach((item) => {
                 exploreBucketEntries.forEach((entry) => {
                     htmlString += `

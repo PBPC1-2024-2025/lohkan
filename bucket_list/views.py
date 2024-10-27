@@ -27,7 +27,7 @@ def edit_bucket_list(request, id):
 
     if form.is_valid() and request.method == "POST":
         form.save()
-        return JsonResponse({'status': 'success'})
+        return HttpResponseRedirect(reverse('bucket_list:show_bucket_list'))
 
     # context = {'form': form}
     return JsonResponse({'status': 'false'})
@@ -61,3 +61,27 @@ def get_food(request, food_id):
         'type': food.type,
     }
     return JsonResponse(food_data)
+
+def remove_from_bucket_list(request, food_id, bucket_id):
+    try:
+        # Try to get the bucket list
+        try:
+            bucket = BucketList.objects.get(id=bucket_id, user=request.user)
+        except BucketList.DoesNotExist:
+            return JsonResponse(
+                {'success': False, 'error': 'Bucket list not found'}, 
+                status=404
+            )
+
+        # Try to get the food item
+        try:
+            food = Food.objects.get(id=food_id)
+        except Food.DoesNotExist:
+            return JsonResponse(
+                {'success': False, 'error': 'Food item not found'}, 
+                status=404
+            )
+        bucket.foods.remove(food)
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
