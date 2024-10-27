@@ -311,24 +311,7 @@
     }
 
     // Submit the form via AJAX when submitted in the modal
-    document.getElementById("modalContent").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const form = e.target;
-
-        console.log(form.action)
-        fetch(form.action, {
-            method: "POST",
-            body: new FormData(form)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                // Close modal and refresh list, or update entry in UI
-                editModal.classList.add("hidden");
-                refreshBucketListEntries(); // Assuming you have this function
-            }
-        });
-    });
+    
 
     function closeEdit() {
         document.getElementById("editBucketListModal").classList.add("hidden");
