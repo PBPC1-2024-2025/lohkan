@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "article",
     "food_review",
     "ask_recipe",
+    "explore",
+    "bucket_list"
 ]
 
 MIDDLEWARE = [
