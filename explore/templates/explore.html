@@ -580,14 +580,46 @@
             <span class="sr-only">Delete Food</span>
           </a>
         {% endif %}
-        <a href="#" class="text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-          </svg>
-          <span class="sr-only">Bookmark Food</span>
-        </a>
+        <div onClick="showBookmarkModal('${item.id}');"
+            class="text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+            </svg>
+            <span class="sr-only">Bookmark Food</span>
+        </div>
       </div>
     </div>`;
+      });
+      data.forEach((item) => {
+        htmlString += `
+{% comment %} bookmark ajax {% endcomment %}
+<div id="bookmarkModal-${item.id}" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto">
+    <div id="bookmarkModalContent" class="relative bg-white p-6 rounded-2xl shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/4 mx-4 sm:mx-0 transform">
+        <div onClick="hideBookmarkModal('${item.id}');" class="absolute p-1 right-4 top-4 cursor-pointer hover:bg-gray-300 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </div>
+        <div class="mb-4">
+            <h2 class="text-xl font-bold mt-2">Add to bucket list</h2>
+        </div>
+        <form id="bookmarkBucketForm">
+            {% csrf_token %}
+            <div class="mb-2">
+                <select id="bucketListDropdown-${item.id}">
+                    <option value="" disabled selected>Select a bucket list</option>
+                    {% for bucket in bucket_lists %}
+                        <option value="{{ bucket.id }}">{{ bucket.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        <button form="bookmarkBucketForm" type="button" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
+                Save changes
+        </button>
+    </div>
+</div>
+`;
       });
 
       document.getElementById("food_cards").className = classNameString;
