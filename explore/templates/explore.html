@@ -322,30 +322,7 @@
       <!-- Modal Body -->
       <div id="foodModalBody" class="px-6 py-4 space-y-6 form-style"></div>
       <!-- Modal Footer -->
-      <div
-        class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end"
-      >
-        <button
-          type="button"
-          id="foodModalBookmarkButton"
-          class="bg-[#550000] hover:bg-[rgb(140,0,0)] transition duration-300 text-white font-bold py-2 px-4 rounded-lg w-full flex justify-center"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-            />
-          </svg>
-        </button>
-      </div>
+      
     </div>
   </div>
 </div>
@@ -614,7 +591,7 @@
                 </select>
             </div>
         </form>
-        <button form="bookmarkBucketForm" type="button" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
+        <button form="bookmarkBucketForm" type="button" class="px-2 py-1 mt-2 w-full rounded-lg bg-[#550000] text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
                 Save changes
         </button>
     </div>
