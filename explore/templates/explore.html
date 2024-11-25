@@ -322,30 +322,7 @@
       <!-- Modal Body -->
       <div id="foodModalBody" class="px-6 py-4 space-y-6 form-style"></div>
       <!-- Modal Footer -->
-      <div
-        class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end"
-      >
-        <button
-          type="button"
-          id="foodModalBookmarkButton"
-          class="bg-[#550000] hover:bg-[rgb(140,0,0)] transition duration-300 text-white font-bold py-2 px-4 rounded-lg w-full flex justify-center"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-            />
-          </svg>
-        </button>
-      </div>
+      
     </div>
   </div>
 </div>
@@ -365,6 +342,85 @@
     document.querySelector("[data-modal-toggle='crudModal']").click();
 
     return false;
+  }
+
+  async function refreshFoods() {
+    document.getElementById("food_cards").innerHTML = "";
+    document.getElementById("food_cards").className = "";
+    var foods;
+    fetch("{% url 'explore:all_to_json' %}", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        displayFood(data);
+      });
+    // const foods = await getFoods();
+  }
+  refreshFoods();
+
+  function showFoodModal(attr) {
+    const foodModalBody = document.getElementById("foodModalBody");
+    foodModalBody.innerHTML = `
+  <div class="flex flex-col sm:w-full align-center px-6 pt-4">
+    <div class="flex h-48 w-full gap-3px justify-center">
+      <img
+        class="w-full h-full object-cover object-center transition duration-50 rounded-xl"
+        loading="lazy"
+        src="${attr[4]}"
+      />
+    </div>
+    <div class="pt-6 text-2xl font-bold text-center">${attr[0]}</div>
+    <div class="pt-2 text-md text-center">
+      ${attr[1]}
+    </div>
+    <div class="w-full flex justify-center mt-6 ">
+      <div class="text-sm text-gray-600 bg-gray-200 rounded-md px-2 py-1">
+        Rp${attr[2]} - Rp${attr[3]}
+      </div>
+    </div>
+    <div class="w-full flex justify-center">
+      ${
+        attr[5] === "MC"
+          ? `
+  <div class="text-sm text-gray-600 bg-green-400 rounded-md px-2 py-1">
+    Main Course
+  </div>`
+          : ""
+      }
+          ${
+            attr[5] === "DS"
+              ? `
+  <div class="text-sm text-gray-600 bg-yellow-400 rounded-md px-2 py-1">
+    Dessert
+  </div>`
+              : ""
+          }
+          ${
+            attr[5] === "DR"
+              ? `
+  <div class="text-sm text-gray-600 bg-pink-400 rounded-md px-2 py-1">
+    Drinks
+  </div>`
+              : ""
+          }
+              ${
+                attr[5] === "SN"
+                  ? `
+  <div class="text-sm text-gray-600 bg-red-400 rounded-md px-2 py-1">
+    Snacks
+  </div>`
+                  : ""
+              }
+    </div>
+  </div>`;
+    const modal = document.getElementById("foodModal");
+    const modalContent = document.getElementById("foodModalContent");
+    modal.classList.remove("hidden");
+    setTimeout(() => {
+      modalContent.classList.remove("opacity-0", "scale-95");
+      modalContent.classList.add("opacity-100", "scale-100");
+    }, 50);
   }
 
   async function filterFood(type) {
@@ -510,13 +566,11 @@
             </svg>
             <span class="sr-only">Bookmark Food</span>
         </div>
-    </div>
-</div>
-`
-            });
-
-            data.forEach((item) => {
-                htmlString += `
+      </div>
+    </div>`;
+      });
+      data.forEach((item) => {
+        htmlString += `
 {% comment %} bookmark ajax {% endcomment %}
 <div id="bookmarkModal-${item.id}" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto">
     <div id="bookmarkModalContent" class="relative bg-white p-6 rounded-2xl shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/4 mx-4 sm:mx-0 transform">
@@ -537,73 +591,104 @@
                 </select>
             </div>
         </form>
-        <button form="bookmarkBucketForm" type="button" class="px-2 py-1 mt-2 w-full rounded-lg bg-black text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
+        <button form="bookmarkBucketForm" type="button" class="px-2 py-1 mt-2 w-full rounded-lg bg-[#550000] text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
                 Save changes
         </button>
     </div>
 </div>
 `;
-            });
-            document.getElementById("food_cards").className = classNameString;
-            document.getElementById("food_cards").innerHTML = htmlString;
-            currentlyDisplayedFoods = data;
-        }
-    }
-    function showBookmarkModal(id) {
-        document.getElementById(`bookmarkModal-${id}`).classList.remove('hidden');
-    }
+      });
 
-    function hideBookmarkModal(id) {
-        document.getElementById(`bookmarkModal-${id}`).classList.add('hidden');
-    }
-
-    function bookmarkFoodEntry(foodId) {
-        // BANYAK DEBUGGING DAN LOG THANKS TO CLAUDE
-        console.log('Function called with foodId:', foodId);
-        event.preventDefault();
-
-        if (!document.getElementById(`bucketListDropdown-${foodId}`).value) {
-            alert("Please select a bucket list");
-            return;
-        }
-
-        // SEMPET ADA PAGE NOT FOUND JADI DIILANGIN ROOT/EXPLORE/ ????? GAJELAS PADAHAL SAMA AJA
-        fetch(`add-to-bucket-list/${foodId}/${document.getElementById(`bucketListDropdown-${foodId}`).value}/`, {
-            method: "POST",
-            headers: {
-                'X-CSRFToken': getCsrfToken(),
-                'Content-Type': 'application/json',
-            },
-            credentials: 'same-origin'
-        })
-        .then(async response => {
-            // Log the full response for debugging
-            console.log('Response status:', response.status);
-            const data = await response.text();
-            console.log('Response body:', data);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}, body: ${data}`);
-            }
-            return JSON.parse(data);
-        })
-        .then(data => {
-            console.log('Success:', data);
-            refreshFoods();
-        })
-        .catch(error => {
-            console.error('Detailed error:', error);
-            alert('Failed to add food to bucket list: ' + error.message);
+      document.getElementById("food_cards").className = classNameString;
+      document.getElementById("food_cards").innerHTML = htmlString;
+      currentlyDisplayedFoods = data;
+      // console.log(document.getElementById("food_cards"));
+      const foodie = [...document.getElementsByClassName("food-item")];
+      // console.log(foodie);
+      foodie.forEach((item) => {
+        const name = item.getAttribute("data-name");
+        const description = item.getAttribute("data-description");
+        const min_price = item.getAttribute("data-min-price");
+        const max_price = item.getAttribute("data-max-price");
+        const image_link = item.getAttribute("data-image-link");
+        const type = item.getAttribute("data-type");
+        item.addEventListener("click", (e) => {
+          showFoodModal([
+            name,
+            description,
+            min_price,
+            max_price,
+            image_link,
+            type,
+          ]);
         });
-    
-        return false;
+      });
+    }
+  }
+  function showBookmarkModal(id) {
+    document.getElementById(`bookmarkModal-${id}`).classList.remove("hidden");
+  }
+
+  function hideBookmarkModal(id) {
+    document.getElementById(`bookmarkModal-${id}`).classList.add("hidden");
+  }
+
+  function bookmarkFoodEntry(foodId) {
+    // BANYAK DEBUGGING DAN LOG THANKS TO CLAUDE
+    console.log("Function called with foodId:", foodId);
+    event.preventDefault();
+
+    if (!document.getElementById(`bucketListDropdown-${foodId}`).value) {
+      alert("Please select a bucket list");
+      return;
     }
 
-    function getCsrfToken() {
-        console.log('CSRF Token:', document.querySelector('[name=csrfmiddlewaretoken]').value);
-        return document.querySelector('[name=csrfmiddlewaretoken]').value;
-    }
+    // SEMPET ADA PAGE NOT FOUND JADI DIILANGIN ROOT/EXPLORE/ ????? GAJELAS PADAHAL SAMA AJA
+    fetch(
+      `add-to-bucket-list/${foodId}/${
+        document.getElementById(`bucketListDropdown-${foodId}`).value
+      }/`,
+      {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCsrfToken(),
+          "Content-Type": "application/json",
+        },
+        credentials: "same-origin",
+      }
+    )
+      .then(async (response) => {
+        // Log the full response for debugging
+        console.log("Response status:", response.status);
+        const data = await response.text();
+        console.log("Response body:", data);
 
+        if (!response.ok) {
+          throw new Error(
+            `HTTP error! status: ${response.status}, body: ${data}`
+          );
+        }
+        return JSON.parse(data);
+      })
+      .then((data) => {
+        console.log("Success:", data);
+        refreshFoods();
+      })
+      .catch((error) => {
+        console.error("Detailed error:", error);
+        alert("Failed to add food to bucket list: " + error.message);
+      });
+
+    return false;
+  }
+
+  function getCsrfToken() {
+    console.log(
+      "CSRF Token:",
+      document.querySelector("[name=csrfmiddlewaretoken]").value
+    );
+    return document.querySelector("[name=csrfmiddlewaretoken]").value;
+  }
 
   function hideFoodModal() {
     const modal = document.getElementById("foodModal");

@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-2^9w1+(st*)vot+ag^ecm0*i8%ui^65+hv7421mv1+aj&n8e=$
 #DEBUG = not PRODUCTION
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id" , "http://marla-marlena-koalove1.pbp.cs.ui.ac.id", "https://marla-marlena-koalove1.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id"]
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "ask_recipe",
     "bucket_list",
     "explore",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "lohkan.urls"
@@ -145,3 +147,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1"]
