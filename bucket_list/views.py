@@ -62,6 +62,7 @@ def get_food(request, food_id):
     }
     return JsonResponse(food_data)
 
+@csrf_exempt
 def remove_from_bucket_list(request, food_id, bucket_id):
     try:
         # Try to get the bucket list

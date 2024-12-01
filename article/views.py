@@ -7,6 +7,9 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.contrib import messages
 from django.core.paginator import Paginator
+import uuid
+from django.http import JsonResponse
+import json
 
 # menampilkan semua artikel
 def full_article(request):
@@ -87,10 +90,39 @@ def show_xml(request):
    data = Article.objects.all()
    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
-# menampilkan artikel berdasarkan id dalam format XML
+# menampilkan artikel berdasarkan id dalam format JSON
 def show_json(request):
-   data = Article.objects.all()
-   return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    articles = Article.objects.all()
+    article_data = []
+
+    for article in articles:
+        # Ambil komentar terkait artikel
+        comments = Comment.objects.filter(article=article)
+        comment_list = []
+
+        for comment in comments:
+            comment_list.append({
+                'id': comment.id,
+                'user': comment.user.username,  # Asumsikan ada relasi dengan User
+                'content': comment.content,
+                'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S'),  # Konversi datetime ke string
+            })
+
+        # Serialisasi artikel
+        article_serialized = serializers.serialize("json", [article])
+        article_json = json.loads(article_serialized)[0]  # Ambil artikel pertama
+
+        # Tambahkan URL absolut untuk gambar
+        if article.image:
+            article_json['fields']['image'] = request.build_absolute_uri(article.image.url)
+        else:
+            article_json['fields']['image'] = None
+
+        # Tambahkan komentar ke dalam data artikel
+        article_json['fields']['comments'] = comment_list
+        article_data.append(article_json)
+
+    return HttpResponse(json.dumps(article_data), content_type="application/json")
 
 # menampilkan artikel berdasarkan id dalam format JSON
 def show_xml_by_id(request, id):
@@ -99,8 +131,39 @@ def show_xml_by_id(request, id):
 
 # menampilkan artikel berdasarkan id dalam format JSON
 def show_json_by_id(request, id):
-    data = Article.objects.filter(pk=id)
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    try:
+        article = Article.objects.get(pk=id)
+        comments = Comment.objects.filter(article=article)
+        comment_list = []
 
+        for comment in comments:
+            comment_list.append({
+                'id': comment.id,
+                'user': comment.user.username,  # Asumsikan ada relasi dengan User
+                'content': comment.content,
+                'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S'),  # Konversi datetime ke string
+            })
+
+        # Serialisasi artikel
+        article_serialized = serializers.serialize("json", [article])
+        article_json = json.loads(article_serialized)[0]  # Ambil artikel pertama
+
+        # Tambahkan URL absolut untuk gambar
+        if article.image:
+            article_json['fields']['image'] = request.build_absolute_uri(article.image.url)
+        else:
+            article_json['fields']['image'] = None
+
+        # Tambahkan komentar ke dalam data artikel
+        article_json['fields']['comments'] = comment_list
+
+        return HttpResponse(json.dumps(article_json), content_type="application/json")
+    
+    except Article.DoesNotExist:
+        return HttpResponse(
+            json.dumps({'error': 'Article not found'}), 
+            content_type="application/json", 
+            status=404
+        )
 def index(request):
     return render(request, 'full_article.html')

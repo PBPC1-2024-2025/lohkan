@@ -6,7 +6,7 @@ from explore.views import show_explore, add_food, edit_food, delete_food, show_x
 app_name = 'explore'
 
 urlpatterns = [
-    path('explore', show_explore, name='show_explore'),
+    path('', show_explore, name='show_explore'),
     path('add-food/', add_food, name='add_food'),
     path('edit-food/<uuid:id>', edit_food, name='edit_food'),
     path('delete-food/<uuid:id>', delete_food, name='delete_food'),
