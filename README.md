@@ -68,3 +68,4 @@ Para Foodies memiliki role sebagai user yang dapat melihat berbagai produk yang 
 
 ## <summary><strong>Link Design</strong></summary>
 https://www.figma.com/design/hyw1YqYThyIRcNes0k746g/Lohkan-APP?node-id=0-1&node-type=canvas&t=iVtYVtdc9cx1Usni-0
+
