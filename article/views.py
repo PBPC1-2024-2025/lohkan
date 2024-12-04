@@ -92,7 +92,6 @@ def show_xml(request):
 
 # menampilkan artikel berdasarkan id dalam format JSON
 def show_json(request):
-    # Ambil semua artikel
     articles = Article.objects.all()
     article_data = []
 
@@ -113,6 +112,12 @@ def show_json(request):
         article_serialized = serializers.serialize("json", [article])
         article_json = json.loads(article_serialized)[0]  # Ambil artikel pertama
 
+        # Tambahkan URL absolut untuk gambar
+        if article.image:
+            article_json['fields']['image'] = request.build_absolute_uri(article.image.url)
+        else:
+            article_json['fields']['image'] = None
+
         # Tambahkan komentar ke dalam data artikel
         article_json['fields']['comments'] = comment_list
         article_data.append(article_json)
@@ -126,7 +131,6 @@ def show_xml_by_id(request, id):
 
 # menampilkan artikel berdasarkan id dalam format JSON
 def show_json_by_id(request, id):
-    # Ambil artikel berdasarkan ID
     try:
         article = Article.objects.get(pk=id)
         comments = Comment.objects.filter(article=article)
@@ -144,12 +148,22 @@ def show_json_by_id(request, id):
         article_serialized = serializers.serialize("json", [article])
         article_json = json.loads(article_serialized)[0]  # Ambil artikel pertama
 
+        # Tambahkan URL absolut untuk gambar
+        if article.image:
+            article_json['fields']['image'] = request.build_absolute_uri(article.image.url)
+        else:
+            article_json['fields']['image'] = None
+
         # Tambahkan komentar ke dalam data artikel
         article_json['fields']['comments'] = comment_list
 
         return HttpResponse(json.dumps(article_json), content_type="application/json")
     
     except Article.DoesNotExist:
-        return HttpResponse(json.dumps({'error': 'Article not found'}), content_type="application/json", status=404)
+        return HttpResponse(
+            json.dumps({'error': 'Article not found'}), 
+            content_type="application/json", 
+            status=404
+        )
 def index(request):
     return render(request, 'full_article.html')
