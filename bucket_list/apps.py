@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ExploreConfig(AppConfig):
+class BucketListConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'explore'
+    name = 'bucket_list'

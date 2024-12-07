@@ -11,7 +11,8 @@ urlpatterns = [
     path('article/', include('article.urls')),
     path('food-review/', include('food_review.urls')),
     path('ask_recipe/', include('ask_recipe.urls')),
-    path('', include('explore.urls')),
+    path('bucket-list/', include('bucket_list.urls')),
+    path('explore/', include('explore.urls', 'explore')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
