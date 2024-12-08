@@ -580,7 +580,7 @@
       "description": "Kue bolu dari ketan hitam dengan tekstur yang lembut dan rasa manis.",
       "min_price": 12000,
       "max_price": 40000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueApem.jpg?raw=true",
+      "image_link": "https://raw.githubusercontent.com/fakhrihabb/lohkan-images/refs/heads/master/KueBoluKetanHitam.jpg",
       "type": "DS"
     }
   },
@@ -593,7 +593,7 @@
       "description": "Kue manis berbentuk cincin yang terbuat dari tepung beras.",
       "min_price": 15000,
       "max_price": 30000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueApem.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueCincin.jpeg?raw=true",
       "type": "SN"
     }
   },
@@ -814,7 +814,7 @@
       "description": "Dodol kenyal dengan rasa manis dari buah cempedak.",
       "min_price": 25000,
       "max_price": 60000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahKuning.png?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempokCempedak.png?raw=true",
       "type": "MC"
     }
   },
@@ -827,7 +827,7 @@
       "description": "Dodol durian yang manis dan legit, cocok sebagai oleh-oleh.",
       "min_price": 15000,
       "max_price": 45000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahKuning.png?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempokDurian.jpeg?raw=true",
       "type": "SN"
     }
   },
@@ -840,7 +840,7 @@
       "description": "Kudapan khas dari beras ketan yang dibungkus daun janur.",
       "min_price": 40000,
       "max_price": 70000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahKuning.png?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Lepet.png?raw=true",
       "type": "DS"
     }
   },
@@ -853,7 +853,7 @@
       "description": "Kerang yang dimasak dengan saus tiram atau santan.",
       "min_price": 10000,
       "max_price": 25000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahKuning.png?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LokanLaut.png?raw=true",
       "type": "MC"
     }
   },
@@ -866,7 +866,7 @@
       "description": "Lontong dari beras yang disajikan dengan kuah santan dan ikan.",
       "min_price": 10000,
       "max_price": 20000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahKuning.png?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LontongBangka.jpg?raw=true",
       "type": "MC"
     }
   },
@@ -931,7 +931,7 @@
       "description": "Otak-otak dari ikan yang dibungkus daun dan dibakar.",
       "min_price": 35000,
       "max_price": 85000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/NasiBelut.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/OtakOtakBangka.png?raw=true",
       "type": "SN"
     }
   },
@@ -970,7 +970,7 @@
       "description": "Pempek dengan ikan tenggiri dan kuah cuka khas Bangka.",
       "min_price": 15000,
       "max_price": 20000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PecakIkanSembilang.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PempekBangka.jpg?raw=true",
       "type": "DS"
     }
   },
@@ -983,7 +983,7 @@
       "description": "Daging ayam yang direbus dalam kuah santan hingga empuk.",
       "min_price": 32000,
       "max_price": 75000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PecakIkanSembilang.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PerutAyamBangka.jpeg?raw=true",
       "type": "MC"
     }
   },
@@ -996,7 +996,7 @@
       "description": "Ikan kembung yang dimasak dalam kuah pindang dengan rempah.",
       "min_price": 45000,
       "max_price": 80000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PecakIkanSembilang.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PindangIkanKembung.JPG?raw=true",
       "type": "MC"
     }
   },
@@ -1009,7 +1009,7 @@
       "description": "Rujak dengan bahan utama daun ubi dan bunga pepaya muda yang ditumis.",
       "min_price": 50000,
       "max_price": 100000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PecakIkanSembilang.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/RujakDaunUbiKembangPepaya.png?raw=true",
       "type": "MC"
     }
   },
@@ -1048,8 +1048,8 @@
       "description": "Abon ikan tenggiri yang gurih dan kaya protein.",
       "min_price": 15000,
       "max_price": 20000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Rusip.png?raw=true",
-      "type": "DR"
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SambalLingkung.png?raw=true",
+      "type": "SN"
     }
   },
   {
@@ -1087,7 +1087,7 @@
       "description": "Sate ikan khas Bangka dengan daging ikan yang dibumbui rempah.",
       "min_price": 45000,
       "max_price": 120000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SateDagingSapiKhasBelitung.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SateIkanTuhuk.png?raw=true",
       "type": "MC"
     }
   },
@@ -1126,7 +1126,7 @@
       "description": "Siput laut yang direbus dan disantap dengan sambal.",
       "min_price": 14000,
       "max_price": 30000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SayurLabuSiam.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SiputGongGong.png?raw=true",
       "type": "SN"
     }
   },
@@ -1269,7 +1269,7 @@
       "description": "Ubi jalar yang digoreng hingga renyah.",
       "min_price": 25000,
       "max_price": 50000,
-      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/TumisDaunPakis.jpg?raw=true",
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/UbiJalarGoreng.jpg?raw=true",
       "type": "SN"
     }
   },
