@@ -116,6 +116,35 @@ def add_food_flutter(request):
     else:
         return JsonResponse({"status": "error"}, status=401)
 
+@csrf_exempt
+def edit_food_flutter(request, food_id):
+    food = Food.objects.get(pk=food_id)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        food.name = data['name']
+        food.description = data['description']
+        food.min_price = data['min_price']
+        food.max_price = data['max_price']
+        food.image_link = data['image_link']
+        food.type = data['type']
+        food.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def delete_food_flutter(request, food_id):
+    food = Food.objects.get(pk=food_id)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        if data['delete'] == 'yes':
+            food.delete()
+        else:
+            food.delete()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
 def edit_food(request, id):
     food = Food.objects.get(pk=id)
     form = FoodForm(request.POST or None, instance=food)
