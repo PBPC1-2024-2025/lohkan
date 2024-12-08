@@ -99,6 +99,23 @@ def add_food(request):
     context = {'form': form}
     return render(request, "add_food.html", context)
 
+@csrf_exempt
+def add_food_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        new_food = Food.objects.create(
+            name=data['name'],
+            description=data['description'],
+            min_price=int(data['min_price']),
+            max_price=int(data['max_price']),
+            image_link=data['image_link'],
+            type=data['type']
+        )
+        new_food.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
 def edit_food(request, id):
     food = Food.objects.get(pk=id)
     form = FoodForm(request.POST or None, instance=food)
