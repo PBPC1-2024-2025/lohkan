@@ -1,1 +1,1302 @@
-[{"model":"explore.food","pk":"316aa262-5073-45e2-af78-667c6db4e930","fields":{"date":"2024-10-27","name":"Asem Laksa","description":"Mie asam pedas dengan ikan dan kuah yang segar.","min_price":10000,"max_price":30000,"image_link":"https://i.postimg.cc/ncMWXkkp/Asem-Laksa.jpg","type":"MC"}},{"model":"explore.food","pk":"21b0afae-e002-470a-95c7-730b753869f6","fields":{"date":"2024-10-27","name":"Asem Pedas Ikan Gabus","description":"Sup asam pedas dengan ikan gabus yang segar dan lembut.","min_price":25000,"max_price":70000,"image_link":"https://i.postimg.cc/q7WSrCn4/Asam-Pedas-Ikan-Gabus.jpg","type":"MC"}},{"model":"explore.food","pk":"6808c329-d608-446b-9829-ca90b3f47f8e","fields":{"date":"2024-10-27","name":"Bakmi Bangka","description":"Mie dengan kuah kaldu yang kaya rasa dari ikan tenggiri.","min_price":30000,"max_price":75000,"image_link":"https://i.postimg.cc/Xvrmtgrs/Bakmi-Bangka.jpg","type":"MC"}},{"model":"explore.food","pk":"72191b81-7615-4763-bcd1-fa4193ca91e7","fields":{"date":"2024-10-27","name":"Bakso Ikan Bangka","description":"Bakso dari ikan dengan tekstur kenyal dan kuah kaldu yang kaya rasa.","min_price":15000,"max_price":35000,"image_link":"https://i.postimg.cc/PrcRYw3Z/Bakso-Ikan-Bangka.jpg","type":"MC"}},{"model":"explore.food","pk":"da3d351d-eab5-4d01-9bb8-b3c63d2769bb","fields":{"date":"2024-10-27","name":"Balacan","description":"Bumbu fermentasi udang yang digunakan sebagai penyedap masakan.","min_price":13000,"max_price":250000,"image_link":"https://i.postimg.cc/0jkf18t9/Balacan.png","type":"MC"}},{"model":"explore.food","pk":"fdbdcbf6-8f31-4366-83ed-ae057ae5dc9c","fields":{"date":"2024-10-27","name":"Bong Li Piang","description":"Kue tradisional dengan isian selai nanas yang lembut dan manis.","min_price":20000,"max_price":60000,"image_link":"https://i.postimg.cc/rmWbwFCW/Bong-Li-Piang.jpg","type":"DS"}},{"model":"explore.food","pk":"edd5894c-f4ba-4247-9073-c9cf7b981fe1","fields":{"date":"2024-10-27","name":"Bubur Jagung Belitung","description":"Bubur jagung yang manis dan disajikan dengan santan kental.","min_price":20000,"max_price":80000,"image_link":"https://i.postimg.cc/GpsrvRx3/Bubur-Jagung-Belitung.jpg","type":"MC"}},{"model":"explore.food","pk":"1e27f969-e574-40ee-840e-becbec12a63e","fields":{"date":"2024-10-27","name":"Bubur Kepiting","description":"Bubur dengan daging kepiting yang gurih dan disajikan dengan bawang goreng.","min_price":15000,"max_price":35000,"image_link":"https://i.postimg.cc/wTSmhqh3/Bubur-Kepiting.png","type":"MC"}},{"model":"explore.food","pk":"6a74451a-a517-4390-a839-57e9e9ab1a14","fields":{"date":"2024-10-27","name":"Bubur Pedas","description":"Bubur pedas dengan sayuran dan rempah yang menyegarkan.","min_price":15000,"max_price":45000,"image_link":"https://i.postimg.cc/HxwgPtNf/Bubur-Pedas.jpg","type":"MC"}},{"model":"explore.food","pk":"501d298b-9709-4ae2-b2e6-e91e230bcc0e","fields":{"date":"2024-10-27","name":"Bubur Sumsum Bangka","description":"Bubur manis yang lembut dari tepung beras, sering disajikan dengan gula merah.","min_price":12000,"max_price":45000,"image_link":"https://i.postimg.cc/N0QL45LG/Bubur-Sumsum-Bangka.png","type":"MC"}},{"model":"explore.food","pk":"093ed827-7698-4fe7-9090-1ba7e4648073","fields":{"date":"2024-10-27","name":"Bubur Tinutuan Bangka","description":"Bubur tradisional dengan sayuran yang segar dan pedas.","min_price":10000,"max_price":45000,"image_link":"https://i.postimg.cc/3NFc2Sqx/Bubur-Tinutuan-Bangka.jpg","type":"MC"}},{"model":"explore.food","pk":"cb65e0c7-83e0-41e9-ad70-1e74df1308e7","fields":{"date":"2024-10-27","name":"Cincalok","description":"Ikan teri yang difermentasi untuk dibuat sambal khas.","min_price":50000,"max_price":150000,"image_link":"https://i.postimg.cc/d1mBf7jW/Cincalok.png","type":"MC"}},{"model":"explore.food","pk":"8c46900b-3cb3-4003-a9c3-793e78b97a80","fields":{"date":"2024-10-27","name":"Es Ai Lo Bi","description":"Es khas Bangka dengan isian kelapa muda, cincau, dan gula aren.","min_price":15000,"max_price":40000,"image_link":"https://i.postimg.cc/Z5pyHGcH/EsAiLoBi.png","type":"DR"}},{"model":"explore.food","pk":"52f52970-e11f-4bff-b569-caaf2b2f861b","fields":{"date":"2024-10-27","name":"Es Campur Khas Bangka","description":"Es campur dengan berbagai isian seperti kacang merah, alpukat, dan kelapa.","min_price":10000,"max_price":30000,"image_link":"https://i.postimg.cc/ZqmvMwsS/Es-Campur-Bangka.png","type":"DR"}},{"model":"explore.food","pk":"becaafd1-3073-4d35-987f-1344d005d438","fields":{"date":"2024-10-27","name":"Es Jeruk Kunci","description":"Minuman segar dari perasan jeruk kunci yang asam dan manis.","min_price":45000,"max_price":95000,"image_link":"https://i.postimg.cc/Y9qGphwD/Es-Jeruk-Kunci.png","type":"DR"}},{"model":"explore.food","pk":"b65af2e8-fa9c-4fea-9c18-64b973b0b9b5","fields":{"date":"2024-10-27","name":"Es Kacang Hijau","description":"Es kacang hijau yang lembut dengan kuah santan dan gula merah.","min_price":30000,"max_price":70000,"image_link":"https://i.postimg.cc/tTQb5cB3/Es-Kacang-Hijau.webp","type":"DR"}},{"model":"explore.food","pk":"25692379-6ce4-4c31-a505-ab79359dd696","fields":{"date":"2024-10-27","name":"Es Kacang Merah","description":"Es kacang merah dengan santan dan sirup manis.","min_price":20000,"max_price":50000,"image_link":"https://i.postimg.cc/k5PYhddg/Es-Kacang-Merah.jpg","type":"DR"}},{"model":"explore.food","pk":"3ca2b47f-bc0a-4205-8491-0ca0929fb36c","fields":{"date":"2024-10-27","name":"Es Kelapa Muda Belitung","description":"Es kelapa muda yang segar dan manis dengan tambahan gula aren.","min_price":20000,"max_price":45000,"image_link":"https://i.postimg.cc/44WM4MpW/Es-Kelapa-Muda-Belitung.jpg","type":"DR"}},{"model":"explore.food","pk":"4f449f90-7c6b-4c47-8a97-7ad56eb1fa56","fields":{"date":"2024-10-27","name":"Es Kolang-Kaling","description":"Es dari kolang-kaling yang manis dan disajikan dengan sirup.","min_price":50000,"max_price":100000,"image_link":"https://i.postimg.cc/GhccVZdz/Es-Kolang-Kaling.webp","type":"DR"}},{"model":"explore.food","pk":"5b3d1af7-f520-4048-b1bd-d61da12e3fc1","fields":{"date":"2024-10-27","name":"Es Krim Ovaltine","description":"Es krim dengan rasa Ovaltine yang creamy dan manis.","min_price":35000,"max_price":60000,"image_link":"https://i.postimg.cc/8cSYJQtY/Es-Krim-Ovaltine.jpg","type":"DS"}},{"model":"explore.food","pk":"60b677ca-35c6-473e-b401-47641e15dcaa","fields":{"date":"2024-10-27","name":"Es Nipah","description":"Es dari buah nipah dengan sirup manis dan es serut.","min_price":15000,"max_price":50000,"image_link":"https://i.postimg.cc/T3DH93Fs/EsNipah.jpg","type":"DR"}},{"model":"explore.food","pk":"77f62cde-708a-4159-8d3e-394d2d23ec92","fields":{"date":"2024-10-27","name":"Es Tape Ketan Hitam","description":"Es tape ketan hitam dengan santan yang manis dan lembut.","min_price":20000,"max_price":40000,"image_link":"https://i.postimg.cc/prPHNFby/Es-Tape-Ketan-Hitam.jpg","type":"DR"}},{"model":"explore.food","pk":"fd50676c-8499-4627-aaeb-6f4d60fa419a","fields":{"date":"2024-10-27","name":"Getas","description":"Kerupuk ikan tenggiri yang renyah dan gurih.","min_price":12000,"max_price":35000,"image_link":"https://i.postimg.cc/cJ3TQkgG/Getas.png","type":"SN"}},{"model":"explore.food","pk":"0c5a6cb2-9cad-4c9d-988b-eacfd4929704","fields":{"date":"2024-10-27","name":"Gulai Ayam Kampung Bangka","description":"Gulai ayam kampung dengan kuah santan yang gurih.","min_price":50000,"max_price":80000,"image_link":"https://i.postimg.cc/T1QXT3f0/Gulai-Ayam-Kampung-Bangka.jpg","type":"MC"}},{"model":"explore.food","pk":"1bbd9ad5-c4c9-4b4e-b7f0-e421f2299340","fields":{"date":"2024-10-27","name":"Gulai Kepala Ikan Kakap","description":"Sup kepala ikan kakap dengan kuah yang kaya rasa dari rempah.","min_price":10000,"max_price":35000,"image_link":"https://i.postimg.cc/dQ2pM30c/Gulai-Kepala-Ikan-Kakap.jpg","type":"MC"}},{"model":"explore.food","pk":"24b42827-7032-4051-af11-82236e121b61","fields":{"date":"2024-10-27","name":"Ikan Asam Padeh","description":"Ikan asam padeh dengan kuah pedas dan asam yang segar.","min_price":30000,"max_price":100000,"image_link":"https://i.postimg.cc/3JSH6NLJ/Ikan-Asam-Padeh.jpg","type":"MC"}},{"model":"explore.food","pk":"2c7aebf9-7bf6-476c-a78e-92c20773c7f7","fields":{"date":"2024-10-27","name":"Ikan Bakar Sambal Dabu-Dabu","description":"Ikan bakar yang disajikan dengan sambal dabu-dabu pedas.","min_price":50000,"max_price":120000,"image_link":"https://i.postimg.cc/QNqDQ017/Ikan-Bakar-Sambal-Dabu-Dabu.jpg","type":"MC"}},{"model":"explore.food","pk":"16148f50-1a2a-4879-afd4-84fb8ce58ffb","fields":{"date":"2024-10-27","name":"Ikan Bandeng Presto","description":"Ikan bandeng yang dimasak presto hingga durinya lunak.","min_price":25000,"max_price":60000,"image_link":"https://i.postimg.cc/wTBChH6K/Ikan-Bandeng-Presto.webp","type":"MC"}},{"model":"explore.food","pk":"d068549d-761f-4e99-a3ab-76dc92c4e549","fields":{"date":"2024-10-27","name":"Ikan Gulai Tauco","description":"Ikan gulai dengan kuah santan dan bumbu tauco yang gurih.","min_price":50000,"max_price":120000,"image_link":"https://i.postimg.cc/wB5fCb6c/Ikan-Gulai-Tauco.jpg","type":"MC"}},{"model":"explore.food","pk":"0801ce02-59a7-4b23-ace5-cfe659aa6cad","fields":{"date":"2024-10-27","name":"Ikan Kuwe Bakar","description":"Ikan kuwe yang dibakar dengan bumbu rempah dan sambal.","min_price":15000,"max_price":25000,"image_link":"https://i.postimg.cc/HssgBX9h/Ikan-Kuwe-Bakar.webp","type":"MC"}},{"model":"explore.food","pk":"000bc99a-2cd1-4d74-9308-bf3e2fbd924b","fields":{"date":"2024-10-27","name":"Ikan Panggang Bumbu Rujak","description":"Ikan panggang yang disajikan dengan sambal rujak pedas manis.","min_price":10000,"max_price":45000,"image_link":"https://i.postimg.cc/mZyXXndb/Ikan-Panggang-Bumbu-Rujak.jpg","type":"MC"}},{"model":"explore.food","pk":"bf4d4da1-be77-4962-bac7-8a0eb4c6c85d","fields":{"date":"2024-10-27","name":"Ikan Selar Goreng","description":"Ikan selar yang digoreng hingga garing dan disajikan dengan sambal.","min_price":40000,"max_price":100000,"image_link":"https://i.postimg.cc/qRkb4Xqf/Ikan-Selar-Goreng.jpg","type":"MC"}},{"model":"explore.food","pk":"2c35918e-8c9c-44a0-963b-77bb43037539","fields":{"date":"2024-10-27","name":"Jus Belimbing","description":"Jus belimbing yang segar dan asam manis.","min_price":25000,"max_price":50000,"image_link":"https://i.postimg.cc/RZWzzm81/Jus-Belimbing.webp","type":"DR"}},{"model":"explore.food","pk":"92d334e8-282a-4b85-87c9-161ee66630e0","fields":{"date":"2024-10-27","name":"Kari Ikan Tenggiri","description":"Kari ikan tenggiri dengan kuah yang kental dan kaya bumbu.","min_price":40000,"max_price":90000,"image_link":"https://i.postimg.cc/MKtLTLRs/Kari-Ikan-Tenggiri.jpg","type":"MC"}},{"model":"explore.food","pk":"15417c46-47c7-4cd5-9448-36ff48f36f2c","fields":{"date":"2024-10-27","name":"Kari Kambing Belinyu","description":"Kari kambing dengan kuah pekat dan bumbu rempah khas Belinyu.","min_price":10000,"max_price":25000,"image_link":"https://i.postimg.cc/FHNJPPBQ/Kari-Kambing-Belinyu.png","type":"MC"}},{"model":"explore.food","pk":"7fceab7e-002d-43f8-b8a5-e6a3e6b9897e","fields":{"date":"2024-10-27","name":"Kembung Bertelur","description":"Ikan kembung yang diisi telur dan digoreng hingga renyah.","min_price":17000,"max_price":30000,"image_link":"https://i.postimg.cc/dVgcsXPb/Kembung-Bertelur.jpg","type":"MC"}},{"model":"explore.food","pk":"699599ae-54fa-46a0-a54e-b4aa4c2eba65","fields":{"date":"2024-10-27","name":"Kemplang","description":"Kerupuk dari ikan tenggiri yang dipanggang, biasanya disajikan dengan sambal balacan.","min_price":28000,"max_price":80000,"image_link":"https://i.postimg.cc/brmRzKMk/Kemplang.png","type":"SN"}},{"model":"explore.food","pk":"a92225fb-97ce-4012-a703-444c5cf9d0c4","fields":{"date":"2024-10-27","name":"Kepiting Saos Belitung","description":"Kepiting dengan saus khas Belitung yang pedas dan manis.","min_price":20000,"max_price":40000,"image_link":"https://i.postimg.cc/k583Bc7B/Kepiting-Saos-Belitung.jpg","type":"MC"}},{"model":"explore.food","pk":"41f29486-e61f-4932-95b8-0ab73bf20c5b","fields":{"date":"2024-10-27","name":"Kepiting Soka Goreng","description":"Kepiting soka yang digoreng renyah dan disajikan dengan saus pedas.","min_price":35000,"max_price":100000,"image_link":"https://i.postimg.cc/4dB8d7HY/Kepiting-Soka-Goreng.jpg","type":"MC"}},{"model":"explore.food","pk":"05b668e5-7e66-4a18-a864-4a5b8ce8f3fc","fields":{"date":"2024-10-27","name":"Kericu","description":"Camilan renyah dari telur cumi-cumi dan tepung sagu.","min_price":32000,"max_price":250000,"image_link":"https://i.postimg.cc/50Mgp5LY/Kericu.png","type":"SN"}},{"model":"explore.food","pk":"8691dc1d-d3f6-45b4-b582-361e804920d1","fields":{"date":"2024-10-27","name":"Keripik Ubi Kayu","description":"Keripik ubi kayu yang gurih dan renyah.","min_price":40000,"max_price":75000,"image_link":"https://i.postimg.cc/vBsR9VmX/Keripik-Ubi-Kayu.jpg","type":"SN"}},{"model":"explore.food","pk":"98c17d68-38ef-4eb6-9ea7-b34d4ff4ed40","fields":{"date":"2024-10-27","name":"Ketupat Soto Bangka","description":"Ketupat yang disajikan dengan soto ayam khas Bangka.","min_price":25000,"max_price":60000,"image_link":"https://i.postimg.cc/KjGdphBM/Ketupat-Soto-Bangka.jpg","type":"MC"}},{"model":"explore.food","pk":"191ade20-a636-4aba-a6b6-ce348ed59533","fields":{"date":"2024-10-27","name":"Kopi Tung Tau","description":"Kopi hitam tradisional dari kedai kopi terkenal di Bangka.","min_price":18000,"max_price":24000,"image_link":"https://i.postimg.cc/htLfT9D3/Kopi-Tung-Tau.png","type":"DR"}},{"model":"explore.food","pk":"5d9cd92c-eed3-4413-b59d-fc396eb6787c","fields":{"date":"2024-10-27","name":"Kue Apem","description":"Kue tradisional Indonesia yang terbuat dari campuran tepung beras, santan, dan gula, kemudian difermentasi dengan ragi","min_price":15000,"max_price":47000,"image_link":"https://i.postimg.cc/0jjVJk7c/KueApem.jpg","type":"DS"}},{"model":"explore.food","pk":"a8d88912-0cbd-4b89-9864-6f08d8b0d99d","fields":{"date":"2024-10-27","name":"Kue Bolu Ketan Hitam","description":"Kue bolu dari ketan hitam dengan tekstur yang lembut dan rasa manis.","min_price":12000,"max_price":40000,"image_link":"https://i.postimg.cc/rFqbqTd0/Kue-Bolu-Ketan-Hitam.jpg","type":"DS"}},{"model":"explore.food","pk":"4a60c495-282c-446f-be2c-44e00b406824","fields":{"date":"2024-10-27","name":"Kue Cincin","description":"Kue manis berbentuk cincin yang terbuat dari tepung beras.","min_price":15000,"max_price":30000,"image_link":"https://i.postimg.cc/L8XbZV3m/Kue-Cincin.jpg","type":"SN"}},{"model":"explore.food","pk":"c49c3606-3f2f-400c-8ba5-48dc7c5bc64d","fields":{"date":"2024-10-27","name":"Kue Cubit Bangka","description":"Kue cubit dengan adonan yang lembut dan topping cokelat.","min_price":30000,"max_price":65000,"image_link":"https://i.postimg.cc/c4VFrNCB/Kue-Cubit-Bangka.jpg","type":"DS"}},{"model":"explore.food","pk":"a6e7d04d-c226-4394-8ccd-8d28a0bc3dca","fields":{"date":"2024-10-27","name":"Kue Dadar Belitung","description":"Kue tipis yang digulung dengan isi manis kelapa.","min_price":25000,"max_price":50000,"image_link":"https://i.postimg.cc/JzVssTLk/Kue-Dadar-Belitung.png","type":"DS"}},{"model":"explore.food","pk":"e3281cb1-a635-48b1-af53-41a318f502bf","fields":{"date":"2024-10-27","name":"Kue Engkak Ketan","description":"Kue tradisional dari ketan dengan rasa manis dan gurih.","min_price":20000,"max_price":70000,"image_link":"https://i.postimg.cc/QNFg5nR4/Kue-Engkak-Ketan.png","type":"DS"}},{"model":"explore.food","pk":"f4dec1bc-f6c1-4651-b47f-bf017d7e4166","fields":{"date":"2024-10-27","name":"Kue Jongkong","description":"Kue manis dari tepung beras dengan lapisan hijau dan coklat.","min_price":18000,"max_price":60000,"image_link":"https://i.postimg.cc/XJJJRmwT/Kue-Jongkong.png","type":"DS"}},{"model":"explore.food","pk":"b5f26970-9361-4dee-9cd4-11b0e9e77e22","fields":{"date":"2024-10-27","name":"Kue Pelite","description":"Kue tradisional dari tepung beras dan santan yang dibungkus daun pandan.","min_price":5000,"max_price":13000,"image_link":"https://i.postimg.cc/s2Kx0sZY/Kue-Pelite.png","type":"DS"}},{"model":"explore.food","pk":"c26c9844-225d-41cd-9dd6-abc3df4ed90f","fields":{"date":"2024-10-27","name":"Kue Rintak","description":"Kue kering dari tepung sagu dengan tekstur lembut dan manis.","min_price":18000,"max_price":40000,"image_link":"https://i.postimg.cc/K8k52p53/Kue-Rintak.png","type":"SN"}},{"model":"explore.food","pk":"dec3dee2-ccfb-47ff-bd05-536f83c54c53","fields":{"date":"2024-10-27","name":"Kue Sekopek","description":"Kue tradisional dari tepung beras yang digoreng hingga renyah.","min_price":35000,"max_price":85000,"image_link":"https://i.postimg.cc/GtfqFWQr/Kue-Sekopek.jpg","type":"DS"}},{"model":"explore.food","pk":"18ced0e9-55f4-4dd9-a376-2259fe40677d","fields":{"date":"2024-10-27","name":"Lakse","description":"Mie tradisional Bangka yang disajikan dengan kuah ikan.","min_price":40000,"max_price":150000,"image_link":"https://i.postimg.cc/g2CHkyMS/Lakse.png","type":"MC"}},{"model":"explore.food","pk":"b989bfbf-ebe7-4a41-8b39-0fa355f24328","fields":{"date":"2024-10-27","name":"Lakso Bangka","description":"Mie khas Bangka dengan kuah santan berbumbu dan tekstur kenyal.","min_price":20000,"max_price":50000,"image_link":"https://i.postimg.cc/sfbYJ4zV/Lakse.png","type":"SN"}},{"model":"explore.food","pk":"c1a007c8-b261-4019-9326-fb21c00a7484","fields":{"date":"2024-10-27","name":"Lakso Kuning","description":"Mie khas Bangka dengan kuah santan dan aroma rempah.","min_price":35000,"max_price":100000,"image_link":"https://i.postimg.cc/FFkc1kLw/Lakso-Kuning.png","type":"MC"}},{"model":"explore.food","pk":"a60d14f4-614e-43a1-958e-d9c22e9bb678","fields":{"date":"2024-10-27","name":"Lapis Gulung Selai Nanas","description":"Roti lapis dengan selai nanas yang manis dan lembut.","min_price":15000,"max_price":30000,"image_link":"https://i.postimg.cc/gJ9SQbF0/Lemang.jpg","type":"DS"}},{"model":"explore.food","pk":"7308e082-6ac5-4c9b-b0df-0f246cc01422","fields":{"date":"2024-10-27","name":"Lemang","description":"Makanan tradisional dari beras ketan yang dimasak dalam bambu.","min_price":25000,"max_price":80000,"image_link":"https://i.postimg.cc/Wp886k3z/Lempah-Alar-Keladi.png","type":"DS"}},{"model":"explore.food","pk":"f1e6b74a-071c-4341-b234-71c5d841f8a2","fields":{"date":"2024-10-27","name":"Lempah Akar Keladi","description":"Sup sayur dengan akar keladi sebagai bahan utama, dimasak dengan bumbu lempah.","min_price":15000,"max_price":25000,"image_link":"https://i.postimg.cc/7YLVBZGV/Lempah-Darat.png","type":"MC"}},{"model":"explore.food","pk":"54efdaae-4e6c-4f48-8aa6-ea191a217cd8","fields":{"date":"2024-10-27","name":"Lempah Darat","description":"Sup sayuran dari pucuk daun dan akar keladi dengan kuah rempah.","min_price":15000,"max_price":50000,"image_link":"https://i.postimg.cc/qMZGWH2d/Lempah-Kulat.png","type":"DR"}},{"model":"explore.food","pk":"7254a47b-2ad1-4dcc-914b-df471150314a","fields":{"date":"2024-10-27","name":"Lempah Kulat","description":"Sup jamur khas Bangka yang dimasak dengan kuah rempah pedas.","min_price":20000,"max_price":30000,"image_link":"https://i.postimg.cc/ydBh01C0/Lempah-Kuning.png","type":"MC"}},{"model":"explore.food","pk":"6e7eb88f-a94a-408e-aa5a-c11918fdd2e7","fields":{"date":"2024-10-27","name":"Lempah Kuning","description":"Sup ikan khas Bangka dengan kuah kuning dari kunyit dan rempah-rempah.","min_price":30000,"max_price":100000,"image_link":"https://i.postimg.cc/d3fTNvpH/Lempok-Cempedak.png","type":"MC"}},{"model":"explore.food","pk":"5df879a2-41ad-4de2-9aac-499646d0b12a","fields":{"date":"2024-10-27","name":"Lempok Cempedak","description":"Dodol kenyal dengan rasa manis dari buah cempedak.","min_price":25000,"max_price":60000,"image_link":"https://i.postimg.cc/VsZGPtcT/Lempok-Durian.jpg","type":"MC"}},{"model":"explore.food","pk":"0584564b-e6b3-4917-b6a3-38690857a86d","fields":{"date":"2024-10-27","name":"Lempok Durian","description":"Dodol durian yang manis dan legit, cocok sebagai oleh-oleh.","min_price":15000,"max_price":45000,"image_link":"https://i.postimg.cc/Zn5rDwRR/Lepet.png","type":"SN"}},{"model":"explore.food","pk":"2f8121da-90c6-4dde-a0a7-07e1cae657e7","fields":{"date":"2024-10-27","name":"Lepet","description":"Kudapan khas dari beras ketan yang dibungkus daun janur.","min_price":40000,"max_price":70000,"image_link":"https://i.postimg.cc/7LSMCCdx/Lokan-Laut.png","type":"DS"}},{"model":"explore.food","pk":"9ffefd47-0192-49cd-87bf-2b10a5bce8bc","fields":{"date":"2024-10-27","name":"Lokan Laut","description":"Kerang yang dimasak dengan saus tiram atau santan.","min_price":10000,"max_price":25000,"image_link":"https://i.postimg.cc/dt7Ws0s0/Lontong-Bangka.jpg","type":"MC"}},{"model":"explore.food","pk":"67e6001c-b0aa-4d90-b232-7086f3c1c3db","fields":{"date":"2024-10-27","name":"Lontong Bangka","description":"Lontong dari beras yang disajikan dengan kuah santan dan ikan.","min_price":10000,"max_price":20000,"image_link":"https://i.postimg.cc/ZRc8cGJ2/Martabak-Bangka.png","type":"MC"}},{"model":"explore.food","pk":"18506896-c910-47fe-bc23-c2f7ddb6d449","fields":{"date":"2024-10-27","name":"Martabak Bangka","description":"Martabak manis khas Bangka dengan topping melimpah seperti keju dan coklat.","min_price":30000,"max_price":90000,"image_link":"https://i.postimg.cc/ZqvswKQg/Martabak-Telur-Bangka.jpg","type":"DS"}},{"model":"explore.food","pk":"1a1075c3-b393-4408-baae-8e0e3fbddc35","fields":{"date":"2024-10-27","name":"Martabak Telur Bangka","description":"Martabak dengan isian telur dan daging, khas Bangka.","min_price":40000,"max_price":80000,"image_link":"https://i.postimg.cc/KvnMDXQN/MieKoba.png","type":"DS"}},{"model":"explore.food","pk":"3e0c21d3-72ee-4a92-ad93-0ce4693336e3","fields":{"date":"2024-10-27","name":"Mie Koba","description":"Mie kuah dengan potongan ikan tenggiri dan kuah kaldu ikan.","min_price":10000,"max_price":20000,"image_link":"https://i.postimg.cc/mg563FmC/Nasi-Belut.jpg","type":"MC"}},{"model":"explore.food","pk":"d369d4c3-21f4-4cc7-8e6d-f5795736468d","fields":{"date":"2024-10-27","name":"Nasi Belut","description":"Nasi dengan belut yang digoreng renyah dan disajikan dengan sambal.","min_price":50000,"max_price":110000,"image_link":"https://i.postimg.cc/Ss3MDkwZ/Otak-Otak-Bangka.png","type":"MC"}},{"model":"explore.food","pk":"ddbf48ff-82fb-4fa2-9d38-19913713ddb3","fields":{"date":"2024-10-27","name":"Otak-otak Bangka","description":"Otak-otak dari ikan yang dibungkus daun dan dibakar.","min_price":35000,"max_price":85000,"image_link":"https://i.postimg.cc/prcDNKhB/Pantiaw.png","type":"SN"}},{"model":"explore.food","pk":"774ee33e-e234-4ac5-8528-82c596e3c680","fields":{"date":"2024-10-27","name":"Pantiaw","description":"Mie gepeng khas Bangka dengan kuah santan pedas manis.","min_price":6000,"max_price":15000,"image_link":"https://i.postimg.cc/ydFQzpsy/Pecak-Ikan-Sembilang.jpg","type":"MC"}},{"model":"explore.food","pk":"dfb76f80-1f12-42d2-85ec-e5c4e13c7948","fields":{"date":"2024-10-27","name":"Pecak Ikan Sembilang","description":"Ikan sembilang yang dimasak dengan bumbu pecak pedas.","min_price":45000,"max_price":100000,"image_link":"https://i.postimg.cc/fTWH6vFY/Pempek-Bangka.jpg","type":"MC"}},{"model":"explore.food","pk":"9c9671ab-aa5a-401d-9c35-205d028a1932","fields":{"date":"2024-10-27","name":"Pempek Bangka","description":"Pempek dengan ikan tenggiri dan kuah cuka khas Bangka.","min_price":15000,"max_price":20000,"image_link":"https://i.postimg.cc/Kjx9c7YS/Perut-Ayam-Bangka.jpg","type":"DS"}},{"model":"explore.food","pk":"b1d9c8e0-7525-4641-941d-a30662e73a19","fields":{"date":"2024-10-27","name":"Perut Ayam Bangka","description":"Daging ayam yang direbus dalam kuah santan hingga empuk.","min_price":32000,"max_price":75000,"image_link":"https://i.postimg.cc/CK47PBNc/Pindang-Ikan-Kembung.jpg","type":"MC"}},{"model":"explore.food","pk":"25f21c40-b73f-4906-86f3-fb0a9396cbf2","fields":{"date":"2024-10-27","name":"Pindang Ikan Kembung","description":"Ikan kembung yang dimasak dalam kuah pindang dengan rempah.","min_price":45000,"max_price":80000,"image_link":"https://i.postimg.cc/909qks2c/Roti-Selai-Nanas.png","type":"MC"}},{"model":"explore.food","pk":"638ac646-e686-4aa2-b324-c74709eb3f1f","fields":{"date":"2024-10-27","name":"Rujak Daun Ubi Kembang Pepaya","description":"Rujak dengan bahan utama daun ubi dan bunga pepaya muda yang ditumis.","min_price":50000,"max_price":100000,"image_link":"https://i.postimg.cc/wxw5sYfs/Rujak-Daun-Ubi-Kembang-Pepaya.png","type":"MC"}},{"model":"explore.food","pk":"0d274c5c-63b0-4218-8491-b7c7450ec69e","fields":{"date":"2024-10-27","name":"Rujak Sirsak","description":"Rujak dengan potongan buah sirsak dan bumbu kacang pedas manis.","min_price":45000,"max_price":100000,"image_link":"https://i.postimg.cc/d1mb9VkF/Rujak-Sirsak.jpg","type":"SN"}},{"model":"explore.food","pk":"c426607a-be20-4875-b8b1-6b5b2353e810","fields":{"date":"2024-10-27","name":"Rusip","description":"Ikan teri yang difermentasi menjadi sambal dengan rasa asam dan gurih.","min_price":30000,"max_price":110000,"image_link":"https://i.postimg.cc/ZKkNNYPn/Rusip.png","type":"MC"}},{"model":"explore.food","pk":"7a113674-12b4-4bf4-a742-0279bbe4f473","fields":{"date":"2024-10-27","name":"Sambalingkung","description":"Abon ikan tenggiri yang gurih dan kaya protein.","min_price":15000,"max_price":20000,"image_link":"https://i.postimg.cc/hGRVqDjN/Sambal-Lingkung.png","type":"DR"}},{"model":"explore.food","pk":"ad4203b9-991b-4b9e-a5a2-38f34ce36185","fields":{"date":"2024-10-27","name":"Sate Bangka","description":"Sate dari ikan yang dibakar dan disajikan dengan saus kacang.","min_price":50000,"max_price":90000,"image_link":"https://i.postimg.cc/yxjLDJJJ/Sate-Bangka.jpg","type":"MC"}},{"model":"explore.food","pk":"e3bff0c3-d072-45dd-b0c2-283b2f622a7a","fields":{"date":"2024-10-27","name":"Sate Daging Sapi Khas Belitung","description":"Sate daging sapi dengan bumbu rempah yang disajikan dengan kuah kacang.","min_price":25000,"max_price":70000,"image_link":"https://i.postimg.cc/cLwX358y/Sate-Daging-Sapi-Khas-Belitung.jpg","type":"MC"}},{"model":"explore.food","pk":"40beaac6-1dea-4f59-bf3d-e0fb59afdd80","fields":{"date":"2024-10-27","name":"Sate Ikan Tuhuk","description":"Sate ikan khas Bangka dengan daging ikan yang dibumbui rempah.","min_price":45000,"max_price":120000,"image_link":"https://i.postimg.cc/R00JmWms/Sate-Ikan-Tuhuk.png","type":"MC"}},{"model":"explore.food","pk":"2d1cdd47-6ffd-43c9-afdd-8ba34133e16e","fields":{"date":"2024-10-27","name":"Sate Kerang","description":"Sate kerang dengan bumbu pedas manis yang menggugah selera.","min_price":32000,"max_price":90000,"image_link":"https://i.postimg.cc/76YVpHtw/Sate-Kerang.jpg","type":"MC"}},{"model":"explore.food","pk":"ced01ed1-ad29-4c45-9b7a-39f62fdab312","fields":{"date":"2024-10-27","name":"Sayur Labu Siam","description":"Sayur labu siam yang ditumis dengan bumbu rempah.","min_price":35000,"max_price":95000,"image_link":"https://i.postimg.cc/MH9gh3mr/Sayur-Labu-Siam.jpg","type":"MC"}},{"model":"explore.food","pk":"b63be9af-e249-4ba8-8dd6-c68ade14f8e6","fields":{"date":"2024-10-27","name":"Siput Gong Gong","description":"Siput laut yang direbus dan disantap dengan sambal.","min_price":14000,"max_price":30000,"image_link":"https://i.postimg.cc/nz0m7qkt/Siput-Gong-Gong.png","type":"SN"}},{"model":"explore.food","pk":"49e1ec80-3eb6-4cf9-af72-41c19784e112","fields":{"date":"2024-10-27","name":"Sup Gangan Ikan","description":"Sup ikan dengan kuah bening yang segar dan bumbu rempah.","min_price":35000,"max_price":75000,"image_link":"https://i.postimg.cc/Dzh5PdqW/Sup-Gangan-Ikan.jpg","type":"MC"}},{"model":"explore.food","pk":"430a7059-8b2a-4ee0-9648-291cb7bd9869","fields":{"date":"2024-10-27","name":"Sup Kembang Kol","description":"Sup kembang kol dengan kuah kaldu yang gurih.","min_price":15000,"max_price":60000,"image_link":"https://i.postimg.cc/zDpmb3YS/Sup-Kembang-Kol.jpg","type":"MC"}},{"model":"explore.food","pk":"4184cc83-8927-4bb6-acef-12a6d30fc33d","fields":{"date":"2024-10-27","name":"Sup Kepiting Jagung","description":"Sup kepiting dengan jagung manis dan kuah gurih.","min_price":40000,"max_price":120000,"image_link":"https://i.postimg.cc/T1BJLrd3/Sup-Kepiting-Jagung.jpg","type":"MC"}},{"model":"explore.food","pk":"b19f0184-c2bb-4517-968b-cb27fa66c72a","fields":{"date":"2024-10-27","name":"Tai Fu Sui","description":"Minuman tradisional dari tahu yang difermentasi.","min_price":20000,"max_price":50000,"image_link":"https://i.postimg.cc/3wb4x3JK/TaiFuSui.png","type":"DR"}},{"model":"explore.food","pk":"ad3c6b99-8ae9-4f1c-9883-0a67ea4db0ce","fields":{"date":"2024-10-27","name":"Teh Kembang Sepatu","description":"Teh herbal dari bunga kembang sepatu yang segar dan wangi.","min_price":50000,"max_price":120000,"image_link":"https://i.postimg.cc/K8f3Cn63/Teh-Kembang-Sepatu.png","type":"DR"}},{"model":"explore.food","pk":"e6911bc3-18df-44c6-9a2e-568d4a5d170d","fields":{"date":"2024-10-27","name":"Teh Tarik Belitung","description":"Teh tarik dengan campuran susu kental manis yang khas.","min_price":10000,"max_price":35000,"image_link":"https://i.postimg.cc/hP3HswjX/Teh-Tarik-Belitung.webp","type":"DR"}},{"model":"explore.food","pk":"1eb1226d-959f-488c-8e27-bf0d89dc0e20","fields":{"date":"2024-10-27","name":"Teri Krispi","description":"Ikan teri yang digoreng dengan tepung hingga renyah.","min_price":25000,"max_price":75000,"image_link":"https://i.postimg.cc/MHHQYXPf/Teri-Krispi.png","type":"SN"}},{"model":"explore.food","pk":"e8cc1620-4e8d-4570-a2c8-70946af7be81","fields":{"date":"2024-10-27","name":"Tumis Batang Keladi","description":"Tumisan batang keladi yang dimasak dengan santan dan bumbu rempah.","min_price":35000,"max_price":90000,"image_link":"https://i.postimg.cc/gkMMdZFQ/Tumis-Batang-Keladi.jpg","type":"MC"}},{"model":"explore.food","pk":"459f3b21-9357-4887-85b2-482c93c23703","fields":{"date":"2024-10-27","name":"Tumis Buah Nanas","description":"Tumisan nanas yang manis dan sedikit asam, disajikan sebagai lauk.","min_price":15000,"max_price":30000,"image_link":"https://i.postimg.cc/Z52VvzqL/Tumis-Buah-Nanas.png","type":"MC"}},{"model":"explore.food","pk":"2dede48a-39d5-4290-8994-4c61ebaa4ec9","fields":{"date":"2024-10-27","name":"Tumis Daun Pakis","description":"Tumis daun pakis yang renyah dan gurih.","min_price":35000,"max_price":85000,"image_link":"https://i.postimg.cc/L8YGbTYN/Tumis-Daun-Pakis.jpg","type":"MC"}},{"model":"explore.food","pk":"41845c05-266f-45e7-aa2e-0e1f53422aff","fields":{"date":"2024-10-27","name":"Ubi Jalar Goreng","description":"Ubi jalar yang digoreng hingga renyah.","min_price":25000,"max_price":50000,"image_link":"https://i.postimg.cc/0ybVNy9Q/Ubi-Jalar-Goreng.jpg","type":"SN"}},{"model":"explore.food","pk":"21d9e7c6-dce1-4f13-9802-0cc724eedc14","fields":{"date":"2024-10-27","name":"Udang Rebus Sambal Tempoyak","description":"Udang rebus yang disajikan dengan sambal tempoyak fermentasi durian.","min_price":10000,"max_price":20000,"image_link":"https://i.postimg.cc/63j0KkFR/Udang-Rebus-Sambal-Tempoyak.jpg","type":"MC"}},{"model":"explore.food","pk":"b03ea152-5ad1-47ed-97cb-02a8058925b6","fields":{"date":"2024-10-27","name":"Urap Bangka","description":"Salad sayur dengan kelapa parut dan bumbu rempah yang gurih.","min_price":25000,"max_price":90000,"image_link":"https://i.postimg.cc/90DBQxjk/Urap-Bangka.jpg","type":"MC"}}]
+[
+  {
+    "model": "explore.food",
+    "pk": "316aa262-5073-45e2-af78-667c6db4e930",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Asem Laksa",
+      "description": "Mie asam pedas dengan ikan dan kuah yang segar.",
+      "min_price": 10000,
+      "max_price": 30000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/AsemLaksa.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "21b0afae-e002-470a-95c7-730b753869f6",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Asem Pedas Ikan Gabus",
+      "description": "Sup asam pedas dengan ikan gabus yang segar dan lembut.",
+      "min_price": 25000,
+      "max_price": 70000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/AsamPedasIkanGabus.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "6808c329-d608-446b-9829-ca90b3f47f8e",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Bakmi Bangka",
+      "description": "Mie dengan kuah kaldu yang kaya rasa dari ikan tenggiri.",
+      "min_price": 30000,
+      "max_price": 75000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/BakmiBangka.jpeg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "72191b81-7615-4763-bcd1-fa4193ca91e7",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Bakso Ikan Bangka",
+      "description": "Bakso dari ikan dengan tekstur kenyal dan kuah kaldu yang kaya rasa.",
+      "min_price": 15000,
+      "max_price": 35000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/BaksoIkanBangka.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "da3d351d-eab5-4d01-9bb8-b3c63d2769bb",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Balacan",
+      "description": "Bumbu fermentasi udang yang digunakan sebagai penyedap masakan.",
+      "min_price": 13000,
+      "max_price": 250000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Balacan.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "fdbdcbf6-8f31-4366-83ed-ae057ae5dc9c",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Bong Li Piang",
+      "description": "Kue tradisional dengan isian selai nanas yang lembut dan manis.",
+      "min_price": 20000,
+      "max_price": 60000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/BongLiPiang.jpg?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "edd5894c-f4ba-4247-9073-c9cf7b981fe1",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Bubur Jagung Belitung",
+      "description": "Bubur jagung yang manis dan disajikan dengan santan kental.",
+      "min_price": 20000,
+      "max_price": 80000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/BuburJagungBelitung.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "1e27f969-e574-40ee-840e-becbec12a63e",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Bubur Kepiting",
+      "description": "Bubur dengan daging kepiting yang gurih dan disajikan dengan bawang goreng.",
+      "min_price": 15000,
+      "max_price": 35000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/BuburKepiting.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "6a74451a-a517-4390-a839-57e9e9ab1a14",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Bubur Pedas",
+      "description": "Bubur pedas dengan sayuran dan rempah yang menyegarkan.",
+      "min_price": 15000,
+      "max_price": 45000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/BuburPedas.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "501d298b-9709-4ae2-b2e6-e91e230bcc0e",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Bubur Sumsum Bangka",
+      "description": "Bubur manis yang lembut dari tepung beras, sering disajikan dengan gula merah.",
+      "min_price": 12000,
+      "max_price": 45000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/BuburSumsumBangka.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "093ed827-7698-4fe7-9090-1ba7e4648073",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Bubur Tinutuan Bangka",
+      "description": "Bubur tradisional dengan sayuran yang segar dan pedas.",
+      "min_price": 10000,
+      "max_price": 45000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/BuburTinutuanBangka.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "cb65e0c7-83e0-41e9-ad70-1e74df1308e7",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Cincalok",
+      "description": "Ikan teri yang difermentasi untuk dibuat sambal khas.",
+      "min_price": 50000,
+      "max_price": 150000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Cincalok.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "8c46900b-3cb3-4003-a9c3-793e78b97a80",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Ai Lo Bi",
+      "description": "Es khas Bangka dengan isian kelapa muda, cincau, dan gula aren.",
+      "min_price": 15000,
+      "max_price": 40000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsAiLoBi.png?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "52f52970-e11f-4bff-b569-caaf2b2f861b",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Campur Khas Bangka",
+      "description": "Es campur dengan berbagai isian seperti kacang merah, alpukat, dan kelapa.",
+      "min_price": 10000,
+      "max_price": 30000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsCampurBangka.png?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "becaafd1-3073-4d35-987f-1344d005d438",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Jeruk Kunci",
+      "description": "Minuman segar dari perasan jeruk kunci yang asam dan manis.",
+      "min_price": 45000,
+      "max_price": 95000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsJerukKunci.png?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "b65af2e8-fa9c-4fea-9c18-64b973b0b9b5",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Kacang Hijau",
+      "description": "Es kacang hijau yang lembut dengan kuah santan dan gula merah.",
+      "min_price": 30000,
+      "max_price": 70000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsKacangHijau.jpg?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "25692379-6ce4-4c31-a505-ab79359dd696",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Kacang Merah",
+      "description": "Es kacang merah dengan santan dan sirup manis.",
+      "min_price": 20000,
+      "max_price": 50000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsKacangMerah.jpg?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "3ca2b47f-bc0a-4205-8491-0ca0929fb36c",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Kelapa Muda Belitung",
+      "description": "Es kelapa muda yang segar dan manis dengan tambahan gula aren.",
+      "min_price": 20000,
+      "max_price": 45000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsKelapaMudaBelitung.jpeg?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "4f449f90-7c6b-4c47-8a97-7ad56eb1fa56",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Kolang-Kaling",
+      "description": "Es dari kolang-kaling yang manis dan disajikan dengan sirup.",
+      "min_price": 50000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsKolang-Kaling.jpg?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "5b3d1af7-f520-4048-b1bd-d61da12e3fc1",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Krim Ovaltine",
+      "description": "Es krim dengan rasa Ovaltine yang creamy dan manis.",
+      "min_price": 35000,
+      "max_price": 60000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsKrimOvaltine.jpeg?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "60b677ca-35c6-473e-b401-47641e15dcaa",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Nipah",
+      "description": "Es dari buah nipah dengan sirup manis dan es serut.",
+      "min_price": 15000,
+      "max_price": 50000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsNipah.jpg?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "77f62cde-708a-4159-8d3e-394d2d23ec92",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Es Tape Ketan Hitam",
+      "description": "Es tape ketan hitam dengan santan yang manis dan lembut.",
+      "min_price": 20000,
+      "max_price": 40000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/EsTapeKetanHitam.jpg?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "fd50676c-8499-4627-aaeb-6f4d60fa419a",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Getas",
+      "description": "Kerupuk ikan tenggiri yang renyah dan gurih.",
+      "min_price": 12000,
+      "max_price": 35000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Getas.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "0c5a6cb2-9cad-4c9d-988b-eacfd4929704",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Gulai Ayam Kampung Bangka",
+      "description": "Gulai ayam kampung dengan kuah santan yang gurih.",
+      "min_price": 50000,
+      "max_price": 80000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/GulaiAyamKampungBangka.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "1bbd9ad5-c4c9-4b4e-b7f0-e421f2299340",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Gulai Kepala Ikan Kakap",
+      "description": "Sup kepala ikan kakap dengan kuah yang kaya rasa dari rempah.",
+      "min_price": 10000,
+      "max_price": 35000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/GulaiAyamKampungBangka.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "24b42827-7032-4051-af11-82236e121b61",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ikan Asam Padeh",
+      "description": "Ikan asam padeh dengan kuah pedas dan asam yang segar.",
+      "min_price": 30000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/IkanAsamPadeh.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "2c7aebf9-7bf6-476c-a78e-92c20773c7f7",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ikan Bakar Sambal Dabu-Dabu",
+      "description": "Ikan bakar yang disajikan dengan sambal dabu-dabu pedas.",
+      "min_price": 50000,
+      "max_price": 120000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/IkanBakarSambalDabu-Dabu.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "16148f50-1a2a-4879-afd4-84fb8ce58ffb",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ikan Bandeng Presto",
+      "description": "Ikan bandeng yang dimasak presto hingga durinya lunak.",
+      "min_price": 25000,
+      "max_price": 60000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/IkanBandengPresto.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "d068549d-761f-4e99-a3ab-76dc92c4e549",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ikan Gulai Tauco",
+      "description": "Ikan gulai dengan kuah santan dan bumbu tauco yang gurih.",
+      "min_price": 50000,
+      "max_price": 120000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/IkanGulaiTauco.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "0801ce02-59a7-4b23-ace5-cfe659aa6cad",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ikan Kuwe Bakar",
+      "description": "Ikan kuwe yang dibakar dengan bumbu rempah dan sambal.",
+      "min_price": 15000,
+      "max_price": 25000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/IkanKuweBakar.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "000bc99a-2cd1-4d74-9308-bf3e2fbd924b",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ikan Panggang Bumbu Rujak",
+      "description": "Ikan panggang yang disajikan dengan sambal rujak pedas manis.",
+      "min_price": 10000,
+      "max_price": 45000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/IkanPanggangBumbuRujak.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "bf4d4da1-be77-4962-bac7-8a0eb4c6c85d",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ikan Selar Goreng",
+      "description": "Ikan selar yang digoreng hingga garing dan disajikan dengan sambal.",
+      "min_price": 40000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/IkanSelarGoreng.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "2c35918e-8c9c-44a0-963b-77bb43037539",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Jus Belimbing",
+      "description": "Jus belimbing yang segar dan asam manis.",
+      "min_price": 25000,
+      "max_price": 50000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/JusBelimbing.jpg?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "92d334e8-282a-4b85-87c9-161ee66630e0",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kari Ikan Tenggiri",
+      "description": "Kari ikan tenggiri dengan kuah yang kental dan kaya bumbu.",
+      "min_price": 40000,
+      "max_price": 90000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KariIkanTenggiri.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "15417c46-47c7-4cd5-9448-36ff48f36f2c",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kari Kambing Belinyu",
+      "description": "Kari kambing dengan kuah pekat dan bumbu rempah khas Belinyu.",
+      "min_price": 10000,
+      "max_price": 25000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KariKambingBelinyu.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "7fceab7e-002d-43f8-b8a5-e6a3e6b9897e",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kembung Bertelur",
+      "description": "Ikan kembung yang diisi telur dan digoreng hingga renyah.",
+      "min_price": 17000,
+      "max_price": 30000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KembungBertelur.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "699599ae-54fa-46a0-a54e-b4aa4c2eba65",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kemplang",
+      "description": "Kerupuk dari ikan tenggiri yang dipanggang, biasanya disajikan dengan sambal balacan.",
+      "min_price": 28000,
+      "max_price": 80000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Kemplang.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "a92225fb-97ce-4012-a703-444c5cf9d0c4",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kepiting Saos Belitung",
+      "description": "Kepiting dengan saus khas Belitung yang pedas dan manis.",
+      "min_price": 20000,
+      "max_price": 40000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KepitingSaosBelitung.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "41f29486-e61f-4932-95b8-0ab73bf20c5b",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kepiting Soka Goreng",
+      "description": "Kepiting soka yang digoreng renyah dan disajikan dengan saus pedas.",
+      "min_price": 35000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KepitingSokaGoreng.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "05b668e5-7e66-4a18-a864-4a5b8ce8f3fc",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kericu",
+      "description": "Camilan renyah dari telur cumi-cumi dan tepung sagu.",
+      "min_price": 32000,
+      "max_price": 250000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Kericu.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "8691dc1d-d3f6-45b4-b582-361e804920d1",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Keripik Ubi Kayu",
+      "description": "Keripik ubi kayu yang gurih dan renyah.",
+      "min_price": 40000,
+      "max_price": 75000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KeripikUbiKayu.jpg?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "98c17d68-38ef-4eb6-9ea7-b34d4ff4ed40",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ketupat Soto Bangka",
+      "description": "Ketupat yang disajikan dengan soto ayam khas Bangka.",
+      "min_price": 25000,
+      "max_price": 60000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KetupatSotoBangka.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "191ade20-a636-4aba-a6b6-ce348ed59533",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kopi Tung Tau",
+      "description": "Kopi hitam tradisional dari kedai kopi terkenal di Bangka.",
+      "min_price": 18000,
+      "max_price": 24000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KopiTungTau.png?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "5d9cd92c-eed3-4413-b59d-fc396eb6787c",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Apem",
+      "description": "Kue tradisional Indonesia yang terbuat dari campuran tepung beras, santan, dan gula, kemudian difermentasi dengan ragi",
+      "min_price": 15000,
+      "max_price": 47000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueApem.jpg?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "a8d88912-0cbd-4b89-9864-6f08d8b0d99d",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Bolu Ketan Hitam",
+      "description": "Kue bolu dari ketan hitam dengan tekstur yang lembut dan rasa manis.",
+      "min_price": 12000,
+      "max_price": 40000,
+      "image_link": "https://raw.githubusercontent.com/fakhrihabb/lohkan-images/refs/heads/master/KueBoluKetanHitam.jpg",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "4a60c495-282c-446f-be2c-44e00b406824",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Cincin",
+      "description": "Kue manis berbentuk cincin yang terbuat dari tepung beras.",
+      "min_price": 15000,
+      "max_price": 30000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueCincin.jpeg?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "c49c3606-3f2f-400c-8ba5-48dc7c5bc64d",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Cubit Bangka",
+      "description": "Kue cubit dengan adonan yang lembut dan topping cokelat.",
+      "min_price": 30000,
+      "max_price": 65000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueCubitBangka.jpg?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "a6e7d04d-c226-4394-8ccd-8d28a0bc3dca",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Dadar Belitung",
+      "description": "Kue tipis yang digulung dengan isi manis kelapa.",
+      "min_price": 25000,
+      "max_price": 50000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueDadarBelitung.png?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "e3281cb1-a635-48b1-af53-41a318f502bf",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Engkak Ketan",
+      "description": "Kue tradisional dari ketan dengan rasa manis dan gurih.",
+      "min_price": 20000,
+      "max_price": 70000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueEngkakKetan.png?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "f4dec1bc-f6c1-4651-b47f-bf017d7e4166",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Jongkong",
+      "description": "Kue manis dari tepung beras dengan lapisan hijau dan coklat.",
+      "min_price": 18000,
+      "max_price": 60000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueJongkong.png?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "b5f26970-9361-4dee-9cd4-11b0e9e77e22",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Pelite",
+      "description": "Kue tradisional dari tepung beras dan santan yang dibungkus daun pandan.",
+      "min_price": 5000,
+      "max_price": 13000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KuePelite.png?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "c26c9844-225d-41cd-9dd6-abc3df4ed90f",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Rintak",
+      "description": "Kue kering dari tepung sagu dengan tekstur lembut dan manis.",
+      "min_price": 18000,
+      "max_price": 40000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueRintak.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "dec3dee2-ccfb-47ff-bd05-536f83c54c53",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Kue Sekopek",
+      "description": "Kue tradisional dari tepung beras yang digoreng hingga renyah.",
+      "min_price": 35000,
+      "max_price": 85000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/KueSekopek.jpg?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "18ced0e9-55f4-4dd9-a376-2259fe40677d",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lakse",
+      "description": "Mie tradisional Bangka yang disajikan dengan kuah ikan.",
+      "min_price": 40000,
+      "max_price": 150000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Lakse.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "b989bfbf-ebe7-4a41-8b39-0fa355f24328",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lakso Bangka",
+      "description": "Mie khas Bangka dengan kuah santan berbumbu dan tekstur kenyal.",
+      "min_price": 20000,
+      "max_price": 50000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Lakse.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "c1a007c8-b261-4019-9326-fb21c00a7484",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lakso Kuning",
+      "description": "Mie khas Bangka dengan kuah santan dan aroma rempah.",
+      "min_price": 35000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LaksoKuning.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "a60d14f4-614e-43a1-958e-d9c22e9bb678",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lapis Gulung Selai Nanas",
+      "description": "Roti lapis dengan selai nanas yang manis dan lembut.",
+      "min_price": 15000,
+      "max_price": 30000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/RotiSelaiNanas.png?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "7308e082-6ac5-4c9b-b0df-0f246cc01422",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lemang",
+      "description": "Makanan tradisional dari beras ketan yang dimasak dalam bambu.",
+      "min_price": 25000,
+      "max_price": 80000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Lemang.jpeg?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "f1e6b74a-071c-4341-b234-71c5d841f8a2",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lempah Akar Keladi",
+      "description": "Sup sayur dengan akar keladi sebagai bahan utama, dimasak dengan bumbu lempah.",
+      "min_price": 15000,
+      "max_price": 25000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahAlarKeladi.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "54efdaae-4e6c-4f48-8aa6-ea191a217cd8",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lempah Darat",
+      "description": "Sup sayuran dari pucuk daun dan akar keladi dengan kuah rempah.",
+      "min_price": 15000,
+      "max_price": 50000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahDarat.png?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "7254a47b-2ad1-4dcc-914b-df471150314a",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lempah Kulat",
+      "description": "Sup jamur khas Bangka yang dimasak dengan kuah rempah pedas.",
+      "min_price": 20000,
+      "max_price": 30000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahDarat.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "6e7eb88f-a94a-408e-aa5a-c11918fdd2e7",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lempah Kuning",
+      "description": "Sup ikan khas Bangka dengan kuah kuning dari kunyit dan rempah-rempah.",
+      "min_price": 30000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempahKuning.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "5df879a2-41ad-4de2-9aac-499646d0b12a",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lempok Cempedak",
+      "description": "Dodol kenyal dengan rasa manis dari buah cempedak.",
+      "min_price": 25000,
+      "max_price": 60000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempokCempedak.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "0584564b-e6b3-4917-b6a3-38690857a86d",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lempok Durian",
+      "description": "Dodol durian yang manis dan legit, cocok sebagai oleh-oleh.",
+      "min_price": 15000,
+      "max_price": 45000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LempokDurian.jpeg?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "2f8121da-90c6-4dde-a0a7-07e1cae657e7",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lepet",
+      "description": "Kudapan khas dari beras ketan yang dibungkus daun janur.",
+      "min_price": 40000,
+      "max_price": 70000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Lepet.png?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "9ffefd47-0192-49cd-87bf-2b10a5bce8bc",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lokan Laut",
+      "description": "Kerang yang dimasak dengan saus tiram atau santan.",
+      "min_price": 10000,
+      "max_price": 25000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LokanLaut.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "67e6001c-b0aa-4d90-b232-7086f3c1c3db",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Lontong Bangka",
+      "description": "Lontong dari beras yang disajikan dengan kuah santan dan ikan.",
+      "min_price": 10000,
+      "max_price": 20000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/LontongBangka.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "18506896-c910-47fe-bc23-c2f7ddb6d449",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Martabak Bangka",
+      "description": "Martabak manis khas Bangka dengan topping melimpah seperti keju dan coklat.",
+      "min_price": 30000,
+      "max_price": 90000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/MartabakBangka.png?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "1a1075c3-b393-4408-baae-8e0e3fbddc35",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Martabak Telur Bangka",
+      "description": "Martabak dengan isian telur dan daging, khas Bangka.",
+      "min_price": 40000,
+      "max_price": 80000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/MartabakTelurBangka.jpg?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "3e0c21d3-72ee-4a92-ad93-0ce4693336e3",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Mie Koba",
+      "description": "Mie kuah dengan potongan ikan tenggiri dan kuah kaldu ikan.",
+      "min_price": 10000,
+      "max_price": 20000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/MieKoba.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "d369d4c3-21f4-4cc7-8e6d-f5795736468d",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Nasi Belut",
+      "description": "Nasi dengan belut yang digoreng renyah dan disajikan dengan sambal.",
+      "min_price": 50000,
+      "max_price": 110000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/NasiBelut.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "ddbf48ff-82fb-4fa2-9d38-19913713ddb3",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Otak-otak Bangka",
+      "description": "Otak-otak dari ikan yang dibungkus daun dan dibakar.",
+      "min_price": 35000,
+      "max_price": 85000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/OtakOtakBangka.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "774ee33e-e234-4ac5-8528-82c596e3c680",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Pantiaw",
+      "description": "Mie gepeng khas Bangka dengan kuah santan pedas manis.",
+      "min_price": 6000,
+      "max_price": 15000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Pantiaw.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "dfb76f80-1f12-42d2-85ec-e5c4e13c7948",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Pecak Ikan Sembilang",
+      "description": "Ikan sembilang yang dimasak dengan bumbu pecak pedas.",
+      "min_price": 45000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PecakIkanSembilang.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "9c9671ab-aa5a-401d-9c35-205d028a1932",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Pempek Bangka",
+      "description": "Pempek dengan ikan tenggiri dan kuah cuka khas Bangka.",
+      "min_price": 15000,
+      "max_price": 20000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PempekBangka.jpg?raw=true",
+      "type": "DS"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "b1d9c8e0-7525-4641-941d-a30662e73a19",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Perut Ayam Bangka",
+      "description": "Daging ayam yang direbus dalam kuah santan hingga empuk.",
+      "min_price": 32000,
+      "max_price": 75000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PerutAyamBangka.jpeg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "25f21c40-b73f-4906-86f3-fb0a9396cbf2",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Pindang Ikan Kembung",
+      "description": "Ikan kembung yang dimasak dalam kuah pindang dengan rempah.",
+      "min_price": 45000,
+      "max_price": 80000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/PindangIkanKembung.JPG?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "638ac646-e686-4aa2-b324-c74709eb3f1f",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Rujak Daun Ubi Kembang Pepaya",
+      "description": "Rujak dengan bahan utama daun ubi dan bunga pepaya muda yang ditumis.",
+      "min_price": 50000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/RujakDaunUbiKembangPepaya.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "0d274c5c-63b0-4218-8491-b7c7450ec69e",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Rujak Sirsak",
+      "description": "Rujak dengan potongan buah sirsak dan bumbu kacang pedas manis.",
+      "min_price": 45000,
+      "max_price": 100000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/RujakSirsak.jpg?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "c426607a-be20-4875-b8b1-6b5b2353e810",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Rusip",
+      "description": "Ikan teri yang difermentasi menjadi sambal dengan rasa asam dan gurih.",
+      "min_price": 30000,
+      "max_price": 110000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/Rusip.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "7a113674-12b4-4bf4-a742-0279bbe4f473",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sambalingkung",
+      "description": "Abon ikan tenggiri yang gurih dan kaya protein.",
+      "min_price": 15000,
+      "max_price": 20000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SambalLingkung.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "ad4203b9-991b-4b9e-a5a2-38f34ce36185",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sate Bangka",
+      "description": "Sate dari ikan yang dibakar dan disajikan dengan saus kacang.",
+      "min_price": 50000,
+      "max_price": 90000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SateBangka.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "e3bff0c3-d072-45dd-b0c2-283b2f622a7a",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sate Daging Sapi Khas Belitung",
+      "description": "Sate daging sapi dengan bumbu rempah yang disajikan dengan kuah kacang.",
+      "min_price": 25000,
+      "max_price": 70000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SateDagingSapiKhasBelitung.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "40beaac6-1dea-4f59-bf3d-e0fb59afdd80",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sate Ikan Tuhuk",
+      "description": "Sate ikan khas Bangka dengan daging ikan yang dibumbui rempah.",
+      "min_price": 45000,
+      "max_price": 120000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SateIkanTuhuk.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "2d1cdd47-6ffd-43c9-afdd-8ba34133e16e",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sate Kerang",
+      "description": "Sate kerang dengan bumbu pedas manis yang menggugah selera.",
+      "min_price": 32000,
+      "max_price": 90000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SateKerang.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "ced01ed1-ad29-4c45-9b7a-39f62fdab312",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sayur Labu Siam",
+      "description": "Sayur labu siam yang ditumis dengan bumbu rempah.",
+      "min_price": 35000,
+      "max_price": 95000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SayurLabuSiam.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "b63be9af-e249-4ba8-8dd6-c68ade14f8e6",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Siput Gong Gong",
+      "description": "Siput laut yang direbus dan disantap dengan sambal.",
+      "min_price": 14000,
+      "max_price": 30000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SiputGongGong.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "49e1ec80-3eb6-4cf9-af72-41c19784e112",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sup Gangan Ikan",
+      "description": "Sup ikan dengan kuah bening yang segar dan bumbu rempah.",
+      "min_price": 35000,
+      "max_price": 75000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SupGanganIkan.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "430a7059-8b2a-4ee0-9648-291cb7bd9869",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sup Kembang Kol",
+      "description": "Sup kembang kol dengan kuah kaldu yang gurih.",
+      "min_price": 15000,
+      "max_price": 60000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SupKembangKol.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "4184cc83-8927-4bb6-acef-12a6d30fc33d",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Sup Kepiting Jagung",
+      "description": "Sup kepiting dengan jagung manis dan kuah gurih.",
+      "min_price": 40000,
+      "max_price": 120000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/SupKepitingJagung.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "b19f0184-c2bb-4517-968b-cb27fa66c72a",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Tai Fu Sui",
+      "description": "Minuman tradisional dari tahu yang difermentasi.",
+      "min_price": 20000,
+      "max_price": 50000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/TaiFuSui.png?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "ad3c6b99-8ae9-4f1c-9883-0a67ea4db0ce",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Teh Kembang Sepatu",
+      "description": "Teh herbal dari bunga kembang sepatu yang segar dan wangi.",
+      "min_price": 50000,
+      "max_price": 120000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/TehKembangSepatu.png?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "e6911bc3-18df-44c6-9a2e-568d4a5d170d",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Teh Tarik Belitung",
+      "description": "Teh tarik dengan campuran susu kental manis yang khas.",
+      "min_price": 10000,
+      "max_price": 35000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/TehTarikBelitung.jpg?raw=true",
+      "type": "DR"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "1eb1226d-959f-488c-8e27-bf0d89dc0e20",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Teri Krispi",
+      "description": "Ikan teri yang digoreng dengan tepung hingga renyah.",
+      "min_price": 25000,
+      "max_price": 75000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/TeriKrispi.png?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "e8cc1620-4e8d-4570-a2c8-70946af7be81",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Tumis Batang Keladi",
+      "description": "Tumisan batang keladi yang dimasak dengan santan dan bumbu rempah.",
+      "min_price": 35000,
+      "max_price": 90000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/TumisBatangKeladi.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "459f3b21-9357-4887-85b2-482c93c23703",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Tumis Buah Nanas",
+      "description": "Tumisan nanas yang manis dan sedikit asam, disajikan sebagai lauk.",
+      "min_price": 15000,
+      "max_price": 30000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/TumisBuahNanas.png?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "2dede48a-39d5-4290-8994-4c61ebaa4ec9",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Tumis Daun Pakis",
+      "description": "Tumis daun pakis yang renyah dan gurih.",
+      "min_price": 35000,
+      "max_price": 85000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/TumisDaunPakis.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "41845c05-266f-45e7-aa2e-0e1f53422aff",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Ubi Jalar Goreng",
+      "description": "Ubi jalar yang digoreng hingga renyah.",
+      "min_price": 25000,
+      "max_price": 50000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/UbiJalarGoreng.jpg?raw=true",
+      "type": "SN"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "21d9e7c6-dce1-4f13-9802-0cc724eedc14",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Udang Rebus Sambal Tempoyak",
+      "description": "Udang rebus yang disajikan dengan sambal tempoyak fermentasi durian.",
+      "min_price": 10000,
+      "max_price": 20000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/UdangRebusSambalTempoyak.jpg?raw=true",
+      "type": "MC"
+    }
+  },
+  {
+    "model": "explore.food",
+    "pk": "b03ea152-5ad1-47ed-97cb-02a8058925b6",
+    "fields": {
+      "date": "2024-10-27",
+      "name": "Urap Bangka",
+      "description": "Salad sayur dengan kelapa parut dan bumbu rempah yang gurih.",
+      "min_price": 25000,
+      "max_price": 90000,
+      "image_link": "https://github.com/fakhrihabb/lohkan-images/blob/master/UrapBangka.jpg?raw=true",
+      "type": "MC"
+    }
+  }
+]
