@@ -1,846 +1,846 @@
-{% extends 'base.html' %} {% load static %} {% block meta %}
-<title>LohKan - Explore</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<script>
-  (() => {
-    "use strict";
-    // Page is loaded
-    const objects = document.getElementsByClassName("asyncImage");
-    Array.from(objects).map((item) => {
-      // Start loading image
-      const img = new Image();
-      img.src = item.dataset.src;
-      // Once image is loaded replace the src of the HTML element
-      img.onload = () => {
-        item.classList.remove("asyncImage");
-        return item.nodeName === "IMG"
-          ? (item.src = item.dataset.src)
-          : (item.style.backgroundImage = `url(${item.dataset.src})`);
-      };
-    });
-  })();
-</script>
-{% endblock meta %} {% block content %}
+    {% extends 'base.html' %} {% load static %} {% block meta %}
+    <title>LohKan - Explore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      (() => {
+        "use strict";
+        // Page is loaded
+        const objects = document.getElementsByClassName("asyncImage");
+        Array.from(objects).map((item) => {
+          // Start loading image
+          const img = new Image();
+          img.src = item.dataset.src;
+          // Once image is loaded replace the src of the HTML element
+          img.onload = () => {
+            item.classList.remove("asyncImage");
+            return item.nodeName === "IMG"
+              ? (item.src = item.dataset.src)
+              : (item.style.backgroundImage = `url(${item.dataset.src})`);
+          };
+        });
+      })();
+    </script>
+    {% endblock meta %} {% block content %}
 
-<!-- Navbar -->
-{% include 'navbar.html' %}
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
 
-<div
-  class="flex flex-col lg:flex-row pl-10 pt-3 pb-3 bg-gray-100 items-center justify-between"
->
-  <h1 class="text-3xl lg:text-4xl font-semibold">
-    What are your cravings today,
-    <span class="capitalize">{{user.username}}</span>?
-  </h1>
-  <div class="w-full lg:w-96 mt-8 lg:mt-0">
-    <img
-      src="{% static 'images/couple-eating-explore.png' %}"
-      class="h-32 mx-auto lg:mx-0"
-    />
-  </div>
-</div>
-
-<div class="flex flex-col pt-6 px-4 lg:px-10 items-start w-full lg:w-7xl mb-24">
-  {% if user.is_authenticated and user.username == 'admin' %}
-  <div class="flex flex-col lg:flex-row gap-2 pb-2">
-    <button
-      data-modal-target="crudModal"
-      data-modal-toggle="crudModal"
-      class="btn font-bold border-2 mb-4 lg:mb-0 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300"
-      onclick="showModal();"
+    <div
+      class="flex flex-col lg:flex-row pl-10 pt-3 pb-3 bg-gray-100 items-center justify-between"
     >
-      <span class="font-black text-3xl pb-1.5 pl-2">+</span>
-      <span class="pl-1 pr-4">Add Food</span>
-    </button>
-    <!-- <a
-      href="{% url 'explore:upload_file' %}"
-      class="btn font-bold border-2 mb-4 lg:mb-0 border-black rounded-full inline-flex items-center hover:bg-green-900 hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300"
-    >
-      <span class="font-black text-3xl pb-1.5 pl-2">+</span>
-      <span class="pl-1 pr-4">Upload Database</span>
-    </a> -->
-  </div>
-  {% endif %}
+      <h1 class="text-3xl lg:text-4xl font-semibold">
+        What are your cravings today,
+        <span class="capitalize">{{user.username}}</span>?
+      </h1>
+      <div class="w-full lg:w-96 mt-8 lg:mt-0">
+        <img
+          src="{% static 'images/couple-eating-explore.png' %}"
+          class="h-32 mx-auto lg:mx-0"
+        />
+      </div>
+    </div>
 
-  <!-- search bar -->
-  <form class="w-full lg:w-[50%]">
-    <label
-      for="default-search"
-      class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-      >Search</label
-    >
-    <div class="relative">
-      <div
-        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-      >
-        <svg
-          class="w-4 h-4 text-gray-500 dark:text-gray-400"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 20 20"
+    <div class="flex flex-col pt-6 px-4 lg:px-10 items-start w-full lg:w-7xl mb-24">
+      {% if user.is_authenticated and user.username == 'admin' %}
+      <div class="flex flex-col lg:flex-row gap-2 pb-2">
+        <button
+          data-modal-target="crudModal"
+          data-modal-toggle="crudModal"
+          class="btn font-bold border-2 mb-4 lg:mb-0 border-black rounded-full inline-flex items-center hover:bg-[rgb(150,0,0)] hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300"
+          onclick="showModal();"
         >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          <span class="font-black text-3xl pb-1.5 pl-2">+</span>
+          <span class="pl-1 pr-4">Add Food</span>
+        </button>
+        <!-- <a
+          href="{% url 'explore:upload_file' %}"
+          class="btn font-bold border-2 mb-4 lg:mb-0 border-black rounded-full inline-flex items-center hover:bg-green-900 hover:text-white transition-color duration-300 hover:shadow-xl hover:-translate-y-0.5 transition duration-300"
+        >
+          <span class="font-black text-3xl pb-1.5 pl-2">+</span>
+          <span class="pl-1 pr-4">Upload Database</span>
+        </a> -->
+      </div>
+      {% endif %}
+
+      <!-- search bar -->
+      <form class="w-full lg:w-[50%]">
+        <label
+          for="default-search"
+          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+          >Search</label
+        >
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="search"
+            id="searchField"
+            autocomplete="off"
+            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-2 border-gray-300 rounded-lg bg-gray-50"
+            placeholder="Search Main Course, Snacks, ..."
+            required
           />
-        </svg>
-      </div>
-      <input
-        type="search"
-        id="searchField"
-        autocomplete="off"
-        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-2 border-gray-300 rounded-lg bg-gray-50"
-        placeholder="Search Main Course, Snacks, ..."
-        required
-      />
-    </div>
-  </form>
+        </div>
+      </form>
 
-  <!-- filters -->
-  <div id="buttonFilters" class="flex flex-wrap gap-2 justify-start mt-2 mb-4">
-    <button
-      id="main-course-btn"
-      class="btn text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300"
-      data-type="MC"
-    >
-      Main Course
-    </button>
-    <button
-      id="dessert-btn"
-      class="btn text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300"
-      data-type="DS"
-    >
-      Dessert
-    </button>
-    <button
-      id="drinks-btn"
-      class="btn text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300"
-      data-type="DR"
-    >
-      Drinks
-    </button>
-    <button
-      id="snacks-btn"
-      class="btn text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300"
-      data-type="SN"
-    >
-      Snacks
-    </button>
-  </div>
-
-  <!-- Food Cards -->
-  <div id="food_cards"></div>
-
-  <!-- Crud Modal -->
-  <div
-    id="crudModal"
-    tabindex="-1"
-    aria-hidden="true"
-    class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out"
-  >
-    <div
-      id="crudModalContent"
-      class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out"
-    >
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between p-4 border-b rounded-t">
-        <h3 class="text-xl font-semibold text-gray-900">Add Food</h3>
+      <!-- filters -->
+      <div id="buttonFilters" class="flex flex-wrap gap-2 justify-start mt-2 mb-4">
         <button
-          type="button"
-          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-          id="closeModalBtn"
+          id="main-course-btn"
+          class="btn text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300"
+          data-type="MC"
         >
-          <svg
-            aria-hidden="true"
-            class="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-          <span class="sr-only">Close modal</span>
+          Main Course
+        </button>
+        <button
+          id="dessert-btn"
+          class="btn text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300"
+          data-type="DS"
+        >
+          Dessert
+        </button>
+        <button
+          id="drinks-btn"
+          class="btn text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300"
+          data-type="DR"
+        >
+          Drinks
+        </button>
+        <button
+          id="snacks-btn"
+          class="btn text-sm text-gray-500 font-semibold border-gray-300 border-2 rounded-xl px-2 py-2 hover:shadow-md hover:bg-[rgb(150,0,0)] hover:text-white hover:border-gray-600 transition duration-300"
+          data-type="SN"
+        >
+          Snacks
         </button>
       </div>
-      <!-- Modal Body -->
-      <div class="px-6 py-4 space-y-6 form-style">
-        <form id="foodForm">
-          <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700"
-              >Name</label
-            >
-            <input
-              type="text"
-              id="name"
-              name="name"
-              class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-[#550000]"
-              placeholder="Enter food name..."
-              required
-            />
-          </div>
-          <div class="mb-4">
-            <label
-              for="description"
-              class="block text-sm font-medium text-gray-700"
-              >Description</label
-            >
-            <textarea
-              id="description"
-              name="description"
-              rows="3"
-              class="mt-1 block w-full h-16 resize-none border border-gray-300 rounded-md p-2 hover:border-[#550000]"
-              placeholder="Enter short description..."
-              required
-            ></textarea>
-          </div>
-          <div class="flex justify-between">
-            <div class="mb-4">
-              <label
-                for="min_price"
-                class="block text-sm font-medium text-gray-700"
-                >Min Price (IDR)</label
-              >
-              <input
-                type="number"
-                id="minPrice"
-                name="min_price"
-                class="mt-1 block w-[90%] border border-gray-300 rounded-md p-2 hover:border-[#550000]"
-                required
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                for="max_price"
-                class="block text-sm font-medium text-gray-700"
-                >Max Price (IDR)</label
-              >
-              <input
-                type="number"
-                id="maxPrice"
-                name="max_price"
-                class="mt-1 block w-[90%] border border-gray-300 rounded-md p-2 hover:border-[#550000]"
-                required
-              />
-            </div>
-          </div>
-          <div class="mb-4">
-            <label
-              for="image_link"
-              class="block text-sm font-medium text-gray-700"
-              >Image Link</label
-            >
-            <input
-              type="url"
-              id="imageLink"
-              name="image_link"
-              class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-[#550000]"
-              placeholder="Enter image URL..."
-              required
-            />
-          </div>
-          <div class="mb-4">
-            <label for="type">Food Type</label>
-            <select
-              id="type"
-              name="type"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-            >
-              <option value="MC">Main Course</option>
-              <option value="DS">Dessert</option>
-              <option value="DR">Drinks</option>
-              <option value="SN">Snacks</option>
-            </select>
-          </div>
-        </form>
-      </div>
-      <!-- Modal Footer -->
+
+      <!-- Food Cards -->
+      <div id="food_cards"></div>
+
+      <!-- Crud Modal -->
       <div
-        class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end"
+        id="crudModal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out"
       >
-        <button
-          type="button"
-          class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg"
-          id="cancelButton"
+        <div
+          id="crudModalContent"
+          class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out"
         >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          id="submitFood"
-          form="foodForm"
-          class="bg-[#550000] hover:bg-[rgb(140,0,0)] text-white font-bold py-2 px-4 rounded-lg"
-        >
-          Save
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Food Modal -->
-  <div
-    id="foodModal"
-    tabindex="-1"
-    aria-hidden="true"
-    class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out"
-  >
-    <div
-      id="foodModalContent"
-      class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out"
-    >
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between p-4 border-b rounded-t">
-        <h3 class="text-xl font-semibold text-gray-900">Food details</h3>
-        <button
-          type="button"
-          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-          id="foodModalCloseBtn"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between p-4 border-b rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">Add Food</h3>
+            <button
+              type="button"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+              id="closeModalBtn"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <!-- Modal Body -->
+          <div class="px-6 py-4 space-y-6 form-style">
+            <form id="foodForm">
+              <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-[#550000]"
+                  placeholder="Enter food name..."
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="description"
+                  class="block text-sm font-medium text-gray-700"
+                  >Description</label
+                >
+                <textarea
+                  id="description"
+                  name="description"
+                  rows="3"
+                  class="mt-1 block w-full h-16 resize-none border border-gray-300 rounded-md p-2 hover:border-[#550000]"
+                  placeholder="Enter short description..."
+                  required
+                ></textarea>
+              </div>
+              <div class="flex justify-between">
+                <div class="mb-4">
+                  <label
+                    for="min_price"
+                    class="block text-sm font-medium text-gray-700"
+                    >Min Price (IDR)</label
+                  >
+                  <input
+                    type="number"
+                    id="minPrice"
+                    name="min_price"
+                    class="mt-1 block w-[90%] border border-gray-300 rounded-md p-2 hover:border-[#550000]"
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <label
+                    for="max_price"
+                    class="block text-sm font-medium text-gray-700"
+                    >Max Price (IDR)</label
+                  >
+                  <input
+                    type="number"
+                    id="maxPrice"
+                    name="max_price"
+                    class="mt-1 block w-[90%] border border-gray-300 rounded-md p-2 hover:border-[#550000]"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="mb-4">
+                <label
+                  for="image_link"
+                  class="block text-sm font-medium text-gray-700"
+                  >Image Link</label
+                >
+                <input
+                  type="url"
+                  id="imageLink"
+                  name="image_link"
+                  class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-[#550000]"
+                  placeholder="Enter image URL..."
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label for="type">Food Type</label>
+                <select
+                  id="type"
+                  name="type"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                >
+                  <option value="MC">Main Course</option>
+                  <option value="DS">Dessert</option>
+                  <option value="DR">Drinks</option>
+                  <option value="SN">Snacks</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <!-- Modal Footer -->
+          <div
+            class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end"
           >
-            <path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-          <span class="sr-only">Close modal</span>
-        </button>
+            <button
+              type="button"
+              class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg"
+              id="cancelButton"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              id="submitFood"
+              form="foodForm"
+              class="bg-[#550000] hover:bg-[rgb(140,0,0)] text-white font-bold py-2 px-4 rounded-lg"
+            >
+              Save
+            </button>
+          </div>
+        </div>
       </div>
-      <!-- Modal Body -->
-      <div id="foodModalBody" class="px-6 py-4 space-y-6 form-style"></div>
-      <!-- Modal Footer -->
-      
-    </div>
-  </div>
-</div>
 
-{% include 'footer.html' %}
-<script>
-  let currentlyDisplayedFoods = null;
-  const foodModalBody = document.getElementById("foodModalBody");
+      <!-- Food Modal -->
+      <div
+        id="foodModal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out"
+      >
+        <div
+          id="foodModalContent"
+          class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out"
+        >
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between p-4 border-b rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">Food details</h3>
+            <button
+              type="button"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+              id="foodModalCloseBtn"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <!-- Modal Body -->
+          <div id="foodModalBody" class="px-6 py-4 space-y-6 form-style"></div>
+          <!-- Modal Footer -->
 
-  function addFood() {
-    fetch("{% url 'explore:add_food_ajax' %}", {
-      method: "POST",
-      body: new FormData(document.querySelector("#foodForm")),
-    }).then((response) => refreshFoods());
-
-    document.getElementById("foodForm").reset();
-    document.querySelector("[data-modal-toggle='crudModal']").click();
-
-    return false;
-  }
-
-  async function refreshFoods() {
-    document.getElementById("food_cards").innerHTML = "";
-    document.getElementById("food_cards").className = "";
-    var foods;
-    fetch("{% url 'explore:all_to_json' %}", {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        displayFood(data);
-      });
-    // const foods = await getFoods();
-  }
-  refreshFoods();
-
-  function showFoodModal(attr) {
-    const foodModalBody = document.getElementById("foodModalBody");
-    foodModalBody.innerHTML = `
-  <div class="flex flex-col sm:w-full align-center px-6 pt-4">
-    <div class="flex h-48 w-full gap-3px justify-center">
-      <img
-        class="w-full h-full object-cover object-center transition duration-50 rounded-xl"
-        loading="lazy"
-        src="${attr[4]}"
-      />
-    </div>
-    <div class="pt-6 text-2xl font-bold text-center">${attr[0]}</div>
-    <div class="pt-2 text-md text-center">
-      ${attr[1]}
-    </div>
-    <div class="w-full flex justify-center mt-6 ">
-      <div class="text-sm text-gray-600 bg-gray-200 rounded-md px-2 py-1">
-        Rp${attr[2]} - Rp${attr[3]}
+        </div>
       </div>
     </div>
-    <div class="w-full flex justify-center">
-      ${
-        attr[5] === "MC"
-          ? `
-  <div class="text-sm text-gray-600 bg-green-400 rounded-md px-2 py-1">
-    Main Course
-  </div>`
-          : ""
+
+    {% include 'footer.html' %}
+    <script>
+      const editFoodBaseUrl = "{% url 'explore:edit_food' id='00000000-0000-0000-0000-000000000000' %}".replace('00000000-0000-0000-0000-000000000000', '');
+    const deleteFoodBaseUrl = "{% url 'explore:delete_food' id='00000000-0000-0000-0000-000000000000' %}".replace('00000000-0000-0000-0000-000000000000', '');
+      let currentlyDisplayedFoods = null;
+      const foodModalBody = document.getElementById("foodModalBody");
+
+      function addFood() {
+        fetch("{% url 'explore:add_food_ajax' %}", {
+          method: "POST",
+          body: new FormData(document.querySelector("#foodForm")),
+        }).then((response) => refreshFoods());
+
+        document.getElementById("foodForm").reset();
+        document.querySelector("[data-modal-toggle='crudModal']").click();
+
+        return false;
       }
+
+      async function refreshFoods() {
+        document.getElementById("food_cards").innerHTML = "";
+        document.getElementById("food_cards").className = "";
+        var foods;
+        fetch("{% url 'explore:all_to_json' %}", {
+          method: "POST",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            displayFood(data);
+          });
+        // const foods = await getFoods();
+      }
+      refreshFoods();
+
+      function showFoodModal(attr) {
+        const foodModalBody = document.getElementById("foodModalBody");
+        foodModalBody.innerHTML = `
+      <div class="flex flex-col sm:w-full align-center px-6 pt-4">
+        <div class="flex h-48 w-full gap-3px justify-center">
+          <img
+            class="w-full h-full object-cover object-center transition duration-50 rounded-xl"
+            loading="lazy"
+            src="${attr[4]}"
+          />
+        </div>
+        <div class="pt-6 text-2xl font-bold text-center">${attr[0]}</div>
+        <div class="pt-2 text-md text-center">
+          ${attr[1]}
+        </div>
+        <div class="w-full flex justify-center mt-6 ">
+          <div class="text-sm text-gray-600 bg-gray-200 rounded-md px-2 py-1">
+            Rp${attr[2]} - Rp${attr[3]}
+          </div>
+        </div>
+        <div class="w-full flex justify-center">
           ${
-            attr[5] === "DS"
+            attr[5] === "MC"
               ? `
-  <div class="text-sm text-gray-600 bg-yellow-400 rounded-md px-2 py-1">
-    Dessert
-  </div>`
-              : ""
-          }
-          ${
-            attr[5] === "DR"
-              ? `
-  <div class="text-sm text-gray-600 bg-pink-400 rounded-md px-2 py-1">
-    Drinks
-  </div>`
+      <div class="text-sm text-gray-600 bg-green-400 rounded-md px-2 py-1">
+        Main Course
+      </div>`
               : ""
           }
               ${
-                attr[5] === "SN"
+                attr[5] === "DS"
                   ? `
-  <div class="text-sm text-gray-600 bg-red-400 rounded-md px-2 py-1">
-    Snacks
-  </div>`
+      <div class="text-sm text-gray-600 bg-yellow-400 rounded-md px-2 py-1">
+        Dessert
+      </div>`
                   : ""
               }
-    </div>
-  </div>`;
-    const modal = document.getElementById("foodModal");
-    const modalContent = document.getElementById("foodModalContent");
-    modal.classList.remove("hidden");
-    setTimeout(() => {
-      modalContent.classList.remove("opacity-0", "scale-95");
-      modalContent.classList.add("opacity-100", "scale-100");
-    }, 50);
-  }
-
-  async function filterFood(type) {
-    fetch("{% url 'explore:filter_food' %}", {
-      body: JSON.stringify({ selectedType: type }),
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        displayFood(data);
-      });
-  }
-
-  async function searchAndFilterFoods(searchVal, filter) {
-    let searchData;
-    let filterData;
-    fetch("{% url 'explore:filter_food' %}", {
-      body: JSON.stringify({ selectedType: filter }),
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        filterData = JSON.parse(JSON.stringify(data));
-        fetch("{% url 'explore:search_food' %}", {
-          body: JSON.stringify({ searchText: searchVal }),
-          method: "POST",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            searchData = JSON.parse(JSON.stringify(data));
-            // console.log(filterData);
-            // console.log(searchData);
-            let comboData = [];
-            for (let i = 0; i < filterData.length; i++) {
-              for (let j = 0; j < searchData.length; j++) {
-                if (filterData[i]["id"] === searchData[j]["id"]) {
-                  comboData.push(filterData[i]);
-                }
+              ${
+                attr[5] === "DR"
+                  ? `
+      <div class="text-sm text-gray-600 bg-pink-400 rounded-md px-2 py-1">
+        Drinks
+      </div>`
+                  : ""
               }
-            }
-            // console.log(comboData);
-            displayFood(comboData);
-          });
-      });
-  }
-
-  async function displayFood(data) {
-    document.getElementById("food_cards").innerHTML = "";
-    document.getElementById("food_cards").className = "";
-    let htmlString = "";
-    let classNameString = "";
-    if (data.length === 0) {
-      classNameString = "flex flex-col border-2 rounded-xl border-gray-300";
-      htmlString = `
-      <div class="flex flex-col border-2 rounded-xl border-gray-300">
-          <p>Food not found :(</p>
+                  ${
+                    attr[5] === "SN"
+                      ? `
+      <div class="text-sm text-gray-600 bg-red-400 rounded-md px-2 py-1">
+        Snacks
+      </div>`
+                      : ""
+                  }
+        </div>
       </div>`;
-      document.getElementById("food_cards").className = classNameString;
-      document.getElementById("food_cards").innerHTML = htmlString;
-      currentlyDisplayedFoods = null;
-    } else {
-      classNameString =
-        "flex flex-col border-2 rounded-xl border-gray-300 w-full";
-      data.forEach((item) => {
-        htmlString += `
-    <div class="flex flex-col sm:flex-row px-4 py-2 border-b-2 border-gray-300 items-center hover:bg-gray-100 hover:-translate-y-1 hover:rounded-xl hover:shadow-lg transition duration-700 w-full">
-      <div class="flex w-full cursor-pointer food-item" data-modal-target='foodModal' data-modal-toggle='foodModal' data-image-link="${
-        item.image_link
-      }" data-name="${item.name}" data-description="${
-          item.description
-        }" data-min-price="${item.min_price}" data-max-price="${
-          item.max_price
-        }" data-type="${item.type}">
-        <div class="relative w-24 h-24 flex-shrink-0">
-          <img class="asyncImage absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50 rounded-xl" loading="lazy" src="${
+        const modal = document.getElementById("foodModal");
+        const modalContent = document.getElementById("foodModalContent");
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modalContent.classList.remove("opacity-0", "scale-95");
+          modalContent.classList.add("opacity-100", "scale-100");
+        }, 50);
+      }
+
+      async function filterFood(type) {
+        fetch("{% url 'explore:filter_food' %}", {
+          body: JSON.stringify({ selectedType: type }),
+          method: "POST",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            displayFood(data);
+          });
+      }
+
+      async function searchAndFilterFoods(searchVal, filter) {
+        let searchData;
+        let filterData;
+        fetch("{% url 'explore:filter_food' %}", {
+          body: JSON.stringify({ selectedType: filter }),
+          method: "POST",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            filterData = JSON.parse(JSON.stringify(data));
+            fetch("{% url 'explore:search_food' %}", {
+              body: JSON.stringify({ searchText: searchVal }),
+              method: "POST",
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                searchData = JSON.parse(JSON.stringify(data));
+                // console.log(filterData);
+                // console.log(searchData);
+                let comboData = [];
+                for (let i = 0; i < filterData.length; i++) {
+                  for (let j = 0; j < searchData.length; j++) {
+                    if (filterData[i]["id"] === searchData[j]["id"]) {
+                      comboData.push(filterData[i]);
+                    }
+                  }
+                }
+                // console.log(comboData);
+                displayFood(comboData);
+              });
+          });
+      }
+
+      async function displayFood(data) {
+        document.getElementById("food_cards").innerHTML = "";
+        document.getElementById("food_cards").className = "";
+        let htmlString = "";
+        let classNameString = "";
+        if (data.length === 0) {
+          classNameString = "flex flex-col border-2 rounded-xl border-gray-300";
+          htmlString = `
+          <div class="flex flex-col border-2 rounded-xl border-gray-300">
+              <p>Food not found :(</p>
+          </div>`;
+          document.getElementById("food_cards").className = classNameString;
+          document.getElementById("food_cards").innerHTML = htmlString;
+          currentlyDisplayedFoods = null;
+        } else {
+          classNameString =
+            "flex flex-col border-2 rounded-xl border-gray-300 w-full";
+          data.forEach((item) => {
+            var editLink = `${editFoodBaseUrl}${item.id}`;
+            var deleteLink = `${deleteFoodBaseUrl}${item.id}`;
+            htmlString += `
+        <div class="flex flex-col sm:flex-row px-4 py-2 border-b-2 border-gray-300 items-center hover:bg-gray-100 hover:-translate-y-1 hover:rounded-xl hover:shadow-lg transition duration-700 w-full">
+          <div class="flex w-full cursor-pointer food-item" data-modal-target='foodModal' data-modal-toggle='foodModal' data-image-link="${
             item.image_link
-          }" alt="${item.name}">
-        </div>
-        <div class="flex flex-col pl-4 w-full justify-between">
-          <div class="flex flex-col w-[80%] justify-between">
-            <div class="flex justify-left align-center">
-              <p class="text-xl font-bold">
-                ${item.name}
-              </p>
-              <div class="ml-1 flex items-center">
-                ${
-                  item.type === "MC"
-                    ? '<p class="text-sm font-semibold bg-green-400 rounded-xl px-2 -pb-2 shadow-sm">Main Course</p>'
-                    : ""
-                }
-                ${
-                  item.type === "DS"
-                    ? '<p class="text-sm font-semibold bg-yellow-400 rounded-xl px-2 -pb-2 shadow-sm">Dessert</p>'
-                    : ""
-                }
-                ${
-                  item.type === "DR"
-                    ? '<p class="text-sm font-semibold bg-pink-400 rounded-xl px-2 -pb-2 shadow-sm">Drinks</p>'
-                    : ""
-                }
-                ${
-                  item.type === "SN"
-                    ? '<p class="text-sm font-semibold bg-red-400 rounded-xl px-2 -pb-2 shadow-sm">Snacks</p>'
-                    : ""
-                }
+          }" data-name="${item.name}" data-description="${
+              item.description
+            }" data-min-price="${item.min_price}" data-max-price="${
+              item.max_price
+            }" data-type="${item.type}">
+            <div class="relative w-24 h-24 flex-shrink-0">
+              <img class="asyncImage absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50 rounded-xl" loading="lazy" src="${
+                item.image_link
+              }" alt="${item.name}">
+            </div>
+            <div class="flex flex-col pl-4 w-full justify-between">
+              <div class="flex flex-col w-[80%] justify-between">
+                <div class="flex justify-left align-center">
+                  <p class="text-xl font-bold">
+                    ${item.name}
+                  </p>
+                  <div class="ml-1 flex items-center">
+                    ${
+                      item.type === "MC"
+                        ? '<p class="text-sm font-semibold bg-green-400 rounded-xl px-2 -pb-2 shadow-sm">Main Course</p>'
+                        : ""
+                    }
+                    ${
+                      item.type === "DS"
+                        ? '<p class="text-sm font-semibold bg-yellow-400 rounded-xl px-2 -pb-2 shadow-sm">Dessert</p>'
+                        : ""
+                    }
+                    ${
+                      item.type === "DR"
+                        ? '<p class="text-sm font-semibold bg-pink-400 rounded-xl px-2 -pb-2 shadow-sm">Drinks</p>'
+                        : ""
+                    }
+                    ${
+                      item.type === "SN"
+                        ? '<p class="text-sm font-semibold bg-red-400 rounded-xl px-2 -pb-2 shadow-sm">Snacks</p>'
+                        : ""
+                    }
+                  </div>
+                </div>
+                <p class="line-clamp-1 break-all">
+                  ${item.description}
+                </p>
               </div>
+
+              <p class="text-gray-500">
+                Price: Rp${item.min_price} - Rp${item.max_price}
+              </p>
             </div>
-            <p class="line-clamp-1 break-all">
-              ${item.description}
-            </p>
           </div>
-          
-          <p class="text-gray-500">
-            Price: Rp${item.min_price} - Rp${item.max_price}
-          </p>
-        </div>
-      </div>
-      <div class="flex sm:flex-row gap-3 sm:ml-auto justify-end mt-2 sm:mt-0">
-        {% if user.is_authenticated and user.username == 'admin' %}
-          <a href="/edit-food/${
-            item.id
-          }" class="text-gray-500 hover:bg-yellow-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-            </svg>
-            <span class="sr-only">Edit Food</span>
-          </a>
-          <a href="/delete-food/${
-            item.id
-          }" class="text-gray-500 hover:bg-red-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-            </svg>
-            <span class="sr-only">Delete Food</span>
-          </a>
-        {% endif %}
-        <div onClick="showBookmarkModal('${item.id}');"
-            class="text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500 cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-            </svg>
-            <span class="sr-only">Bookmark Food</span>
-        </div>
-      </div>
-    </div>`;
-      });
-      data.forEach((item) => {
-        htmlString += `
-{% comment %} bookmark ajax {% endcomment %}
-<div id="bookmarkModal-${item.id}" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto">
-    <div id="bookmarkModalContent" class="relative bg-white p-6 rounded-2xl shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/4 mx-4 sm:mx-0 transform">
-        <div onClick="hideBookmarkModal('${item.id}');" class="absolute p-1 right-4 top-4 cursor-pointer hover:bg-gray-300 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-        </div>
-        <div class="mb-4">
-            <h2 class="text-xl font-bold mt-2">Add to bucket list</h2>
-        </div>
-        <form id="bookmarkBucketForm">
-            {% csrf_token %}
-            <div class="mb-2">
-                <select id="bucketListDropdown-${item.id}">
-                    <option value="" disabled selected>Select a bucket list</option>
-                    {% for bucket in bucket_lists %}
-                        <option value="{{ bucket.id }}">{{ bucket.name }}</option>
-                    {% endfor %}
-                </select>
+          <div class="flex sm:flex-row gap-3 sm:ml-auto justify-end mt-2 sm:mt-0">
+            {% if user.is_authenticated and user.username == 'admin' %}
+              <a href="${editLink}" class="text-gray-500 hover:bg-yellow-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                </svg>
+                <span class="sr-only">Edit Food</span>
+              </a>
+              <a href="${deleteLink}" class="text-gray-500 hover:bg-red-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                </svg>
+                <span class="sr-only">Delete Food</span>
+              </a>
+            {% endif %}
+            <div onClick="showBookmarkModal('${item.id}');"
+                class="text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg p-2.5 text-center flex items-center border-2 border-gray-300 transition duration-500 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                </svg>
+                <span class="sr-only">Bookmark Food</span>
             </div>
-        </form>
-        <button form="bookmarkBucketForm" type="button" class="px-2 py-1 mt-2 w-full rounded-lg bg-[#550000] text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
-                Save changes
-        </button>
+          </div>
+        </div>`;
+          });
+          data.forEach((item) => {
+            htmlString += `
+    {% comment %} bookmark ajax {% endcomment %}
+    <div id="bookmarkModal-${item.id}" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto">
+        <div id="bookmarkModalContent" class="relative bg-white p-6 rounded-2xl shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/4 mx-4 sm:mx-0 transform">
+            <div onClick="hideBookmarkModal('${item.id}');" class="absolute p-1 right-4 top-4 cursor-pointer hover:bg-gray-300 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            </div>
+            <div class="mb-4">
+                <h2 class="text-xl font-bold mt-2">Add to bucket list</h2>
+            </div>
+            <form id="bookmarkBucketForm">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <select id="bucketListDropdown-${item.id}">
+                        <option value="" disabled selected>Select a bucket list</option>
+                        {% for bucket in bucket_lists %}
+                            <option value="{{ bucket.id }}">{{ bucket.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+            <button form="bookmarkBucketForm" type="button" class="px-2 py-1 mt-2 w-full rounded-lg bg-[#550000] text-white font-bold" onClick="bookmarkFoodEntry('${item.id}')">
+                    Save changes
+            </button>
+        </div>
     </div>
-</div>
-`;
-      });
+    `;
+          });
 
-      document.getElementById("food_cards").className = classNameString;
-      document.getElementById("food_cards").innerHTML = htmlString;
-      currentlyDisplayedFoods = data;
-      // console.log(document.getElementById("food_cards"));
-      const foodie = [...document.getElementsByClassName("food-item")];
-      // console.log(foodie);
-      foodie.forEach((item) => {
-        const name = item.getAttribute("data-name");
-        const description = item.getAttribute("data-description");
-        const min_price = item.getAttribute("data-min-price");
-        const max_price = item.getAttribute("data-max-price");
-        const image_link = item.getAttribute("data-image-link");
-        const type = item.getAttribute("data-type");
-        item.addEventListener("click", (e) => {
-          showFoodModal([
-            name,
-            description,
-            min_price,
-            max_price,
-            image_link,
-            type,
-          ]);
-        });
-      });
-    }
-  }
-  function showBookmarkModal(id) {
-    document.getElementById(`bookmarkModal-${id}`).classList.remove("hidden");
-  }
-
-  function hideBookmarkModal(id) {
-    document.getElementById(`bookmarkModal-${id}`).classList.add("hidden");
-  }
-
-  function bookmarkFoodEntry(foodId) {
-    // BANYAK DEBUGGING DAN LOG THANKS TO CLAUDE
-    console.log("Function called with foodId:", foodId);
-    event.preventDefault();
-
-    if (!document.getElementById(`bucketListDropdown-${foodId}`).value) {
-      alert("Please select a bucket list");
-      return;
-    }
-
-    // SEMPET ADA PAGE NOT FOUND JADI DIILANGIN ROOT/EXPLORE/ ????? GAJELAS PADAHAL SAMA AJA
-    fetch(
-      `add-to-bucket-list/${foodId}/${
-        document.getElementById(`bucketListDropdown-${foodId}`).value
-      }/`,
-      {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCsrfToken(),
-          "Content-Type": "application/json",
-        },
-        credentials: "same-origin",
+          document.getElementById("food_cards").className = classNameString;
+          document.getElementById("food_cards").innerHTML = htmlString;
+          currentlyDisplayedFoods = data;
+          // console.log(document.getElementById("food_cards"));
+          const foodie = [...document.getElementsByClassName("food-item")];
+          // console.log(foodie);
+          foodie.forEach((item) => {
+            const name = item.getAttribute("data-name");
+            const description = item.getAttribute("data-description");
+            const min_price = item.getAttribute("data-min-price");
+            const max_price = item.getAttribute("data-max-price");
+            const image_link = item.getAttribute("data-image-link");
+            const type = item.getAttribute("data-type");
+            item.addEventListener("click", (e) => {
+              showFoodModal([
+                name,
+                description,
+                min_price,
+                max_price,
+                image_link,
+                type,
+              ]);
+            });
+          });
+        }
       }
-    )
-      .then(async (response) => {
-        // Log the full response for debugging
-        console.log("Response status:", response.status);
-        const data = await response.text();
-        console.log("Response body:", data);
+      function showBookmarkModal(id) {
+        document.getElementById(`bookmarkModal-${id}`).classList.remove("hidden");
+      }
 
-        if (!response.ok) {
-          throw new Error(
-            `HTTP error! status: ${response.status}, body: ${data}`
+      function hideBookmarkModal(id) {
+        document.getElementById(`bookmarkModal-${id}`).classList.add("hidden");
+      }
+
+      function bookmarkFoodEntry(foodId) {
+        // BANYAK DEBUGGING DAN LOG THANKS TO CLAUDE
+        console.log("Function called with foodId:", foodId);
+        event.preventDefault();
+
+        if (!document.getElementById(`bucketListDropdown-${foodId}`).value) {
+          alert("Please select a bucket list");
+          return;
+        }
+
+        // SEMPET ADA PAGE NOT FOUND JADI DIILANGIN ROOT/EXPLORE/ ????? GAJELAS PADAHAL SAMA AJA
+        fetch(
+          `add-to-bucket-list/${foodId}/${
+            document.getElementById(`bucketListDropdown-${foodId}`).value
+          }/`,
+          {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCsrfToken(),
+              "Content-Type": "application/json",
+            },
+            credentials: "same-origin",
+          }
+        )
+          .then(async (response) => {
+            // Log the full response for debugging
+            console.log("Response status:", response.status);
+            const data = await response.text();
+            console.log("Response body:", data);
+
+            if (!response.ok) {
+              throw new Error(
+                `HTTP error! status: ${response.status}, body: ${data}`
+              );
+            }
+            return JSON.parse(data);
+          })
+          .then((data) => {
+            console.log("Success:", data);
+            refreshFoods();
+          })
+          .catch((error) => {
+            console.error("Detailed error:", error);
+            alert("Failed to add food to bucket list: " + error.message);
+          });
+
+        return false;
+      }
+
+      function getCsrfToken() {
+        console.log(
+          "CSRF Token:",
+          document.querySelector("[name=csrfmiddlewaretoken]").value
+        );
+        return document.querySelector("[name=csrfmiddlewaretoken]").value;
+      }
+
+      function hideFoodModal() {
+        const modal = document.getElementById("foodModal");
+        const modalContent = document.getElementById("foodModalContent");
+
+        modalContent.classList.remove("opacity-100", "scale-100");
+        modalContent.classList.add("opacity-0", "scale-95");
+
+        setTimeout(() => {
+          modal.classList.add("hidden");
+        }, 150);
+      }
+
+      document
+        .getElementById("foodModalCloseBtn")
+        .addEventListener("click", hideFoodModal);
+
+      function showModal() {
+        const modal = document.getElementById("crudModal");
+        const modalContent = document.getElementById("crudModalContent");
+
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modalContent.classList.remove("opacity-0", "scale-95");
+          modalContent.classList.add("opacity-100", "scale-100");
+        }, 50);
+      }
+
+      function hideModal() {
+        const modal = document.getElementById("crudModal");
+        const modalContent = document.getElementById("crudModalContent");
+
+        modalContent.classList.remove("opacity-100", "scale-100");
+        modalContent.classList.add("opacity-0", "scale-95");
+
+        setTimeout(() => {
+          modal.classList.add("hidden");
+        }, 150);
+      }
+
+      document.getElementById("cancelButton").addEventListener("click", hideModal);
+      document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+      document.getElementById("submitFood").addEventListener("click", hideModal);
+
+      document.getElementById("foodForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        addFood();
+      });
+
+      const searchField = document.querySelector("#searchField");
+      searchField.addEventListener("keyup", (e) => {
+        const searchValue = e.target.value;
+
+        if (searchValue.trim().length > 0) {
+          if (document.getElementsByClassName("type-btn-on").length != 0) {
+            var dataType = [
+              ...document.getElementsByClassName("type-btn-on"),
+            ][0].getAttribute("data-type");
+            searchAndFilterFoods(searchField.value.trim(), dataType);
+          } else {
+            fetch("{% url 'explore:search_food' %}", {
+              body: JSON.stringify({ searchText: searchValue }),
+              method: "POST",
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                displayFood(data);
+              });
+          }
+        } else {
+          refreshFoods();
+        }
+      });
+
+      let prevButton = null;
+
+      const wrapper = document.getElementById("buttonFilters");
+
+      wrapper.addEventListener("click", (e) => {
+        const isButton = e.target.nodeName === "BUTTON";
+        // console.log(e.target.id);
+        console.log(prevButton);
+        if (!isButton) {
+          return;
+        }
+
+        if (prevButton === e.target) {
+          e.target.classList.remove(
+            "bg-[rgb(85,0,0)]",
+            "border-[rgb(60,0,0)]",
+            "text-white",
+            "type-btn-on"
           );
+          e.target.classList.add("text-gray-500", "hover:bg-[rgb(150,0,0)]");
+          if (searchField.value.trim() != "") {
+            fetch("{% url 'explore:search_food' %}", {
+              body: JSON.stringify({ searchText: searchField.value.trim() }),
+              method: "POST",
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                displayFood(data);
+              });
+          } else {
+            refreshFoods();
+          }
+          prevButton = null;
+        } else {
+          e.target.classList.add(
+            "bg-[rgb(85,0,0)]",
+            "border-[rgb(60,0,0)]",
+            "text-white",
+            "type-btn-on"
+          );
+          e.target.classList.remove("text-gray-500", "hover:bg-[rgb(150,0,0)]");
+
+          if (prevButton !== null) {
+            prevButton.classList.remove(
+              "bg-[rgb(85,0,0)]",
+              "border-[rgb(60,0,0)]",
+              "text-white",
+              "type-btn-on"
+            ); // Remove .active CSS Class
+            prevButton.classList.add("text-gray-500", "hover:bg-[rgb(150,0,0)]");
+          }
+          if (e.target.id === "main-course-btn") {
+            if (searchField.value.trim() != "") {
+              searchAndFilterFoods(searchField.value.trim(), "MC");
+            } else {
+              filterFood("MC");
+            }
+          } else if (e.target.id === "dessert-btn") {
+            if (searchField.value.trim() != "") {
+              searchAndFilterFoods(searchField.value.trim(), "DS");
+            } else {
+              filterFood("DS");
+            }
+          } else if (e.target.id === "drinks-btn") {
+            if (searchField.value.trim() != "") {
+              searchAndFilterFoods(searchField.value.trim(), "DR");
+            } else {
+              filterFood("DR");
+            }
+          } else if (e.target.id === "snacks-btn") {
+            if (searchField.value.trim() != "") {
+              searchAndFilterFoods(searchField.value.trim(), "SN");
+            } else {
+              filterFood("SN");
+            }
+          }
+          prevButton = e.target;
         }
-        return JSON.parse(data);
-      })
-      .then((data) => {
-        console.log("Success:", data);
-        refreshFoods();
-      })
-      .catch((error) => {
-        console.error("Detailed error:", error);
-        alert("Failed to add food to bucket list: " + error.message);
       });
-
-    return false;
-  }
-
-  function getCsrfToken() {
-    console.log(
-      "CSRF Token:",
-      document.querySelector("[name=csrfmiddlewaretoken]").value
-    );
-    return document.querySelector("[name=csrfmiddlewaretoken]").value;
-  }
-
-  function hideFoodModal() {
-    const modal = document.getElementById("foodModal");
-    const modalContent = document.getElementById("foodModalContent");
-
-    modalContent.classList.remove("opacity-100", "scale-100");
-    modalContent.classList.add("opacity-0", "scale-95");
-
-    setTimeout(() => {
-      modal.classList.add("hidden");
-    }, 150);
-  }
-
-  document
-    .getElementById("foodModalCloseBtn")
-    .addEventListener("click", hideFoodModal);
-
-  function showModal() {
-    const modal = document.getElementById("crudModal");
-    const modalContent = document.getElementById("crudModalContent");
-
-    modal.classList.remove("hidden");
-    setTimeout(() => {
-      modalContent.classList.remove("opacity-0", "scale-95");
-      modalContent.classList.add("opacity-100", "scale-100");
-    }, 50);
-  }
-
-  function hideModal() {
-    const modal = document.getElementById("crudModal");
-    const modalContent = document.getElementById("crudModalContent");
-
-    modalContent.classList.remove("opacity-100", "scale-100");
-    modalContent.classList.add("opacity-0", "scale-95");
-
-    setTimeout(() => {
-      modal.classList.add("hidden");
-    }, 150);
-  }
-
-  document.getElementById("cancelButton").addEventListener("click", hideModal);
-  document.getElementById("closeModalBtn").addEventListener("click", hideModal);
-  document.getElementById("submitFood").addEventListener("click", hideModal);
-
-  document.getElementById("foodForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    addFood();
-  });
-
-  const searchField = document.querySelector("#searchField");
-  searchField.addEventListener("keyup", (e) => {
-    const searchValue = e.target.value;
-
-    if (searchValue.trim().length > 0) {
-      if (document.getElementsByClassName("type-btn-on").length != 0) {
-        var dataType = [
-          ...document.getElementsByClassName("type-btn-on"),
-        ][0].getAttribute("data-type");
-        searchAndFilterFoods(searchField.value.trim(), dataType);
-      } else {
-        fetch("{% url 'explore:search_food' %}", {
-          body: JSON.stringify({ searchText: searchValue }),
-          method: "POST",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            displayFood(data);
-          });
-      }
-    } else {
-      refreshFoods();
-    }
-  });
-
-  let prevButton = null;
-
-  const wrapper = document.getElementById("buttonFilters");
-
-  wrapper.addEventListener("click", (e) => {
-    const isButton = e.target.nodeName === "BUTTON";
-    // console.log(e.target.id);
-    console.log(prevButton);
-    if (!isButton) {
-      return;
-    }
-
-    if (prevButton === e.target) {
-      e.target.classList.remove(
-        "bg-[rgb(85,0,0)]",
-        "border-[rgb(60,0,0)]",
-        "text-white",
-        "type-btn-on"
-      );
-      e.target.classList.add("text-gray-500", "hover:bg-[rgb(150,0,0)]");
-      if (searchField.value.trim() != "") {
-        fetch("{% url 'explore:search_food' %}", {
-          body: JSON.stringify({ searchText: searchField.value.trim() }),
-          method: "POST",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            displayFood(data);
-          });
-      } else {
-        refreshFoods();
-      }
-      prevButton = null;
-    } else {
-      e.target.classList.add(
-        "bg-[rgb(85,0,0)]",
-        "border-[rgb(60,0,0)]",
-        "text-white",
-        "type-btn-on"
-      );
-      e.target.classList.remove("text-gray-500", "hover:bg-[rgb(150,0,0)]");
-
-      if (prevButton !== null) {
-        prevButton.classList.remove(
-          "bg-[rgb(85,0,0)]",
-          "border-[rgb(60,0,0)]",
-          "text-white",
-          "type-btn-on"
-        ); // Remove .active CSS Class
-        prevButton.classList.add("text-gray-500", "hover:bg-[rgb(150,0,0)]");
-      }
-      if (e.target.id === "main-course-btn") {
-        if (searchField.value.trim() != "") {
-          searchAndFilterFoods(searchField.value.trim(), "MC");
-        } else {
-          filterFood("MC");
-        }
-      } else if (e.target.id === "dessert-btn") {
-        if (searchField.value.trim() != "") {
-          searchAndFilterFoods(searchField.value.trim(), "DS");
-        } else {
-          filterFood("DS");
-        }
-      } else if (e.target.id === "drinks-btn") {
-        if (searchField.value.trim() != "") {
-          searchAndFilterFoods(searchField.value.trim(), "DR");
-        } else {
-          filterFood("DR");
-        }
-      } else if (e.target.id === "snacks-btn") {
-        if (searchField.value.trim() != "") {
-          searchAndFilterFoods(searchField.value.trim(), "SN");
-        } else {
-          filterFood("SN");
-        }
-      }
-      prevButton = e.target;
-    }
-  });
-</script>
-{% endblock content %}
+    </script>
+    {% endblock content %}
