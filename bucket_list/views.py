@@ -4,6 +4,7 @@ from bucket_list.models import BucketList
 from explore.models import Food
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+import json
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core import serializers
 from django.utils.html import strip_tags
@@ -86,3 +87,18 @@ def remove_from_bucket_list(request, food_id, bucket_id):
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
+    
+@csrf_exempt
+def create_bucket_list_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        new_bucket_list = BucketList.objects.create(
+            user=request.user,
+            name=data["name"],
+        )
+
+        new_bucket_list.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
