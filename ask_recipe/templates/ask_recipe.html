@@ -131,6 +131,9 @@
                         <label for="instructions" class="block text-sm font-medium text-gray-700">Instructions</label>
                         <textarea id="instructions" name="instructions" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required></textarea>  <!-- Textarea untuk instruksi -->
                     </div>
+
+                    <!-- Tempat pesan error -->
+                    <div id="error-message" class="text-red-500 text-sm mt-2 hidden"></div>
                     
                 </form>
             </div>            
@@ -160,24 +163,38 @@
     function showModal() {
         const modal = document.getElementById('crudModal');
         const modalContent = document.getElementById('crudModalContent');
+        const errorMessageDiv = document.getElementById('error-message');
+        const form = document.getElementById('recipeEntryForm');
 
-        modal.classList.remove('hidden'); // Tampilkan modal
+        // Reset form dan error message setiap kali modal dibuka
+        form.reset();
+        errorMessageDiv.classList.add('hidden');
+        errorMessageDiv.textContent = '';
+
+        modal.classList.remove('hidden');
         setTimeout(() => {
-            modalContent.classList.remove('opacity-0', 'scale-95'); // Efek transisi saat modal terbuka
+            modalContent.classList.remove('opacity-0', 'scale-95');
             modalContent.classList.add('opacity-100', 'scale-100');
-        }, 50); 
+        }, 50);
     }
     
     // Fungsi untuk menutup modal
     function hideModal() {
         const modal = document.getElementById('crudModal');
         const modalContent = document.getElementById('crudModalContent');
+        const errorMessageDiv = document.getElementById('error-message');
+        const form = document.getElementById('recipeEntryForm');
 
-        modalContent.classList.remove('opacity-100', 'scale-100'); // Efek transisi saat modal ditutup
+        // Reset form dan error message
+        form.reset();
+        errorMessageDiv.classList.add('hidden');
+        errorMessageDiv.textContent = '';
+
+        modalContent.classList.remove('opacity-100', 'scale-100');
         modalContent.classList.add('opacity-0', 'scale-95');
 
         setTimeout(() => {
-            modal.classList.add('hidden'); // Sembunyikan modal setelah transisi
+            modal.classList.add('hidden');
         }, 150);
     }
 
@@ -215,36 +232,59 @@
     document.getElementById("closeModalBtn").addEventListener("click", hideModal);
     
     document.getElementById('recipeEntryForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // Cegah reload halaman
-
-    const formData = new FormData(this);  // Ambil data dari form
-
+    event.preventDefault();
+    
+    const formData = new FormData(this);
+    const errorMessageDiv = document.getElementById('error-message');
+    
     fetch("{% url 'ask_recipe:create_recipe' %}", {
         method: 'POST',
         body: formData,
         headers: {
-            'X-CSRFToken': '{{ csrf_token }}',  // Tambahkan token CSRF
+            'X-CSRFToken': '{{ csrf_token }}',
         },
     })
     .then(response => {
-        if (response.ok) return response.text();  // Baca respon sebagai teks (HTML)
-        throw new Error('Gagal membuat resep');
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(text);
+            });
+        }
+        return response.text();
     })
     .then(html => {
-        const recipeList = document.querySelector('.recipe-list');  // Sidebar daftar resep
-
-            // Cek dan hapus 'empty-message' jika ada
-            const emptyMessage = recipeList.querySelector('.empty-message');
-        if (emptyMessage) emptyMessage.remove();  // Hapus pesan kosong jika ada
-
-        // Tambahkan item baru di bagian atas (prepend)
+        // Success case - recipe created
+        const recipeList = document.querySelector('.recipe-list');
+        
+        // Remove empty message if exists
+        const emptyMessage = recipeList.querySelector('.empty-message');
+        if (emptyMessage) emptyMessage.remove();
+        
+        // Add new recipe to list
         recipeList.insertAdjacentHTML('afterbegin', html);
-
-        // Reset form dan tutup modal
-        document.getElementById('recipeEntryForm').reset();
+        
+        // Reset form and hide modal
+        this.reset();
         hideModal();
+        
+        // Clear any previous error messages
+        errorMessageDiv.classList.add('hidden');
+        errorMessageDiv.textContent = '';
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        // Reset form ketika error
+        this.reset();
+        
+        // Show error message in modal
+        errorMessageDiv.classList.remove('hidden');
+        errorMessageDiv.textContent = error.message;
+        
+        // Style the error message
+        errorMessageDiv.classList.add('bg-red-100', 'border', 'border-red-400', 'text-red-700', 'px-4', 'py-3', 'rounded', 'relative');
+        
+        // Scroll error into view if needed
+        errorMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
 });
 
 // Fungsi untuk membuka obrolan dan memuat pesan

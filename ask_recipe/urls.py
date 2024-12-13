@@ -16,4 +16,7 @@ urlpatterns = [
     path('json/', views.show_json, name='show_json'),
     path('xml/<str:id>/', views.show_xml_by_id, name='show_xml_by_id'),
     path('json/<str:id>/', views.show_json_by_id, name='show_json_by_id'),
+    path('create_recipe_flutter/', views.create_recipe_flutter, name='create_recipe_flutter'),
+    path('update_recipe_flutter/<uuid:recipe_id>/', views.update_recipe_flutter, name='update_recipe_flutter'),    
+    path('delete_recipe/<uuid:recipe_id>/', views.delete_recipe, name='delete_recipe'),
 ]

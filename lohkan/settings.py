@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-2^9w1+(st*)vot+ag^ecm0*i8%ui^65+hv7421mv1+aj&n8e=$
 #DEBUG = not PRODUCTION
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1:8000" ,  "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id"]
 
 
 # Application definition
@@ -139,7 +139,7 @@ else:
     STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
