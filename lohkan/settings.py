@@ -154,4 +154,4 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1", "http://10.0.2.2"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1", "http://10.0.2.2", "https://marla-marlena-lohkan.pbp.cs.ui.ac.id"]
