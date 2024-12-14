@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from article.views import (
     create_article, show_xml, show_json, delete_article, 
-    show_xml_by_id, show_json_by_id, edit_article, article_detail, add_comment, full_article, index, add_comment_flutter, create_article_flutter
+    show_xml_by_id, show_json_by_id, edit_article, article_detail, add_comment, full_article, index, add_comment_flutter, create_article_flutter, edit_article_flutter
 )
 
 app_name = 'article'
@@ -23,4 +23,5 @@ urlpatterns = [
     path('edit-article/<uuid:id>', edit_article, name='edit_article'), 
     path('article/<uuid:id>/add_comment/', add_comment, name='add_comment'),
     path('article/<uuid:id>/add_comment_flutter/', add_comment_flutter, name='add_comment_flutter'),
+    path('edit-article-flutter/<uuid:id>', edit_article_flutter, name='edit_article_flutter'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

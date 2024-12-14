@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-2^9w1+(st*)vot+ag^ecm0*i8%ui^65+hv7421mv1+aj&n8e=$
 #DEBUG = not PRODUCTION
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1:8000" ,  "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1:8000" ,  "127.0.0.1" , "marla-marlena-lohkan.pbp.cs.ui.ac.id", "10.0.2.2", "10.0.2.2:8000" ]
 
 
 # Application definition
@@ -154,4 +154,4 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1", "http://10.0.2.2"]

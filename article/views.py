@@ -8,33 +8,17 @@ from django.core import serializers
 from django.contrib import messages
 from django.core.paginator import Paginator
 import uuid
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.http import JsonResponse
 import json
+import os
 from django.contrib.auth.decorators import login_required
 
 # menampilkan semua artikel
 def full_article(request):
     article_list = Article.objects.all().order_by('-id')
     return render(request, 'full_article.html', {'article_list': article_list})
-
-# # membuat artikel baru
-# @csrf_exempt
-# @require_POST
-# def create_article(request):
-#    title = request.POST.get("title")
-#    description = request.POST.get("description")
-#    image = request.FILES.get('image') 
-
-#    new_article = Article(
-#       title=title, description=description, image=image
-#    )
-#    new_article.save()
-
-#    return HttpResponse(b"CREATED", status=201)
-
-from django.http import JsonResponse  # Gunakan JsonResponse untuk respons JSON
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
 
 @csrf_exempt
 @require_POST
@@ -74,47 +58,55 @@ def create_article(request):
 @require_POST
 def create_article_flutter(request):
     try:
-        # Ambil data dari request
-        title = request.POST.get("title", "")
-        description = request.POST.get("description", "")
+        title = request.POST.get("title", "").strip()
+        description = request.POST.get("description", "").strip()
         image = request.FILES.get('image')
 
         # Validasi input
         if not title or not description:
             return JsonResponse({
-                'status': 'error', 
-                'message': 'Title and description are required'
+                'status': 'error',
+                'message': 'Title and description are required.'
             }, status=400)
 
-        # Simpan gambar jika ada
-        image_path = None
         if image:
+            # Validasi format gambar
+            allowed_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+            file_extension = os.path.splitext(image.name)[1].lower()
+
+            if file_extension not in allowed_extensions:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': f'Unsupported image format. Allowed formats are: {", ".join(allowed_extensions)}.'
+                }, status=400)
+
             # Buat path penyimpanan unik
-            file_extension = os.path.splitext(image.name)[1]
             filename = f"articles/{uuid.uuid4()}{file_extension}"
-            
+
             # Simpan file
             path = default_storage.save(filename, ContentFile(image.read()))
             image_path = path
+        else:
+            image_path = None
 
         # Buat artikel baru
         new_article = Article(
-            title=title, 
-            description=description, 
+            title=title,
+            description=description,
             image=image_path  # Simpan path gambar
         )
         new_article.save()
 
         return JsonResponse({
-            'status': 'success', 
-            'message': 'Article created successfully',
+            'status': 'success',
+            'message': 'Article created successfully.',
             'article_id': new_article.id
         }, status=201)
 
     except Exception as e:
         return JsonResponse({
-            'status': 'error', 
-            'message': str(e)
+            'status': 'error',
+            'message': f'An error occurred: {str(e)}'
         }, status=500)
 
 # @csrf_exempt
@@ -178,6 +170,25 @@ def edit_article(request, id):
         'article':  article
     }
     return render(request, 'edit_article.html', context)
+
+@csrf_exempt
+def edit_article_flutter(request, article_id):
+    if request.method == 'POST':
+        article = get_object_or_404(Article, pk=article_id)
+        
+        # Update title dan description
+        article.title = request.POST.get('title')
+        article.description = request.POST.get('description')
+        
+        # Update gambar jika ada
+        if 'image' in request.FILES:
+            article.image = request.FILES['image']
+        
+        article.save()
+        
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'error'}, status=400)
 
 # menampilkan detail artikel
 def article_detail(request, id):
