@@ -7,6 +7,7 @@ app_name = 'ask_recipe'
 urlpatterns = [
     path('', views.ask_recipe, name='ask_recipe'), 
     path('create_recipe/', views.create_recipe, name='create_recipe'),
+    path('recipe/<uuid:recipe_id>/', views.edit_recipe, name='edit_recipe'),
     path('send_message/', views.send_message, name='send_message'),
     path('messages/<uuid:group_id>/', views.get_messages, name='get_messages'),
     path('delete_group/<uuid:group_id>/', views.delete_group, name='delete_group'),
@@ -19,4 +20,7 @@ urlpatterns = [
     path('create_recipe_flutter/', views.create_recipe_flutter, name='create_recipe_flutter'),
     path('update_recipe_flutter/<uuid:recipe_id>/', views.update_recipe_flutter, name='update_recipe_flutter'),    
     path('delete_recipe/<uuid:recipe_id>/', views.delete_recipe, name='delete_recipe'),
+    path('chat-messages/', views.get_chat_messages, name='get_chat_messages'),
+    path('send_chat_message/', views.send_chat_message, name='send_chat_message'),
+    path('delete_chat_message/<uuid:message_id>/', views.delete_chat_message, name='delete_chat_message'),
 ]
