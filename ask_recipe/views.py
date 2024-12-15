@@ -5,9 +5,9 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from .models import RecipeGroup, ChatMessage, Recipe
 from .forms import RecipeForm
-from django.http import Http404, HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
-from django.contrib import messages
 
 def ask_recipe(request):
     # ngambil semua resep dari database
@@ -72,6 +72,20 @@ def create_recipe(request):
         except Exception as e:
             # Handle any other errors that might occur
             return HttpResponse(str(e), status=400)
+
+@login_required
+def edit_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)  # Ambil resep berdasarkan UUID
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, instance=recipe)
+        if form.is_valid():
+            form.save()
+            return redirect('ask_recipe:ask_recipe')  # Redirect ke halaman utama setelah edit
+    else:
+        form = RecipeForm(instance=recipe)
+
+    return render(request, 'partials/edit_recipe.html', {'form': form, 'recipe': recipe})
 
 # ngambil pesan dari grup tertentu
 def get_messages(request, group_id):
@@ -184,7 +198,7 @@ def create_recipe_flutter(request):
 
         # Membuat grup diskusi
         group = RecipeGroup.objects.create(
-            name=f"Discussion for {title}",
+            name=title,  # Nama grup sama dengan nama resep
             description=f"Discussion group for {title}",
             created_by=request.user
         )
@@ -232,9 +246,6 @@ def update_recipe_flutter(request, recipe_id):
         if not all([title, ingredients, instructions, cooking_time, servings]):
             return JsonResponse({"error": "All fields are required"}, status=400)
 
-        # Normalisasi title
-        normalized_title = ' '.join(title.lower().split())
-
         # Update fields pada Recipe
         recipe.title = title
         recipe.ingredients = ingredients
@@ -248,6 +259,7 @@ def update_recipe_flutter(request, recipe_id):
         return JsonResponse({
             "message": "Recipe updated successfully",
             "recipe_id": str(recipe.id),
+            # "group_id": str(group.id),
             "status": "success"
         }, status=200)
 
@@ -265,4 +277,89 @@ def delete_recipe(request, recipe_id):
             return JsonResponse({'message': 'Recipe deleted successfully'}, status=200)
         except Exception as e:
             return JsonResponse({'message': f'Failed to delete recipe: {str(e)}'}, status=500)
+    return JsonResponse({'message': 'Invalid HTTP method'}, status=405)
+
+@csrf_exempt
+@login_required
+def get_chat_messages(request):
+    if request.method == 'GET':
+        group_id = request.GET.get('group_id')  # Ambil group_id dari query string
+        if not group_id:
+            return JsonResponse({'error': 'group_id is required'}, status=400)
+
+        try:
+            group = RecipeGroup.objects.get(id=group_id)
+            messages = ChatMessage.objects.filter(group=group).order_by('timestamp')
+            message_list = [
+                {
+                    'id': str(msg.id),
+                    'user': msg.user.username,
+                    'message': msg.message,
+                    'timestamp': msg.timestamp.isoformat(),
+                }
+                for msg in messages
+            ]
+            return JsonResponse({'messages': message_list}, status=200)
+        except RecipeGroup.DoesNotExist:
+            return JsonResponse({'error': 'Group not found'}, status=404)
+        
+@csrf_exempt
+@login_required
+def send_chat_message(request):
+    try:
+        # Print for debugging
+        print("Received request to send chat message")
+        
+        # Parse JSON data
+        data = json.loads(request.body)
+        print("Received data:", data)
+        
+        group_id = data.get('group_id')
+        message_text = data.get('message')
+
+        if not group_id or not message_text:
+            print("Missing group_id or message")
+            return JsonResponse({'error': 'group_id and message are required'}, status=400)
+
+        try:
+            group = RecipeGroup.objects.get(id=group_id)
+            user = request.user
+
+            # Create new message
+            new_message = ChatMessage.objects.create(
+                group=group,
+                user=user,
+                message=message_text
+            )
+
+            print(f"Message sent successfully: {new_message.message}")
+
+            return JsonResponse({
+                'id': str(new_message.id),
+                'user': new_message.user.username,
+                'message': new_message.message,
+                'timestamp': new_message.timestamp.isoformat(),
+            }, status=201)
+        
+        except RecipeGroup.DoesNotExist:
+            print(f"Group not found: {group_id}")
+            return JsonResponse({'error': 'Group not found'}, status=404)
+    
+    except json.JSONDecodeError:
+        print("Invalid JSON data")
+        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return JsonResponse({'error': str(e)}, status=500)
+    
+@csrf_exempt
+def delete_chat_message(request, message_id):
+    if request.method == 'DELETE':
+        message = get_object_or_404(ChatMessage, id=message_id)
+        try:
+            message.delete()
+            return JsonResponse({'message': 'Message deleted successfully'}, status=200)
+        except Exception as e:
+            return JsonResponse({'message': f'Failed to delete message: {str(e)}'}, status=500)
     return JsonResponse({'message': 'Invalid HTTP method'}, status=405)
