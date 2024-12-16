@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
@@ -102,22 +103,67 @@ def see_reviews(request, food_name, food_type='unknown'):
     reviews = ReviewEntry.objects.filter(name=food_name, food_type=food_type).select_related('user')
     if reviews.exists():
         average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
-        if average_rating <= 2:
-            rating_label = "Not quite good 🤔"
-        elif 2 < average_rating <= 3:
-            rating_label = "Maybe later 😬"
-        elif 3 < average_rating <= 4:
-            rating_label = "Maybe try some 😄"
-        else:
-            rating_label = "Recommended! 🤤"
-    else:
-        average_rating = 0
-        rating_label = "No reviews yet. 😢"
+        rating_label = get_rating_label(average_rating)
 
-    return render(request, 'see_reviews.html', {
-        'reviews': reviews,
-        'food_name': food_name,
-        'food_type': food_type,
-        'average_rating': average_rating,
-        'rating_label': rating_label
-    })
+        if request.GET.get('format') == 'json':
+            # Including username in the JSON output
+            reviews_data = [{
+                'username': review.user.username,
+                'rating': review.rating,
+                'comments': review.comments
+            } for review in reviews]
+            return JsonResponse({
+                'reviews': reviews_data,
+                'average_rating': average_rating,
+                'rating_label': rating_label
+            })
+        else:
+            return render(request, 'see_reviews.html', {
+                'reviews': reviews,
+                'food_name': food_name,
+                'food_type': food_type,
+                'average_rating': average_rating,
+                'rating_label': rating_label
+            })
+    else:
+        if request.GET.get('format') == 'json':
+            return JsonResponse({'message': 'No reviews found'}, status=404)
+        else:
+            return render(request, 'see_reviews.html', {
+                'reviews': [],
+                'food_name': food_name,
+                'food_type': food_type,
+                'average_rating': 0,
+                'rating_label': "No reviews yet. 😢"
+            })
+
+def get_rating_label(average_rating):
+    if average_rating <= 2:
+        return "Not quite good 🤔"
+    elif 2 < average_rating <= 3:
+        return "Maybe later 😬"
+    elif 3 < average_rating <= 4:
+        return "Maybe try some 😄"
+    else:
+        return "Recommended! 🤤"
+
+
+@csrf_exempt
+def create_review_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        
+        new_review = ReviewEntry.objects.create(
+            user=request.user,
+            food_name=data["food_name"],
+            food_type = data["food_type"],
+            rating=int(data["rating"]),
+            comments=data["comments"],
+        )
+
+        new_review.save()
+
+        return JsonResponse({"status": "success"}, status=201)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
