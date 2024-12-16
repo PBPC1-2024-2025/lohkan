@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
@@ -145,3 +146,24 @@ def get_rating_label(average_rating):
         return "Maybe try some 😄"
     else:
         return "Recommended! 🤤"
+
+
+@csrf_exempt
+def create_review_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        
+        new_review = ReviewEntry.objects.create(
+            user=request.user,
+            food_name=data["food_name"],
+            food_type = data["food_type"],
+            rating=int(data["rating"]),
+            comments=data["comments"],
+        )
+
+        new_review.save()
+
+        return JsonResponse({"status": "success"}, status=201)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
