@@ -102,3 +102,27 @@ def create_bucket_list_flutter(request):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+    
+@csrf_exempt
+def delete_bucket_list_flutter(request, bucket_id):
+    try:
+        bucket_list = BucketList.objects.get(pk=bucket_id)
+        if request.method == 'POST':
+            bucket_list.delete()
+            return JsonResponse({"status": "success"}, status=200)
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=405)
+    except BucketList.DoesNotExist:
+        return JsonResponse({"status": "error", "message": "Bucket list not found"}, status=404)
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=500)
+    
+@csrf_exempt
+def edit_bucket_list_flutter(request, bucket_id):
+    bucket_list = BucketList.objects.get(pk=bucket_id)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        bucket_list.name = data['name']
+        bucket_list.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
