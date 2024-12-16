@@ -7,6 +7,7 @@ from food_review.models import ReviewEntry
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Avg
+from food_review.models import ReviewEntry
 
 
 # menampilkan semua review
@@ -151,19 +152,45 @@ def get_rating_label(average_rating):
 @csrf_exempt
 def create_review_flutter(request):
     if request.method == 'POST':
-
-        data = json.loads(request.body)
+        try:
+            # Parse JSON dengan hati-hati
+            data = json.loads(request.body.decode('utf-8'))
+            
+            # Validasi tipe data
+            name = str(data.get('name', '')).strip()
+            food_type = str(data.get('food_type', '')).strip()
+            comments = str(data.get('comments', '')).strip()
+            
+            # Konversi rating ke integer dengan validasi
+            try:
+                rating = int(data.get('rating', 0))
+            except (ValueError, TypeError):
+                return JsonResponse({'error': 'Invalid rating'}, status=400)
+            
+            # Validasi data
+            if not name or not food_type or not comments:
+                return JsonResponse({'error': 'Missing required fields'}, status=400)
+            
+            # Simpan ke database
+            review = ReviewEntry.objects.create(
+                name=name.title(),  # Gunakan title case
+                food_type=food_type, 
+                rating=rating, 
+                comments=comments,
+                user=request.user  # Pastikan ada user yang login
+            )
+            
+            return JsonResponse({
+                'message': 'Review created successfully', 
+                'review_id': review.id
+            }, status=201)
         
-        new_review = ReviewEntry.objects.create(
-            user=request.user,
-            food_name=data["food_name"],
-            food_type = data["food_type"],
-            rating=int(data["rating"]),
-            comments=data["comments"],
-        )
-
-        new_review.save()
-
-        return JsonResponse({"status": "success"}, status=201)
-    else:
-        return JsonResponse({"status": "error"}, status=401)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        
+        except Exception as e:
+            # Log error untuk debugging di server
+            print(f"Error creating review: {str(e)}")
+            return JsonResponse({'error': str(e)}, status=500)
+    
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
