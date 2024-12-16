@@ -152,45 +152,44 @@ def get_rating_label(average_rating):
 @csrf_exempt
 def create_review_flutter(request):
     if request.method == 'POST':
+        raw_name = request.POST.get('name', '').strip()  # Get the raw name input
+        name = raw_name.lower()  # Normalize name to lowercase for comparison
+        food_type = request.POST.get('food_type', '').strip()
+        rating = request.POST.get('rating', '').strip()
+        comments = request.POST.get('comments', '').strip()
+        user = request.user  # Assuming you are using Django's authentication
+
+        if not all([raw_name, food_type, rating, comments]):
+            return JsonResponse({'error': 'Missing required fields'}, status=400)
+
         try:
-            # Parse JSON dengan hati-hati
-            data = json.loads(request.body.decode('utf-8'))
-            
-            # Validasi tipe data
-            name = str(data.get('name', '')).strip()
-            food_type = str(data.get('food_type', '')).strip()
-            comments = str(data.get('comments', '')).strip()
-            
-            # Konversi rating ke integer dengan validasi
-            try:
-                rating = int(data.get('rating', 0))
-            except (ValueError, TypeError):
-                return JsonResponse({'error': 'Invalid rating'}, status=400)
-            
-            # Validasi data
-            if not name or not food_type or not comments:
-                return JsonResponse({'error': 'Missing required fields'}, status=400)
-            
-            # Simpan ke database
-            review = ReviewEntry.objects.create(
-                name=name.title(),  # Gunakan title case
-                food_type=food_type, 
-                rating=rating, 
-                comments=comments,
-                user=request.user  # Pastikan ada user yang login
-            )
-            
-            return JsonResponse({
-                'message': 'Review created successfully', 
-                'review_id': review.id
-            }, status=201)
-        
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
-        
+            # Check if the review already exists for the same normalized food item and type
+            existing_review = ReviewEntry.objects.filter(name__iexact=raw_name, food_type=food_type, user=user).first()
+            if existing_review:
+                # Update the existing review
+                existing_review.rating = rating
+                existing_review.comments = comments
+                existing_review.save()
+                return JsonResponse({
+                    'message': 'Review updated successfully',
+                    'review_id': existing_review.id
+                }, status=200)
+            else:
+                # Create a new review
+                new_review = ReviewEntry(
+                    name=raw_name.title(),  # Store name in title case
+                    food_type=food_type,
+                    rating=rating,
+                    comments=comments,
+                    user=user
+                )
+                new_review.save()
+                return JsonResponse({
+                    'message': 'Review created successfully',
+                    'review_id': new_review.id
+                }, status=201)
         except Exception as e:
-            # Log error untuk debugging di server
-            print(f"Error creating review: {str(e)}")
+            # Handle unexpected errors
             return JsonResponse({'error': str(e)}, status=500)
-    
+
     return JsonResponse({'error': 'Method not allowed'}, status=405)
