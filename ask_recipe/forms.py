@@ -1,17 +1,8 @@
 from django import forms
-from .models import RecipeGroup, ChatMessage
+from .models import Recipe
 
 # Form untuk membuat dan mengedit grup resep    
-class RecipeGroupForm(forms.ModelForm):
+class RecipeForm(forms.ModelForm):
     class Meta:
-        model = RecipeGroup
-        fields = ['name', 'description']
-
-# Form untuk mengirim pesan dalam grup resep
-class ChatMessageForm(forms.ModelForm):
-    class Meta:
-        model = ChatMessage
-        fields = ['message'] 
-        widgets = {
-            'message': forms.Textarea(attrs={'rows': 2, 'cols': 40}),
-        }
+        model = Recipe
+        fields = ['title', 'ingredients', 'instructions', 'cooking_time', 'servings']

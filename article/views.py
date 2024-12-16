@@ -8,35 +8,138 @@ from django.core import serializers
 from django.contrib import messages
 from django.core.paginator import Paginator
 import uuid
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.http import JsonResponse
 import json
+import os
+from django.contrib.auth.decorators import login_required
 
 # menampilkan semua artikel
 def full_article(request):
     article_list = Article.objects.all().order_by('-id')
     return render(request, 'full_article.html', {'article_list': article_list})
 
-# membuat artikel baru
 @csrf_exempt
 @require_POST
 def create_article(request):
-   title = request.POST.get("title")
-   description = request.POST.get("description")
-   image = request.FILES.get('image') 
+    try:
+        title = request.POST.get("title", "")
+        description = request.POST.get("description", "")
+        image = request.FILES.get('image')
 
-   new_article = Article(
-      title=title, description=description, image=image
-   )
-   new_article.save()
+        # Validasi input
+        if not title or not description:
+            return JsonResponse({
+                'status': 'error', 
+                'message': 'Title and description are required'
+            }, status=400)
 
-   return HttpResponse(b"CREATED", status=201)
+        new_article = Article(
+            title=title, 
+            description=description, 
+            image=image
+        )
+        new_article.save()
 
-# menghapus artikel
+        return JsonResponse({
+            'status': 'success', 
+            'message': 'Article created successfully',
+            'article_id': new_article.id
+        }, status=201)
+
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error', 
+            'message': str(e)
+        }, status=500)
+
+@csrf_exempt
+@require_POST
+def create_article_flutter(request):
+    try:
+        title = request.POST.get("title", "").strip()
+        description = request.POST.get("description", "").strip()
+        image = request.FILES.get('image')
+
+        # Validasi input
+        if not title or not description:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Title and description are required.'
+            }, status=400)
+
+        if image:
+            # Validasi format gambar
+            allowed_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+            file_extension = os.path.splitext(image.name)[1].lower()
+
+            if file_extension not in allowed_extensions:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': f'Unsupported image format. Allowed formats are: {", ".join(allowed_extensions)}.'
+                }, status=400)
+
+            # Buat path penyimpanan unik
+            filename = f"articles/{uuid.uuid4()}{file_extension}"
+
+            # Simpan file
+            path = default_storage.save(filename, ContentFile(image.read()))
+            image_path = path
+        else:
+            image_path = None
+
+        # Buat artikel baru
+        new_article = Article(
+            title=title,
+            description=description,
+            image=image_path  # Simpan path gambar
+        )
+        new_article.save()
+
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Article created successfully.',
+            'article_id': new_article.id
+        }, status=201)
+
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': f'An error occurred: {str(e)}'
+        }, status=500)
+
+# @csrf_exempt
+# # menghapus artikel
+# def delete_article(request, id):
+#     if request.method == 'DELETE':
+#         article = Article.objects.get(pk = id)
+#         article.delete()
+#         return HttpResponse
+
+@csrf_exempt
 def delete_article(request, id):
-    article = Article.objects.get(pk = id)
-    article.delete()
-    return HttpResponseRedirect(reverse('article:full_article'))
+    if request.method == 'DELETE':
+        try:
+            # Coba ambil artikel berdasarkan ID
+            article = Article.objects.filter(pk=id).first()
+            if not article:
+                return JsonResponse({'error': 'Article not found.'}, status=404)
+            # Hapus artikel jika ditemukan
+            article.delete()
+            return HttpResponse(status=204)  # 204 No Content jika sukses
+        except Exception as e:
+            # Log error untuk debugging
+            print(f"Error deleting article: {e}")
+            return JsonResponse({'error': 'An error occurred while deleting the article.'}, status=500)
+    else:
+        article = Article.objects.get(pk=id)
+        article.delete()
+        return HttpResponseRedirect(reverse('article:full_article'))
+    return JsonResponse({'error': 'Invalid HTTP method.'}, status=405)
 
+
+@csrf_exempt
 # mengedit artikel
 def edit_article(request, id):
     article = Article.objects.filter(pk=id).first() 
@@ -68,13 +171,32 @@ def edit_article(request, id):
     }
     return render(request, 'edit_article.html', context)
 
+@csrf_exempt
+def edit_article_flutter(request, article_id):
+    if request.method == 'POST':
+        article = get_object_or_404(Article, pk=article_id)
+        
+        # Update title dan description
+        article.title = request.POST.get('title')
+        article.description = request.POST.get('description')
+        
+        # Update gambar jika ada
+        if 'image' in request.FILES:
+            article.image = request.FILES['image']
+        
+        article.save()
+        
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'error'}, status=400)
+
 # menampilkan detail artikel
 def article_detail(request, id):
     article = get_object_or_404(Article, pk=id)
     comments = Comment.objects.filter(article=article).order_by('-created_at') 
     return render(request, 'article.html', {'article': article, 'comments': comments})
 
-
+@csrf_exempt
 def add_comment(request, id):  
     article = get_object_or_404(Article, pk=id) 
     if request.method == 'POST':
@@ -83,6 +205,26 @@ def add_comment(request, id):
             Comment.objects.create(article=article, content=content, user=request.user)
             return redirect('article:article_detail', id=id)  
     return redirect('article:article_detail', id=id)
+
+@csrf_exempt  
+def add_comment_flutter(request, id):
+    article = get_object_or_404(Article, pk=id)
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            content = data.get('content')
+            
+            if content:
+                # Create a new comment
+                Comment.objects.create(article=article, content=content, user=request.user)
+                return JsonResponse({'message': 'Comment added successfully'}, status=201)
+            else:
+                return JsonResponse({'error': 'Content is required'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
+
 
 
 # menampilkan artikel dalam format JSON

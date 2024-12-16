@@ -1,9 +1,12 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from .models import RecipeGroup, ChatMessage, Recipe
-from .forms import RecipeGroupForm, ChatMessageForm
-from django.http import HttpResponse
+from .forms import RecipeForm
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 
 def ask_recipe(request):
@@ -16,47 +19,85 @@ def ask_recipe(request):
 @require_POST
 def create_recipe(request):
     if request.method == "POST":
-        # ngambil data dari permintaan post
-        title = request.POST.get("title")
-        ingredients = request.POST.get("ingredients")
-        instructions = request.POST.get("instructions")
-        cooking_time = int(request.POST.get("cooking_time"))
-        servings = int(request.POST.get("servings"))
+        try:
+            # Get data from post request
+            title = request.POST.get("title")
+            ingredients = request.POST.get("ingredients")
+            instructions = request.POST.get("instructions")
+            cooking_time = int(request.POST.get("cooking_time"))
+            servings = int(request.POST.get("servings"))
 
-        # mastiin semua data valid sebelum disimpan
-        if not title or not ingredients or not instructions or not cooking_time or not servings:
-            return HttpResponse("Incomplete data", status=400)
-        
-        # buat grup otomatis untuk diskusi resep ini
-        group = RecipeGroup.objects.create(
-            name=f"Discussion for {title}",
-            description=f"Discussion group for {title}",
-            created_by=request.user
-        )
+            # Validate required data
+            if not title or not ingredients or not instructions or not cooking_time or not servings:
+                return HttpResponse("All fields are required", status=400)
 
-        # buat resep dan hubungkan dengan grup
-        recipe = Recipe.objects.create(
-            group=group,
-            title=title,
-            ingredients=ingredients,
-            instructions=instructions,
-            cooking_time=int(cooking_time), 
-            servings=int(servings),
-            added_by=request.user
-        )
+            # Normalize the title (remove extra spaces and convert to lowercase)
+            normalized_title = ' '.join(title.lower().split())
+            
+            # Check for existing recipes with normalized names
+            existing_recipes = Recipe.objects.all()
+            for existing_recipe in existing_recipes:
+                existing_normalized_title = ' '.join(existing_recipe.title.lower().split())
+                if normalized_title == existing_normalized_title:
+                    return HttpResponse(
+                        f"Recipe with the name '{title}' already exists.", 
+                        status=400
+                    )
 
-        # ngembaliin template dengan item resep yang baru dibua
-        return render(request, 'partials/recipe_item.html', {'recipe': recipe})
+            # Create group first
+            group_name = f"Discussion for {title}"
+            group = RecipeGroup.objects.create(
+                name=group_name,
+                description=f"Discussion group for {title}",
+                created_by=request.user
+            )
+
+            # Then create recipe with the group reference
+            recipe = Recipe.objects.create(
+                title=title,
+                ingredients=ingredients,
+                instructions=instructions,
+                cooking_time=cooking_time, 
+                servings=servings,
+                added_by=request.user,
+                group=group
+            )
+
+            # Update the group with the recipe reference if needed
+            group.recipe = recipe
+            group.save()
+
+            return render(request, 'partials/recipe_item.html', {'recipe': recipe, 'group': group})
+
+        except Exception as e:
+            # Handle any other errors that might occur
+            return HttpResponse(str(e), status=400)
+
+@login_required
+def edit_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)  # Ambil resep berdasarkan UUID
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, instance=recipe)
+        if form.is_valid():
+            form.save()
+            return redirect('ask_recipe:ask_recipe')  # Redirect ke halaman utama setelah edit
+    else:
+        form = RecipeForm(instance=recipe)
+
+    return render(request, 'partials/edit_recipe.html', {'form': form, 'recipe': recipe})
 
 # ngambil pesan dari grup tertentu
 def get_messages(request, group_id):
-     # ngambil semua pesan dari grup berdasarkan ID
-    messages = ChatMessage.objects.filter(group_id=group_id).order_by('timestamp')
+    # Cek apakah grup ada
+    group = get_object_or_404(RecipeGroup, id=group_id)
+    
+    # Mengambil semua pesan dari grup berdasarkan ID
+    messages = ChatMessage.objects.filter(group=group).order_by('timestamp')
     return render(request, 'partials/messages.html', {'messages': messages, 'user': request.user})
 
 # Mengirim pesan baru
 def send_message(request):
-    # ngambil data dari permintaan post
     if request.method == "POST":
         group_id = request.POST.get('group_id')
         content = request.POST.get('content')
@@ -64,21 +105,27 @@ def send_message(request):
         if not group_id or not content:
             return HttpResponse("Group ID or content is missing.", status=400)
 
+        # Cek jika grup valid
         group = get_object_or_404(RecipeGroup, id=group_id)
-        # buat pesan baru
+        
+        # Buat pesan baru
         message = ChatMessage.objects.create(group=group, user=request.user, message=content)
 
-        # ngembaliin pesan yang baru dibuat dalam konteks
+        # Mengembalikan pesan yang baru dibuat dalam konteks
         return render(request, 'partials/messages.html', {'messages': [message], 'user': request.user})
-    
-    # menangani permintaan yang tidak valid
+
     return HttpResponse("Invalid request method.", status=405)
 
 # hapus grup resep berdasarkan ID
 def delete_group(request, group_id):
     group = get_object_or_404(RecipeGroup, id=group_id)
-    group.delete()
-    return redirect('ask_recipe:ask_recipe')
+    
+    # Pastikan grup ada sebelum dihapus
+    if group.recipe:  # Memastikan grup memiliki resep yang terkait
+        group.delete()
+        return redirect('ask_recipe:ask_recipe')
+    
+    return HttpResponse("Grup tidak memiliki resep yang terkait atau grup tidak ditemukan.", status=400)
 
 # hapus pesan berdasarkan ID
 @csrf_exempt
@@ -90,21 +137,22 @@ def delete_message(request, message_id):
 
 @csrf_exempt
 def search_recipe(request):
-    # get query pencarian dari permintaan
     query = request.GET.get('q', '')
-    # filter resep berdasarkan judul (tidak case-sensitive)
     recipes = Recipe.objects.filter(title__icontains=query)
-    # ngembaliin daftar resep
+    
+    if not recipes:
+        return HttpResponse("No recipes found.", status=404)
+    
     return render(request, 'partials/recipe_list.html', {'recipes': recipes})
 
 # ngambil resep berdasarkan pengguna saat ini dengan xml
 def show_xml(request):
-    data = Recipe.objects.filter(added_by=request.user)  # Ubah user menjadi added_by
+    data = Recipe.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 # ngambil resep berdasarkan pengguna saat ini dengan json
 def show_json(request):
-    data = Recipe.objects.filter(added_by=request.user)  # Ubah user menjadi added_by
+    data = Recipe.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 # ngambil resep berdasarkan id dengan xml
@@ -115,4 +163,203 @@ def show_xml_by_id(request, id):
 # ngambil resep berdasarkan id dengan json
 def show_json_by_id(request, id):
     data = Recipe.objects.filter(pk=id)
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    if not data:
+        return HttpResponse("Recipe not found.", status=404)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json"),
+
+@csrf_exempt
+@require_POST
+@login_required
+def create_recipe_flutter(request):
+    try:
+        # Parse data JSON dari request body
+        data = json.loads(request.body)
+        title = data.get("title")
+        ingredients = data.get("ingredients")
+        instructions = data.get("instructions") 
+        cooking_time = data.get("cooking_time")
+        servings = data.get("servings")
+
+        # Validasi data: pastikan semua field ada dan tidak kosong
+        if not all([title, ingredients, instructions, cooking_time, servings]):
+            return JsonResponse({"error": "All fields are required"}, status=400)
+
+        # Normalisasi judul (menghapus spasi berlebih dan konversi ke lowercase)
+        normalized_title = ' '.join(title.lower().split())
+
+        # Validasi jika resep dengan nama yang sama sudah ada
+        existing_recipes = Recipe.objects.all()
+        for existing_recipe in existing_recipes:
+            existing_normalized_title = ' '.join(existing_recipe.title.lower().split())
+            if normalized_title == existing_normalized_title:
+                return JsonResponse({
+                    "error": f"Recipe with the name '{title}' already exists."
+                }, status=400)
+
+        # Membuat grup diskusi
+        group = RecipeGroup.objects.create(
+            name=title,  # Nama grup sama dengan nama resep
+            description=f"Discussion group for {title}",
+            created_by=request.user
+        )
+
+        # Membuat resep baru
+        recipe = Recipe.objects.create(
+            group=group,
+            title=title,
+            ingredients=ingredients,
+            instructions=instructions,
+            cooking_time=cooking_time,
+            servings=servings,
+            added_by=request.user
+        )
+        recipe.save()
+
+        return JsonResponse({
+            "message": "Recipe created successfully",
+            "recipe_id": str(recipe.id),
+            "status":"success"
+        }, status=200)
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
+@csrf_exempt
+@require_POST
+@login_required
+def update_recipe_flutter(request, recipe_id):
+    try:
+        # Pastikan recipe_id adalah UUID
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+
+        # Parsing data JSON dari request body
+        data = json.loads(request.body)
+        title = data.get("title")
+        ingredients = data.get("ingredients")
+        instructions = data.get("instructions")
+        cooking_time = data.get("cooking_time")
+        servings = data.get("servings")
+
+        # Validasi data
+        if not all([title, ingredients, instructions, cooking_time, servings]):
+            return JsonResponse({"error": "All fields are required"}, status=400)
+
+        # Update fields pada Recipe
+        recipe.title = title
+        recipe.ingredients = ingredients
+        recipe.instructions = instructions
+        recipe.cooking_time = cooking_time
+        recipe.servings = servings
+
+        # Simpan perubahan
+        recipe.save()
+
+        return JsonResponse({
+            "message": "Recipe updated successfully",
+            "recipe_id": str(recipe.id),
+            # "group_id": str(group.id),
+            "status": "success"
+        }, status=200)
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+@csrf_exempt
+def delete_recipe(request, recipe_id):
+    if request.method == 'DELETE':
+        recipe = get_object_or_404(Recipe, pk=recipe_id)
+        try:
+            recipe.delete()
+            return JsonResponse({'message': 'Recipe deleted successfully'}, status=200)
+        except Exception as e:
+            return JsonResponse({'message': f'Failed to delete recipe: {str(e)}'}, status=500)
+    return JsonResponse({'message': 'Invalid HTTP method'}, status=405)
+
+@csrf_exempt
+@login_required
+def get_chat_messages(request):
+    if request.method == 'GET':
+        group_id = request.GET.get('group_id')  # Ambil group_id dari query string
+        if not group_id:
+            return JsonResponse({'error': 'group_id is required'}, status=400)
+
+        try:
+            group = RecipeGroup.objects.get(id=group_id)
+            messages = ChatMessage.objects.filter(group=group).order_by('timestamp')
+            message_list = [
+                {
+                    'id': str(msg.id),
+                    'user': msg.user.username,
+                    'message': msg.message,
+                    'timestamp': msg.timestamp.isoformat(),
+                }
+                for msg in messages
+            ]
+            return JsonResponse({'messages': message_list}, status=200)
+        except RecipeGroup.DoesNotExist:
+            return JsonResponse({'error': 'Group not found'}, status=404)
+        
+@csrf_exempt
+@login_required
+def send_chat_message(request):
+    try:
+        # Print for debugging
+        print("Received request to send chat message")
+        
+        # Parse JSON data
+        data = json.loads(request.body)
+        print("Received data:", data)
+        
+        group_id = data.get('group_id')
+        message_text = data.get('message')
+
+        if not group_id or not message_text:
+            print("Missing group_id or message")
+            return JsonResponse({'error': 'group_id and message are required'}, status=400)
+
+        try:
+            group = RecipeGroup.objects.get(id=group_id)
+            user = request.user
+
+            # Create new message
+            new_message = ChatMessage.objects.create(
+                group=group,
+                user=user,
+                message=message_text
+            )
+
+            print(f"Message sent successfully: {new_message.message}")
+
+            return JsonResponse({
+                'id': str(new_message.id),
+                'user': new_message.user.username,
+                'message': new_message.message,
+                'timestamp': new_message.timestamp.isoformat(),
+            }, status=201)
+        
+        except RecipeGroup.DoesNotExist:
+            print(f"Group not found: {group_id}")
+            return JsonResponse({'error': 'Group not found'}, status=404)
+    
+    except json.JSONDecodeError:
+        print("Invalid JSON data")
+        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return JsonResponse({'error': str(e)}, status=500)
+    
+@csrf_exempt
+def delete_chat_message(request, message_id):
+    if request.method == 'DELETE':
+        message = get_object_or_404(ChatMessage, id=message_id)
+        try:
+            message.delete()
+            return JsonResponse({'message': 'Message deleted successfully'}, status=200)
+        except Exception as e:
+            return JsonResponse({'message': f'Failed to delete message: {str(e)}'}, status=500)
+    return JsonResponse({'message': 'Invalid HTTP method'}, status=405)
