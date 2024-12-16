@@ -148,7 +148,7 @@ def get_rating_label(average_rating):
     else:
         return "Recommended! 🤤"
 
-
+@login_required
 @csrf_exempt
 def create_review_flutter(request):
     if request.method == 'POST':
