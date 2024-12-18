@@ -1,8 +1,13 @@
+import uuid
 import json
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from .models import RecipeGroup, ChatMessage, Recipe
 from .forms import RecipeForm
 from django.shortcuts import get_object_or_404
@@ -49,7 +54,6 @@ def create_recipe(request):
             group = RecipeGroup.objects.create(
                 name=group_name,
                 description=f"Discussion group for {title}",
-                created_by=request.user
             )
 
             # Then create recipe with the group reference
@@ -59,7 +63,7 @@ def create_recipe(request):
                 instructions=instructions,
                 cooking_time=cooking_time, 
                 servings=servings,
-                added_by=request.user,
+                added_by=User.objects.get(username='admin'),
                 group=group
             )
 
@@ -152,8 +156,23 @@ def show_xml(request):
 
 # ngambil resep berdasarkan pengguna saat ini dengan json
 def show_json(request):
-    data = Recipe.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    recipes = Recipe.objects.all()
+    recipe_data = []
+
+    for recipe in recipes:
+        # Serialisasi resep
+        recipe_serialized = serializers.serialize("json", [recipe])
+        recipe_json = json.loads(recipe_serialized)[0]  # Ambil resep pertama
+
+        # Tambahkan URL absolut untuk gambar
+        if recipe.image:
+            recipe_json['fields']['image_url'] = request.build_absolute_uri(recipe.image.url)
+        else:
+            recipe_json['fields']['image_url'] = None
+
+        recipe_data.append(recipe_json)
+
+    return HttpResponse(json.dumps(recipe_data), content_type="application/json")
 
 # ngambil resep berdasarkan id dengan xml
 def show_xml_by_id(request, id):
@@ -169,62 +188,66 @@ def show_json_by_id(request, id):
 
 @csrf_exempt
 @require_POST
-@login_required
 def create_recipe_flutter(request):
     try:
-        # Parse data JSON dari request body
-        data = json.loads(request.body)
-        title = data.get("title")
-        ingredients = data.get("ingredients")
-        instructions = data.get("instructions") 
-        cooking_time = data.get("cooking_time")
-        servings = data.get("servings")
+        # Ambil data dari request
+        title = request.POST.get('title')
+        ingredients = request.POST.get('ingredients')
+        instructions = request.POST.get('instructions')
+        cooking_time = int(request.POST.get('cooking_time'))
+        servings = int(request.POST.get('servings'))
+        image = request.FILES.get('image')  # Ambil gambar jika ada
 
-        # Validasi data: pastikan semua field ada dan tidak kosong
-        if not all([title, ingredients, instructions, cooking_time, servings]):
-            return JsonResponse({"error": "All fields are required"}, status=400)
+        # Validasi data
+        if not all([title, ingredients, instructions, cooking_time, servings, image]):
+            return JsonResponse({'status': 'error', 'message': 'All fields are required'}, status=400)
 
-        # Normalisasi judul (menghapus spasi berlebih dan konversi ke lowercase)
+        # Normalize the title (remove extra spaces and convert to lowercase)
         normalized_title = ' '.join(title.lower().split())
 
-        # Validasi jika resep dengan nama yang sama sudah ada
+        # Check for existing recipes with normalized names
         existing_recipes = Recipe.objects.all()
         for existing_recipe in existing_recipes:
             existing_normalized_title = ' '.join(existing_recipe.title.lower().split())
             if normalized_title == existing_normalized_title:
-                return JsonResponse({
-                    "error": f"Recipe with the name '{title}' already exists."
-                }, status=400)
+                return JsonResponse(
+                    {'status': 'error', 'message': f"Recipe with the name '{title}' already exists."},
+                    status=400
+                )
 
-        # Membuat grup diskusi
+        # Simpan gambar
+        if image:
+            filename = f"recipe_images/{uuid.uuid4()}_{image.name}"
+            image_path = default_storage.save(filename, ContentFile(image.read()))
+        else:
+            image_path = None
+
+        # Buat grup resep
         group = RecipeGroup.objects.create(
-            name=title,  # Nama grup sama dengan nama resep
-            description=f"Discussion group for {title}",
-            created_by=request.user
+            name=title,
+            description=f"Discussion for Recipe {title}",
         )
 
-        # Membuat resep baru
+        # Buat resep
         recipe = Recipe.objects.create(
-            group=group,
             title=title,
             ingredients=ingredients,
             instructions=instructions,
             cooking_time=cooking_time,
             servings=servings,
-            added_by=request.user
+            added_by=User.objects.get(username='admin'),
+            group=group,
+            image=image_path
         )
-        recipe.save()
 
         return JsonResponse({
-            "message": "Recipe created successfully",
-            "recipe_id": str(recipe.id),
-            "status":"success"
-        }, status=200)
+            'status': 'success',
+            'message': 'Recipe created successfully',
+            'recipe_id': str(recipe.id),
+        }, status=201)
 
-    except json.JSONDecodeError:
-        return JsonResponse({"error": "Invalid JSON data"}, status=400)
     except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+        return JsonResponse({'status': 'error', 'message': f'Terjadi kesalahan: {str(e)}'}, status=500)
     
 @csrf_exempt
 @require_POST
@@ -241,10 +264,17 @@ def update_recipe_flutter(request, recipe_id):
         instructions = data.get("instructions")
         cooking_time = data.get("cooking_time")
         servings = data.get("servings")
+        image = request.FILES.get('image')  # Ambil gambar jika ada
 
         # Validasi data
-        if not all([title, ingredients, instructions, cooking_time, servings]):
-            return JsonResponse({"error": "All fields are required"}, status=400)
+        if not all([title, ingredients, instructions, cooking_time, servings, image]):
+            return JsonResponse({'status': 'error', 'message': 'All fields are required'}, status=400)
+
+        # Simpan gambar jika ada
+        image_path = None
+        if image:
+            filename = f"recipe_images/{uuid.uuid4()}_{image.name}"
+            image_path = default_storage.save(filename, ContentFile(image.read()))
 
         # Update fields pada Recipe
         recipe.title = title
@@ -270,7 +300,7 @@ def update_recipe_flutter(request, recipe_id):
 
 @csrf_exempt
 def delete_recipe(request, recipe_id):
-    if request.method == 'DELETE':
+    if request.method == 'DELETE':  # Handle POST requests
         recipe = get_object_or_404(Recipe, pk=recipe_id)
         try:
             recipe.delete()

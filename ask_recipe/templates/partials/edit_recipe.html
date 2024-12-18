@@ -26,8 +26,8 @@
                         Recipe Title
                     </label>
                     <input type="text" name="title" id="title"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                           value="{{ form.title.value }}" placeholder="Enter recipe title">
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value="{{ form.title.value }}" placeholder="Enter recipe title">
                 </div>
 
                 <!-- Cooking Time and Servings -->
@@ -37,16 +37,16 @@
                             Servings
                         </label>
                         <input type="number" name="servings" id="servings"
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                               value="{{ form.servings.value }}" placeholder="e.g., 4">
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            value="{{ form.servings.value }}" placeholder="e.g., 4">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="cooking_time">
                             Cooking Time (mins)
                         </label>
                         <input type="number" name="cooking_time" id="cooking_time"
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                               value="{{ form.cooking_time.value }}" placeholder="e.g., 30">
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            value="{{ form.cooking_time.value }}" placeholder="e.g., 30">
                     </div>
                 </div>
 
@@ -56,8 +56,8 @@
                         Ingredients
                     </label>
                     <textarea name="ingredients" id="ingredients" rows="4"
-                              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                              placeholder="List ingredients separated by commas">{{ form.ingredients.value }}</textarea>
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="List ingredients separated by commas">{{ form.ingredients.value }}</textarea>
                 </div>
 
                 <!-- Instructions -->
@@ -66,8 +66,27 @@
                         Instructions
                     </label>
                     <textarea name="instructions" id="instructions" rows="5"
-                              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                              placeholder="Step-by-step instructions">{{ form.instructions.value }}</textarea>
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="Step-by-step instructions">{{ form.instructions.value }}</textarea>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="image">
+                        Recipe Image (Optional)
+                    </label>
+                    <div class="flex items-center space-x-4">
+                        <!-- Tampilkan foto yang sudah ada -->
+                        {% if recipe.image %}
+                            <img src="{{ recipe.image.url }}" alt="Current Image" class="w-20 h-20 object-cover rounded-lg">
+                        {% else %}
+                            <p class="text-gray-500">No image uploaded yet.</p>
+                        {% endif %}
+
+                        <!-- Input untuk mengunggah foto baru -->
+                        <input type="file" name="image" id="image" accept="image/*"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
                 </div>
                 
                 <!-- Action Buttons -->

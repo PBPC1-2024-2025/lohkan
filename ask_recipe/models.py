@@ -4,10 +4,9 @@ from django.contrib.auth.models import User
     
 # Model untuk mengelola grup resep
 class RecipeGroup(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # UUID untuk ID unik
-    name = models.CharField(max_length=100, unique=True) 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_groups")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
