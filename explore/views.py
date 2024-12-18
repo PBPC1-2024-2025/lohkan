@@ -168,6 +168,7 @@ def show_json(request):
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 # bismillah
+@csrf_exempt
 def add_to_bucket_list(request, food_id, bucket_id):
     try:
         # Try to get the bucket list

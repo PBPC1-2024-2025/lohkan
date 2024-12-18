@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from food_review.views import (
     add_review_ajax, show_xml, show_json, 
-    show_xml_by_id, show_json_by_id, index, see_reviews
+    show_xml_by_id, show_json_by_id, index, see_reviews, create_review_flutter
 )
 from food_review.views import add_review_ajax
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path('xml/<uuid:id>/', show_xml_by_id, name='show_xml_by_id'),
     path('json/<uuid:id>/', show_json_by_id, name='show_json_by_id'),
     path('reviews/food/<str:food_name>/<str:food_type>/', views.see_reviews, name='see_reviews'),
+    path('create-review-flutter/', create_review_flutter, name = 'create_review_flutter'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
