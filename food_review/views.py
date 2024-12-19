@@ -46,9 +46,8 @@ def page_review(request):
     })
 
 # membuat review baru
-@login_required  # If using user authentication
+@login_required 
 @csrf_exempt
-@require_POST
 def add_review_ajax(request):
     raw_name = request.POST.get('name').strip()  # Get the raw name input
     name = raw_name.lower()  # Normalize name to lowercase for comparison
@@ -148,16 +147,16 @@ def get_rating_label(average_rating):
     else:
         return "Recommended! 🤤"
 
-@login_required
+
 @csrf_exempt
 def create_review_flutter(request):
     if request.method == 'POST':
-        raw_name = request.POST.get('name', '').strip()  # Get the raw name input
-        name = raw_name.lower()  # Normalize name to lowercase for comparison
+        raw_name = request.POST.get('name', '').strip()  
+        name = raw_name.lower()  
         food_type = request.POST.get('food_type', '').strip()
         rating = request.POST.get('rating', '').strip()
         comments = request.POST.get('comments', '').strip()
-        user = request.user  # Assuming you are using Django's authentication
+        user = request.user 
 
         if not all([raw_name, food_type, rating, comments]):
             return JsonResponse({'error': 'Missing required fields'}, status=400)
