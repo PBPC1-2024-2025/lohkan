@@ -148,7 +148,6 @@ def get_rating_label(average_rating):
         return "Recommended! 🤤"
 
 
-@csrf_exempt
 def create_review_flutter(request):
     if request.method == 'POST':
         try:
@@ -158,14 +157,13 @@ def create_review_flutter(request):
             food_type = data.get('food_type', '').strip()
             rating = data.get('rating', '').strip()
             comments = data.get('comments', '').strip()
-            user = request.user  # Assumes user authentication is enabled
             
             # Validate required fields
             if not all([raw_name, food_type, rating, comments]):
                 return JsonResponse({'error': 'Missing required fields'}, status=400)
 
-            # Check if the review already exists for the same food item and user
-            existing_review = ReviewEntry.objects.filter(name__iexact=raw_name, food_type=food_type, user=user).first()
+            # Check if the review already exists for the same food item
+            existing_review = ReviewEntry.objects.filter(name__iexact=raw_name, food_type=food_type).first()
             if existing_review:
                 # Update existing review
                 existing_review.rating = rating
@@ -181,8 +179,7 @@ def create_review_flutter(request):
                     name=raw_name.title(),  # Save name in title case
                     food_type=food_type,
                     rating=rating,
-                    comments=comments,
-                    user=user
+                    comments=comments
                 )
                 new_review.save()
                 return JsonResponse({
