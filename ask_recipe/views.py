@@ -251,30 +251,32 @@ def create_recipe_flutter(request):
     
 @csrf_exempt
 @require_POST
-@login_required
 def update_recipe_flutter(request, recipe_id):
     try:
         # Pastikan recipe_id adalah UUID
         recipe = get_object_or_404(Recipe, id=recipe_id)
 
-        # Parsing data JSON dari request body
-        data = json.loads(request.body)
-        title = data.get("title")
-        ingredients = data.get("ingredients")
-        instructions = data.get("instructions")
-        cooking_time = data.get("cooking_time")
-        servings = data.get("servings")
+        # Ambil data dari request
+        title = request.POST.get('title')
+        ingredients = request.POST.get('ingredients')
+        instructions = request.POST.get('instructions')
+        cooking_time = int(request.POST.get('cooking_time'))
+        servings = int(request.POST.get('servings'))
         image = request.FILES.get('image')  # Ambil gambar jika ada
 
         # Validasi data
-        if not all([title, ingredients, instructions, cooking_time, servings, image]):
+        if not all([title, ingredients, instructions, cooking_time, servings]):
             return JsonResponse({'status': 'error', 'message': 'All fields are required'}, status=400)
 
+        # Validasi angka (cooking time dan servings)
+        if cooking_time <= 0 or servings <= 0:
+            return JsonResponse({'status': 'error', 'message': 'Cooking time and servings must be greater than 0'}, status=400)
+
         # Simpan gambar jika ada
-        image_path = None
         if image:
             filename = f"recipe_images/{uuid.uuid4()}_{image.name}"
             image_path = default_storage.save(filename, ContentFile(image.read()))
+            recipe.image = image_path  # Update path gambar di model
 
         # Update fields pada Recipe
         recipe.title = title
@@ -287,16 +289,15 @@ def update_recipe_flutter(request, recipe_id):
         recipe.save()
 
         return JsonResponse({
-            "message": "Recipe updated successfully",
-            "recipe_id": str(recipe.id),
-            # "group_id": str(group.id),
-            "status": "success"
+            'status': 'success',
+            'message': 'Recipe updated successfully',
+            'recipe_id': str(recipe.id),
         }, status=200)
 
-    except json.JSONDecodeError:
-        return JsonResponse({"error": "Invalid JSON data"}, status=400)
+    except ValueError:
+        return JsonResponse({'status': 'error', 'message': 'Cooking time and servings must be valid numbers'}, status=400)
     except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+        return JsonResponse({'status': 'error', 'message': f'Terjadi kesalahan: {str(e)}'}, status=500)
 
 @csrf_exempt
 def delete_recipe(request, recipe_id):
@@ -310,7 +311,6 @@ def delete_recipe(request, recipe_id):
     return JsonResponse({'message': 'Invalid HTTP method'}, status=405)
 
 @csrf_exempt
-@login_required
 def get_chat_messages(request):
     if request.method == 'GET':
         group_id = request.GET.get('group_id')  # Ambil group_id dari query string
@@ -334,53 +334,53 @@ def get_chat_messages(request):
             return JsonResponse({'error': 'Group not found'}, status=404)
         
 @csrf_exempt
-@login_required
 def send_chat_message(request):
+    print("Received request body:", request.body)  # Debug print
     try:
-        # Print for debugging
-        print("Received request to send chat message")
-        
-        # Parse JSON data
+        # Parse JSON data dari body request
         data = json.loads(request.body)
-        print("Received data:", data)
+        print("Parsed data:", data)  # Debug print
+        print("Current user:", request.user)  # Debug print
         
         group_id = data.get('group_id')
         message_text = data.get('message')
 
+        print(f"group_id: {group_id}, message: {message_text}")  # Debug print
+
         if not group_id or not message_text:
-            print("Missing group_id or message")
             return JsonResponse({'error': 'group_id and message are required'}, status=400)
 
         try:
             group = RecipeGroup.objects.get(id=group_id)
-            user = request.user
+            print("Found group:", group)  # Debug print
 
-            # Create new message
+            # Buat pesan baru
             new_message = ChatMessage.objects.create(
                 group=group,
-                user=user,
+                user=request.user,
                 message=message_text
             )
 
-            print(f"Message sent successfully: {new_message.message}")
-
             return JsonResponse({
+                'status': 'success',
                 'id': str(new_message.id),
                 'user': new_message.user.username,
                 'message': new_message.message,
                 'timestamp': new_message.timestamp.isoformat(),
             }, status=201)
-        
+
         except RecipeGroup.DoesNotExist:
-            print(f"Group not found: {group_id}")
+            print("Group not found!")  # Debug print
             return JsonResponse({'error': 'Group not found'}, status=404)
-    
-    except json.JSONDecodeError:
-        print("Invalid JSON data")
+        except Exception as e:
+            print("Error creating message:", str(e))  # Debug print
+            return JsonResponse({'error': str(e)}, status=500)
+
+    except json.JSONDecodeError as e:
+        print("JSON decode error:", str(e))  # Debug print
         return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-    
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        print("Unexpected error:", str(e))  # Debug print
         return JsonResponse({'error': str(e)}, status=500)
     
 @csrf_exempt
