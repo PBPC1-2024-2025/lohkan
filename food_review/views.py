@@ -155,7 +155,7 @@ def create_review_flutter(request):
             data = json.loads(request.body)
             raw_name = data.get('name', '').strip()
             food_type = data.get('food_type', '').strip()
-            rating = data.get('rating', '').strip()
+            rating = data.get('rating', '')
             comments = data.get('comments', '').strip()
             
             # Validate required fields
