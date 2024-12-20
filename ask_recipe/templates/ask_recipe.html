@@ -387,13 +387,34 @@ function fetchMessages(groupId) {
         .then(response => response.text())
         .then(html => {
             const chatContent = document.querySelector('.chat-content');
-            chatContent.innerHTML += html;  // Tambahkan pesan ke dalam konten chat
+            chatContent.innerHTML += html; // Tambahkan pesan ke dalam konten chat
+            updateMessageTimestamps(); // Perbarui waktu pesan
             setTimeout(() => {
                 scrollToBottom();
-            }, 100);   // Scroll otomatis ke pesan terakhir
+            }, 100); // Scroll otomatis ke pesan terakhir
         })
         .catch(error => console.error('Error fetching messages:', error));
 }
+
+// Fungsi untuk mengonversi waktu ISO ke waktu lokal
+function formatLocalTime(isoTimestamp) {
+    const date = new Date(isoTimestamp);
+    return date.toLocaleString(); // Menggunakan zona waktu lokal pengguna
+}
+
+// Fungsi untuk memperbarui waktu pesan di chat
+function updateMessageTimestamps() {
+    document.querySelectorAll('.server-timestamp').forEach(element => {
+        const isoTimestamp = element.getAttribute('data-timestamp');
+        const localTime = formatLocalTime(isoTimestamp);
+        element.textContent = localTime; // Tampilkan waktu lokal
+    });
+}
+
+// Panggil fungsi untuk memperbarui waktu pesan saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    updateMessageTimestamps();
+});
 
 // Fungsi untuk menambahkan pesan baru ke chat
 function renderMessage(html) {
@@ -423,8 +444,8 @@ inputMessage.addEventListener('keypress', function (event) {
 
 // Fungsi untuk mengirim pesan
 function sendMessage() {
-    const content = inputMessage.value.trim();  // Ambil konten pesan
-    const groupId = chatContent.getAttribute('data-group-id');  // Ambil ID grup
+    const content = inputMessage.value.trim(); // Ambil konten pesan
+    const groupId = chatContent.getAttribute('data-group-id'); // Ambil ID grup
 
     // Validasi input
     if (!content) {
@@ -450,8 +471,9 @@ function sendMessage() {
     })
     .then(response => response.text())
     .then(html => {
-        renderMessage(html);  // Tambahkan pesan baru ke chat
-        inputMessage.value = '';  // Reset input field
+        renderMessage(html); // Tambahkan pesan baru ke chat
+        updateMessageTimestamps(); // Perbarui waktu pesan
+        inputMessage.value = ''; // Reset input field
     })
     .catch(error => console.error('Error sending message:', error));
 }

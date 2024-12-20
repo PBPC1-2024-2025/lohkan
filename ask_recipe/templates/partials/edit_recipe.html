@@ -29,7 +29,7 @@
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         value="{{ form.title.value }}" placeholder="Enter recipe title">
                 </div>
-
+                
                 <!-- Cooking Time and Servings -->
                 <div class="mb-4 grid grid-cols-2 gap-4">
                     <div>
@@ -89,6 +89,19 @@
                     </div>
                 </div>
                 
+                <!-- Error Messages -->
+                {% if form.errors %}
+                    <div class="text-red-500 text-sm mt-4">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <!-- Action Buttons -->
                 <div class="flex items-center justify-between">
                     <a href="{% url 'ask_recipe:ask_recipe' %}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
