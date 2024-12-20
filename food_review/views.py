@@ -152,7 +152,7 @@ def create_review_flutter(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            user = data.get('user')
+            user = request.user
             name = data.get('name')
             food_type = data.get('food_type')
             rating = data.get('rating')
