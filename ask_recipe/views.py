@@ -31,14 +31,15 @@ def create_recipe(request):
             instructions = request.POST.get("instructions")
             cooking_time = int(request.POST.get("cooking_time"))
             servings = int(request.POST.get("servings"))
+            image = request.FILES.get("image")  # Ambil gambar dari formulir
 
             # Validate required data
-            if not title or not ingredients or not instructions or not cooking_time or not servings:
-                return HttpResponse("All fields are required", status=400)
+            if not title or not ingredients or not instructions or not cooking_time or not servings or not image:
+                return HttpResponse("All fields are required, including the image.", status=400)
 
             # Normalize the title (remove extra spaces and convert to lowercase)
             normalized_title = ' '.join(title.lower().split())
-            
+
             # Check for existing recipes with normalized names
             existing_recipes = Recipe.objects.all()
             for existing_recipe in existing_recipes:
@@ -56,6 +57,10 @@ def create_recipe(request):
                 description=f"Discussion group for {title}",
             )
 
+            # Simpan gambar
+            filename = f"recipe_images/{uuid.uuid4()}_{image.name}"
+            image_path = default_storage.save(filename, ContentFile(image.read()))
+
             # Then create recipe with the group reference
             recipe = Recipe.objects.create(
                 title=title,
@@ -64,7 +69,8 @@ def create_recipe(request):
                 cooking_time=cooking_time, 
                 servings=servings,
                 added_by=User.objects.get(username='admin'),
-                group=group
+                group=group,
+                image=image_path  # Simpan path gambar ke model
             )
 
             # Update the group with the recipe reference if needed
@@ -82,9 +88,16 @@ def edit_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)  # Ambil resep berdasarkan UUID
 
     if request.method == 'POST':
-        form = RecipeForm(request.POST, instance=recipe)
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)  # Tambahkan request.FILES
         if form.is_valid():
-            form.save()
+            # Handle image upload
+            if 'image' in request.FILES:
+                image = request.FILES['image']
+                filename = f"recipe_images/{uuid.uuid4()}_{image.name}"
+                image_path = default_storage.save(filename, ContentFile(image.read()))
+                recipe.image = image_path  # Update path gambar di model
+
+            form.save()  # Simpan perubahan
             return redirect('ask_recipe:ask_recipe')  # Redirect ke halaman utama setelah edit
     else:
         form = RecipeForm(instance=recipe)

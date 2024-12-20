@@ -132,10 +132,12 @@
                         <textarea id="instructions" name="instructions" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required></textarea>  <!-- Textarea untuk instruksi -->
                     </div>
 
-                    <!-- Input untuk foto opsional -->
+                    <!-- Input untuk foto -->
                     <div class="mb-4">
-                        <label for="image" class="block text-sm font-medium text-gray-700">Upload Image (Optional)</label>
-                        <input type="file" id="image" name="image" accept="image/*" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        <label for="image" class="block text-sm font-medium text-gray-700">
+                            Upload Image <span class="text-red-500">*</span> (Required)
+                        </label>
+                        <input type="file" id="image" name="image" accept="image/*" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
                     </div>
                     
                     <!-- Tempat pesan error -->
@@ -239,9 +241,20 @@
     
     document.getElementById('recipeEntryForm').addEventListener('submit', function(event) {
     event.preventDefault();
+
     
-    const formData = new FormData(this);
+    const imageInput = document.getElementById('image');
     const errorMessageDiv = document.getElementById('error-message');
+
+    // Validasi gambar
+    if (!imageInput.files.length) {
+        errorMessageDiv.classList.remove('hidden');
+        errorMessageDiv.textContent = 'Image is required!';
+        return; // Berhenti jika gambar tidak diunggah
+    }
+
+    // Lanjutkan pengiriman formulir jika gambar ada
+    const formData = new FormData(this);
     
     fetch("{% url 'ask_recipe:create_recipe' %}", {
         method: 'POST',
