@@ -160,8 +160,8 @@ def create_review_flutter(request):
 
             # Validasi data -> dia masuk ke sini 
             if not user:
-                print(f"user")
-                return JsonResponse({'error': 'User is required'})
+                print(f"user blm masuk")
+                return JsonResponse({'error': 'User is required'}, status=400)
             # if not all([user, name, food_type, rating, comments]):
             #     print(f"halo")
             #     return JsonResponse({'error': 'All fields are required'})
