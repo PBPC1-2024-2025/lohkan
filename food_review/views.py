@@ -151,44 +151,39 @@ def get_rating_label(average_rating):
 def create_review_flutter(request):
     if request.method == 'POST':
         try:
-            # Parse JSON body
             data = json.loads(request.body)
-            raw_name = data.get('name', '').strip()
-            food_type = data.get('food_type', '').strip()
-            rating = data.get('rating', '')
-            comments = data.get('comments', '').strip()
-            
-            # Validate required fields
-            if not all([raw_name, food_type, rating, comments]):
-                return JsonResponse({'error': 'Missing required fields'}, status=400)
+            user = data.get('user')
+            name = data.get('name')
+            food_type = data.get('food_type')
+            rating = data.get('rating')
+            comments = data.get('comments')
 
-            # Check if the review already exists for the same food item
-            existing_review = ReviewEntry.objects.filter(name__iexact=raw_name, food_type=food_type).first()
-            if existing_review:
-                # Update existing review
-                existing_review.rating = rating
-                existing_review.comments = comments
-                existing_review.save()
-                return JsonResponse({
-                    'message': 'Review updated successfully',
-                    'review_id': existing_review.id
-                }, status=200)
-            else:
-                # Create a new review
-                new_review = ReviewEntry(
-                    name=raw_name.title(),  # Save name in title case
-                    food_type=food_type,
-                    rating=rating,
-                    comments=comments
-                )
-                new_review.save()
-                return JsonResponse({
-                    'message': 'Review created successfully',
-                    'review_id': new_review.id
-                }, status=201)
+            # Validasi data -> dia masuk ke sini 
+            if not user:
+                print(f"user")
+                return JsonResponse({'error': 'User is required'})
+            # if not all([user, name, food_type, rating, comments]):
+            #     print(f"halo")
+            #     return JsonResponse({'error': 'All fields are required'})
+            
+            review = ReviewEntry.objects.create(
+                user=user,
+                name=name,
+                food_type=food_type,
+                rating=rating,
+                comments=comments
+            )
+
+            return JsonResponse({
+                'message': 'Review created successfully',
+                'review_id': review.id
+            }, status=201)
+
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
-
-    return JsonResponse({'error': 'Method not allowed'}, status=405)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
