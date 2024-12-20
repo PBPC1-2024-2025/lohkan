@@ -230,7 +230,7 @@ def create_recipe_flutter(request):
 
         # Validasi data
         if not all([title, ingredients, instructions, cooking_time, servings, image]):
-            return JsonResponse({'status': 'error', 'message': 'Semua kolom wajib diisi'}, status=400)
+            return JsonResponse({'status': 'error', 'message': 'All fields are required!'}, status=400)
 
         # Menormalkan judul
         normalized_title = ' '.join(title.lower().split())
@@ -241,7 +241,7 @@ def create_recipe_flutter(request):
             existing_normalized_title = ' '.join(existing_recipe.title.lower().split())
             if normalized_title == existing_normalized_title:
                 return JsonResponse(
-                    {'status': 'error', 'message': f"Resep dengan nama '{title}' sudah ada."},
+                    {'status': 'error', 'message': f"A recipe with the name '{title}' already exists"},
                     status=400
                 )
 
@@ -255,7 +255,6 @@ def create_recipe_flutter(request):
         # Membuat grup resep
         group = RecipeGroup.objects.create(
             name=title,
-            description=f"Diskusi untuk Resep {title}",
         )
 
         # Membuat resep
@@ -272,14 +271,14 @@ def create_recipe_flutter(request):
 
         return JsonResponse({
             'status': 'success',
-            'message': 'Resep berhasil dibuat',
+            'message': 'Recipe successfully created',
             'recipe_id': str(recipe.id),
         }, status=201)
 
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': f'Terjadi kesalahan: {str(e)}'}, status=500)
+        return JsonResponse({'status': 'error', 'message': f'Error: {str(e)}'}, status=500)
 
-# Mengedit resep di web django di flutter app
+# Mengedit resep di flutter app
 @csrf_exempt
 @require_POST
 def update_recipe_flutter(request, recipe_id):
@@ -297,11 +296,24 @@ def update_recipe_flutter(request, recipe_id):
 
         # Validasi data
         if not all([title, ingredients, instructions, cooking_time, servings]):
-            return JsonResponse({'status': 'error', 'message': 'Semua kolom wajib diisi'}, status=400)
+            return JsonResponse({'status': 'error', 'message': 'All fields are required!'}, status=400)
 
         # Validasi angka (waktu memasak dan porsi)
         if cooking_time <= 0 or servings <= 0:
-            return JsonResponse({'status': 'error', 'message': 'Waktu memasak dan porsi harus lebih besar dari 0'}, status=400)
+            return JsonResponse({'status': 'error', 'message':'Cooking time and portions must be greater than 0'}, status=400)
+
+        # Menormalkan judul
+        normalized_title = ' '.join(title.lower().split())
+
+        # Memeriksa apakah ada resep lain dengan judul yang sama, kecuali resep yang sedang diedit
+        existing_recipes = Recipe.objects.exclude(id=recipe.id)  # Mengecualikan resep yang sedang diedit
+        for existing_recipe in existing_recipes:
+            existing_normalized_title = ' '.join(existing_recipe.title.lower().split())
+            if normalized_title == existing_normalized_title:
+                return JsonResponse(
+                    {'status': 'error', 'message': f"A recipe with the name '{title}' already exists."},
+                    status=400
+                )
 
         # Menyimpan gambar jika ada
         if image:
@@ -321,14 +333,14 @@ def update_recipe_flutter(request, recipe_id):
 
         return JsonResponse({
             'status': 'success',
-            'message': 'Resep berhasil diperbarui',
+            'message': 'Recipe updated successfully',
             'recipe_id': str(recipe.id),
         }, status=200)
 
     except ValueError:
-        return JsonResponse({'status': 'error', 'message': 'Waktu memasak dan porsi harus berupa angka yang valid'}, status=400)
+        return JsonResponse({'status': 'error', 'message': 'Cooking times and portions must be valid numbers'}, status=400)
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': f'Terjadi kesalahan: {str(e)}'}, status=500)
+        return JsonResponse({'status': 'error', 'message': f'Error: {str(e)}'}, status=500)
 
 # Menghapus resep berdasarkan ID di flutter app
 @csrf_exempt
@@ -337,10 +349,10 @@ def delete_recipe(request, recipe_id):
         recipe = get_object_or_404(Recipe, pk=recipe_id)
         try:
             recipe.delete()
-            return JsonResponse({'message': 'Resep berhasil dihapus'}, status=200)
+            return JsonResponse({'message': 'Recipe deleted successfully'}, status=200)
         except Exception as e:
-            return JsonResponse({'message': f'Gagal menghapus resep: {str(e)}'}, status=500)
-    return JsonResponse({'message': 'Metode HTTP tidak valid'}, status=405)
+            return JsonResponse({'message': f'Failed to delete recipe: {str(e)}'}, status=500)
+    return JsonResponse({'message': 'Invalid HTTP method'}, status=405)
 
 # Mengambil pesan dari grup tertentu di flutter app
 @csrf_exempt
@@ -348,7 +360,7 @@ def get_chat_messages(request):
     if request.method == 'GET':
         group_id = request.GET.get('group_id')  # Mengambil group_id dari query string
         if not group_id:
-            return JsonResponse({'error': 'group_id diperlukan'}, status=400)
+            return JsonResponse({'error': 'group_id is required'}, status=400)
 
         try:
             group = RecipeGroup.objects.get(id=group_id)
@@ -364,7 +376,7 @@ def get_chat_messages(request):
             ]
             return JsonResponse({'messages': message_list}, status=200)
         except RecipeGroup.DoesNotExist:
-            return JsonResponse({'error': 'Grup tidak ditemukan'}, status=404)
+            return JsonResponse({'error': 'Group not found'}, status=404)
 
 # Mengirim pesan baru di flutter app       
 @csrf_exempt
@@ -377,7 +389,7 @@ def send_chat_message(request):
         message_text = data.get('message')
 
         if not group_id or not message_text:
-            return JsonResponse({'error': 'group_id dan message diperlukan'}, status=400)
+            return JsonResponse({'error': 'group_id and message are required'}, status=400)
 
         try:
             group = RecipeGroup.objects.get(id=group_id)
@@ -398,12 +410,12 @@ def send_chat_message(request):
             }, status=201)
 
         except RecipeGroup.DoesNotExist:
-            return JsonResponse({'error': 'Grup tidak ditemukan'}, status=404)
+            return JsonResponse({'error': 'Group not found'}, status=404)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
 
     except json.JSONDecodeError as e:
-        return JsonResponse({'error': 'Data JSON tidak valid'}, status=400)
+        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
@@ -414,7 +426,7 @@ def delete_chat_message(request, message_id):
         message = get_object_or_404(ChatMessage, id=message_id)
         try:
             message.delete()
-            return JsonResponse({'message': 'Pesan berhasil dihapus'}, status=200)
+            return JsonResponse({'message': 'Message successfully deleted'}, status=200)
         except Exception as e:
-            return JsonResponse({'message': f'Gagal menghapus pesan: {str(e)}'}, status=500)
-    return JsonResponse({'message': 'Metode HTTP tidak valid'}, status=405)
+            return JsonResponse({'message': f'Failed to delete message: {str(e)}'}, status=500)
+    return JsonResponse({'message': 'Invalid HTTP method'}, status=405)

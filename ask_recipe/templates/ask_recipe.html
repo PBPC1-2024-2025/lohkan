@@ -7,157 +7,164 @@
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+<div class="flex flex-col min-h-screen">
     <!-- Navbar -->
     {% include 'navbar.html' %}
-<div>
-    <div class="flex flex-col lg:flex-row h-screen">
-        <!-- Sidebar -->
-        <div class="w-full lg:w-1/3 bg-[#500] p-6 text-white flex flex-col h-auto lg:h-full">  <!-- Sidebar untuk daftar resep -->
-            <div class="flex items-center justify-between">
-                <h1 class="text-2xl lg:text-3xl font-bold">Ask Recipe 🔖</h1>
-                <div class="flex items-center space-x-4">
-                    <button id="create-recipe-btn" class="text-xl lg:text-3xl z-10 relative">
-                        {% if user.is_authenticated and user.username == 'admin' %}
-                        <i class="fas fa-comment-dots"></i>
-                        {% endif %}
+
+    <!-- Main Content -->
+    <div class="flex-grow">
+        <!-- Container for both sidebar and chat -->
+        <div class="container mx-auto flex flex-col lg:flex-row">
+            <!-- Sidebar -->
+            <div class="w-full lg:w-1/3 bg-[#500] p-6 text-white">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl lg:text-3xl font-bold">Ask Recipe 🔖</h1>
+                    <div class="flex items-center space-x-4">
+                        <button id="create-recipe-btn" class="text-xl lg:text-3xl z-10 relative">
+                            {% if user.is_authenticated and user.username == 'admin' %}
+                            <i class="fas fa-comment-dots"></i>
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+                <hr class="my-4 border-1 border-white">
+
+                <!-- Search Bar -->
+                <div class="relative mb-6">
+                    <input type="text" id="recipe-search" placeholder="Search Recipe For .."
+                        class="w-full px-4 py-2 rounded-full bg-white text-gray-700 focus:outline-none">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-700" id="clear-search">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                </div>
+
+                <!-- Recipe List -->
+                <div class="recipe-list flex-1 overflow-y-auto overflow-x-hidden space-y-4 max-h-[calc(100vh-20rem)]">
+                    {% if recipes %}
+                        {% for recipe in recipes %}
+                            {% include 'partials/recipe_item.html' with recipe=recipe %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-message flex flex-col items-center justify-center min-h-[24rem] p-6 mt-20">
+                            <img src="{% static 'images/kosong.png' %}" alt="kosong" class="w-20 h-20 mb-4"/>
+                            <p class="text-center text-white mb-6">No recipes added yet. Be the first to add one!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="w-full lg:w-2/3 bg-[#fff] p-6 flex flex-col min-h-[calc(100vh-4rem)]">
+                <!-- Chat Placeholder -->
+                <div id="chat-placeholder" class="flex flex-col items-center justify-center h-full" style="background-color: #fff;">
+                    <img src="{% static 'images/chat.png' %}" alt="chat" class="w-20 h-20 mb-4"/>
+                    <p class="text-center text-black">Select a recipe to start chatting!</p>
+                </div>
+
+                <!-- Chat Area -->
+                <div id="chat-area" class="hidden flex flex-col h-full">
+                    <!-- Header Chat -->
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                                <img src="{% static 'images/user.png' %}" alt="User Icon" class="rounded-full w-full h-full object-cover">
+                            </div>
+                            <div class="flex flex-col">
+                                <p id="chat-header" class="text-xl font-bold"></p>
+                                <p id="data-creator" class="text-sm text-gray-600"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Content -->
+                    <div class="chat-content flex-1 overflow-y-auto space-y-4 mb-4 max-h-[calc(100vh-16rem)]" data-group-id="{{ selected_group.id }}"></div>
+
+                    <!-- Input Area -->
+                    <div class="flex items-center space-x-2 mt-auto">
+                        <input type="text" id="message-input" placeholder="Type a message" 
+                            class="flex-1 p-3 rounded-full border border-gray-300">
+                        <button id="send-button" class="p-3 bg-red-800 text-white rounded-full">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CRUD Modal -->
+        <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-[9999] w-full h-full flex items-start justify-center bg-gray-800 bg-opacity-50 overflow-y-auto py-4"> <!-- Modal untuk menambah resep -->
+            <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out my-8"> <!-- Konten modal -->
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 border-b rounded-t bg-red-800">  <!-- Header modal -->
+                    <h3 class="text-xl font-semibold text-white">Add Your Recipe</h3>  <!-- Judul modal -->
+                    <button type="button" class="text-gray-300 hover:bg-red-800 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">  <!-- Tombol untuk menutup modal -->
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">  <!-- Ikon untuk menutup modal -->
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>  <!-- Garis silang -->
+                        </svg>
+                        <span class="sr-only">Close modal</span>  <!-- Teks untuk pembaca layar -->
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="px-6 py-4 space-y-6 form-style">  <!-- Konten modal -->
+                    <form id="recipeEntryForm" method="post">  <!-- Form untuk menambah resep -->
+                        {% csrf_token %}  <!-- Token CSRF untuk keamanan -->
+
+                        <div class="grid gap-6 mb-4">  <!-- Grid untuk inputan -->
+                            <div>
+                                <label for="title" class="block text-sm font-medium text-gray-700">Name</label>  <!-- Label untuk input nama -->
+                                <input type="text" id="title" name="title" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>  <!-- Input untuk nama resep -->
+                            </div>
+                        </div>
+                    
+                        <div class="grid grid-cols-2 gap-6 mb-4">  <!-- Grid untuk inputan jumlah porsi dan waktu memasak -->
+                            <div>
+                                <label for="servings" class="block text-sm font-medium text-gray-700">Servings</label>  <!-- Label untuk input jumlah porsi -->
+                                <input type="number" id="servings" name="servings" min="1" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>  <!-- Input untuk jumlah porsi -->
+                            </div>
+                            <div>
+                                <label for="cooking_time" class="block text-sm font-medium text-gray-700">Cooking Time</label>  <!-- Label untuk input waktu memasak -->
+                                <input type="number" id="cooking_time" name="cooking_time" min="1" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>  <!-- Input untuk waktu memasak -->
+                            </div>
+                        </div>
+                    
+                        <div class="mb-4">  <!-- Input untuk bahan-bahan -->
+                            <label for="ingredients" class="block text-sm font-medium text-gray-700">Ingredients</label>
+                            <textarea id="ingredients" name="ingredients" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required></textarea>  <!-- Textarea untuk bahan-bahan -->
+                        </div>
+                    
+                        <div class="mb-4">  <!-- Input untuk instruksi -->
+                            <label for="instructions" class="block text-sm font-medium text-gray-700">Instructions</label>
+                            <textarea id="instructions" name="instructions" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required></textarea>  <!-- Textarea untuk instruksi -->
+                        </div>
+
+                        <!-- Input untuk foto -->
+                        <div class="mb-4">
+                            <label for="image" class="block text-sm font-medium text-gray-700">
+                                Upload Image <span class="text-red-500">*</span> (Required)
+                            </label>
+                            <input type="file" id="image" name="image" accept="image/*" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+                        </div>
+                        
+                        <!-- Tempat pesan error -->
+                        <div id="error-message" class="text-red-500 text-sm mt-2 hidden"></div>
+                        
+                    </form>
+                </div>            
+                <!-- Modal footer -->
+                <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">  <!-- Tombol footer modal -->
+                    <button type="button" id="cancelButton" class="bg-gray-900 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-lg">  <!-- Tombol untuk membatalkan -->
+                        Cancel
+                    </button>
+                    <button type="submit" id="submitRecipeEntry" form="recipeEntryForm" class="bg-red-800 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">  <!-- Tombol untuk menyimpan resep -->
+                        Save
                     </button>
                 </div>
             </div>
-            <hr class="my-4 border-1 border-white"> <!-- Garis pemisah -->
-
-            <!-- Search Bar -->
-            <div class="relative mb-6">
-                <input type="text" id="recipe-search" placeholder="Search Recipe For .."
-                    class="w-full px-4 py-2 rounded-full bg-white text-gray-700 focus:outline-none">
-                <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-700" id="clear-search">
-                    <i class="fas fa-times-circle"></i>
-                </button>
-            </div>
-
-            <!-- Recipe List -->
-            <div class="recipe-list flex-1 overflow-y-auto overflow-x-auto space-y-4">
-                {% if recipes %}
-                    {% for recipe in recipes %}
-                        {% include 'partials/recipe_item.html' with recipe=recipe %}
-                    {% endfor %}
-                {% else %}
-                    <div class="empty-message flex flex-col items-center justify-center min-h-[24rem] p-6 mt-20">
-                        <img src="{% static 'images/kosong.png' %}" alt="kosong" class="w-20 h-20 mb-4"/>
-                        <p class="text-center text-white mb-6">No recipes added yet. Be the first to add one!</p>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Chat Area -->
-        <div class="w-full lg:w-2/3 bg-[#fff] p-6 flex flex-col h-full">
-            <!-- Placeholder: Ditampilkan jika belum ada resep yang dipilih -->
-            <div id="chat-placeholder" class="flex flex-col items-center justify-center h-full" style="background-color: #fff;">
-                <img src="{% static 'images/chat.png' %}" alt="chat" class="w-20 h-20 mb-4"/>
-                <p class="text-center text-black">Select a recipe to start chatting!</p>
-            </div>
-
-            <!-- Chat Area: Tampil saat resep dipilih -->
-            <div id="chat-area" class="hidden flex flex-col h-full space-y-4">
-                <!-- Header Chat -->
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                            <img src="{% static 'images/user.png' %}" alt="User Icon" class="rounded-full w-full h-full object-cover">
-                        </div>
-                        <div class="flex flex-col">
-                            <p id="chat-header" class="text-xl font-bold"></p>
-                            <p id="data-creator" class="text-sm text-gray-600"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Konten Chat -->
-                <div class="chat-content flex-1 overflow-y-auto space-y-4 mb-4" data-group-id="{{ selected_group.id }}"></div>
-            
-                <!-- Input Pesan -->
-                <div class="flex items-center space-x-2">
-                    <input type="text" id="message-input" placeholder="Type a message" 
-                        class="flex-1 p-3 rounded-full border border-gray-300">
-                    <button id="send-button" class="p-3 bg-red-800 text-white rounded-full">
-                        <i class="fas fa-paper-plane"></i>
-                    </button> 
-                </div>
-            </div>
-        </div>
-    
-    <!-- CRUD Modal -->
-    <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out"> <!-- Modal untuk menambah resep -->
-        <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out"> <!-- Konten modal -->
-             <!-- Modal header -->
-             <div class="flex items-center justify-between p-4 border-b rounded-t bg-red-800">  <!-- Header modal -->
-                <h3 class="text-xl font-semibold text-white">Add Your Recipe</h3>  <!-- Judul modal -->
-                <button type="button" class="text-gray-300 hover:bg-red-800 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">  <!-- Tombol untuk menutup modal -->
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">  <!-- Ikon untuk menutup modal -->
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>  <!-- Garis silang -->
-                    </svg>
-                    <span class="sr-only">Close modal</span>  <!-- Teks untuk pembaca layar -->
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="px-6 py-4 space-y-6 form-style">  <!-- Konten modal -->
-                <form id="recipeEntryForm" method="post">  <!-- Form untuk menambah resep -->
-                    {% csrf_token %}  <!-- Token CSRF untuk keamanan -->
-
-                    <div class="grid gap-6 mb-4">  <!-- Grid untuk inputan -->
-                        <div>
-                            <label for="title" class="block text-sm font-medium text-gray-700">Name</label>  <!-- Label untuk input nama -->
-                            <input type="text" id="title" name="title" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>  <!-- Input untuk nama resep -->
-                        </div>
-                    </div>
-                
-                    <div class="grid grid-cols-2 gap-6 mb-4">  <!-- Grid untuk inputan jumlah porsi dan waktu memasak -->
-                        <div>
-                            <label for="servings" class="block text-sm font-medium text-gray-700">Servings</label>  <!-- Label untuk input jumlah porsi -->
-                            <input type="number" id="servings" name="servings" min="1" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>  <!-- Input untuk jumlah porsi -->
-                        </div>
-                        <div>
-                            <label for="cooking_time" class="block text-sm font-medium text-gray-700">Cooking Time</label>  <!-- Label untuk input waktu memasak -->
-                            <input type="number" id="cooking_time" name="cooking_time" min="1" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>  <!-- Input untuk waktu memasak -->
-                        </div>
-                    </div>
-                
-                    <div class="mb-4">  <!-- Input untuk bahan-bahan -->
-                        <label for="ingredients" class="block text-sm font-medium text-gray-700">Ingredients</label>
-                        <textarea id="ingredients" name="ingredients" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required></textarea>  <!-- Textarea untuk bahan-bahan -->
-                    </div>
-                
-                    <div class="mb-4">  <!-- Input untuk instruksi -->
-                        <label for="instructions" class="block text-sm font-medium text-gray-700">Instructions</label>
-                        <textarea id="instructions" name="instructions" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required></textarea>  <!-- Textarea untuk instruksi -->
-                    </div>
-
-                    <!-- Input untuk foto -->
-                    <div class="mb-4">
-                        <label for="image" class="block text-sm font-medium text-gray-700">
-                            Upload Image <span class="text-red-500">*</span> (Required)
-                        </label>
-                        <input type="file" id="image" name="image" accept="image/*" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
-                    </div>
-                    
-                    <!-- Tempat pesan error -->
-                    <div id="error-message" class="text-red-500 text-sm mt-2 hidden"></div>
-                    
-                </form>
-            </div>            
-            <!-- Modal footer -->
-            <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">  <!-- Tombol footer modal -->
-                <button type="button" id="cancelButton" class="bg-gray-900 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-lg">  <!-- Tombol untuk membatalkan -->
-                    Cancel
-                </button>
-                <button type="submit" id="submitRecipeEntry" form="recipeEntryForm" class="bg-red-800 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">  <!-- Tombol untuk menyimpan resep -->
-                    Save
-                </button>
-            </div>
         </div>
     </div>
-</div>
 {% include 'footer.html' %} 
+</div>
+
 <script>
     const modal = document.getElementById('crudModal');
     const modalContent = document.getElementById('crudModalContent');
@@ -341,7 +348,7 @@ function openChat(element) {
                 <h2 class="font-bold text-lg mb-2">Ingredients :</h2>
                 <ul class="list-disc list-inside space-y-1 text-gray-700">
                     ${ingredients
-                        .split('-')
+                        .split('.')
                         .map(ingredient => ingredient.trim())
                         .filter(ingredient => ingredient)
                         .map(ingredient => `<li>${ingredient}</li>`)
@@ -353,7 +360,7 @@ function openChat(element) {
                 <h2 class="font-bold text-lg mb-2">Instructions :</h2>
                 <ol class="list-decimal list-inside space-y-1 text-gray-700">
                     ${instructions
-                        .split('-')
+                        .split('.')
                         .map(instruction => instruction.trim())
                         .filter(instruction => instruction)
                         .map(instruction => `<li>${instruction}</li>`)
