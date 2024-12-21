@@ -159,12 +159,12 @@ def create_review_flutter(request):
             comments = data.get('comments')
 
             # Validasi data -> dia masuk ke sini 
-            if not user:
-                print(f"user blm masuk")
-                return JsonResponse({'error': 'User is required'}, status=400)
-            # if not all([user, name, food_type, rating, comments]):
-            #     print(f"halo")
-            #     return JsonResponse({'error': 'All fields are required'})
+            # if not user:
+            #     print(f"user blm masuk")
+            #     return JsonResponse({'error': 'User is required'}, status=400)
+            # # if not all([user, name, food_type, rating, comments]):
+            # #     print(f"halo")
+            # #     return JsonResponse({'error': 'All fields are required'})
             
             review = ReviewEntry.objects.create(
                 user=user,
@@ -181,8 +181,8 @@ def create_review_flutter(request):
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON format'}, status=400)
-        except User.DoesNotExist:
-            return JsonResponse({'error': 'User not found'}, status=404)
+        # except User.DoesNotExist:
+        #     return JsonResponse({'error': 'User not found'}, status=404)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
     else:
